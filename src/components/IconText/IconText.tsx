@@ -1,0 +1,21 @@
+import cx from "classnames";
+
+interface IconTextProps {
+  icon: string;
+  iconClasses?: string;
+  text: string;
+  textClasses?: string;
+}
+
+function IconText({ icon, iconClasses, text, textClasses }: IconTextProps) {
+  return (
+    <div className="flex items-center gap-2">
+      <div className={cx(iconClasses, "flex justify-center")}>
+        <i className={cx("fa-regular", icon)}></i>
+      </div>
+      <p className={cx(textClasses)}>{text}</p>
+    </div>
+  );
+}
+
+export default IconText;
