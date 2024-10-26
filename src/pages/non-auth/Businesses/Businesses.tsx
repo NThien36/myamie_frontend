@@ -6,7 +6,7 @@ import Pagination from "@/components/Pagination/Pagination";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import Title from "@/components/Title/Title";
 
-function Business() {
+function Businesses() {
   return (
     <>
       <Title
@@ -31,4 +31,4 @@ function Business() {
   );
 }
 
-export default Business;
+export default Businesses;

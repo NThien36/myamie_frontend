@@ -1,0 +1,61 @@
+import Logo from "@/assets/images/Logo";
+import cx from "classnames";
+import Carousel from "@/components/Carousel/Carousel";
+import { ROUTE_PATH } from "@/routes/route-path";
+import { Link, Outlet, useLocation } from "react-router-dom";
+
+const images = [
+  "https://statics.vinwonders.com/canh-dep-viet-nam-15_1634999578.jpg",
+  "https://pantravel.vn/wp-content/uploads/2023/11/ngon-nui-thieng-cua-nhat-ban.jpg",
+  "https://nemthuanviet.com/wp-content/uploads/2023/10/canh-dep-1.jpg",
+];
+
+function AuthLayout() {
+  const location = useLocation();
+
+  const isLoginPage = location.pathname === ROUTE_PATH.LOGIN;
+  const isSignupBusinessPage =
+    location.pathname === ROUTE_PATH.REGISTER_BUSINESS;
+
+  return (
+    <div
+      className={cx("h-screen", {
+        "grid grid-cols-3": !isSignupBusinessPage,
+      })}
+    >
+      <div className="col-span-1 flex flex-col justify-between p-4 h-full">
+        <Link to={ROUTE_PATH.BUSINESSES} className="mx-auto">
+          <Logo />
+        </Link>
+        <div className="w-2/3 mx-auto">
+          <Outlet />
+        </div>
+        {isLoginPage ? (
+          <div className="flex justify-center gap-1">
+            <p>Chưa có tài khoản?</p>
+            <Link
+              to={ROUTE_PATH.REGISTER}
+              className="hover:underline font-medium"
+            >
+              Đăng ký tại đây
+            </Link>
+          </div>
+        ) : (
+          <div className="flex justify-center gap-1">
+            <p>Đã có tài khoản?</p>
+            <Link to={ROUTE_PATH.LOGIN} className="hover:underline font-medium">
+              Đăng nhập tại đây
+            </Link>
+          </div>
+        )}
+      </div>
+      {!isSignupBusinessPage && (
+        <div className="col-span-2 py-4 pr-4">
+          <Carousel images={images} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default AuthLayout;
