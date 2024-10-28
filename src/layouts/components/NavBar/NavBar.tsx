@@ -24,7 +24,7 @@ const navlinks = [
 
 function NavBar() {
   return (
-    <div className="container px-7 flex justify-between items-center py-5">
+    <div className="container px-7 flex justify-between items-center py-6">
       <div className="space-x-7 font-medium">
         {navlinks.map((link) => (
           <NavLink

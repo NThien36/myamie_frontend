@@ -2,7 +2,7 @@ import { Category } from "@/models/category.interface";
 
 interface CategoryItemProps {
   category: Category;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 function CategoryItem({ category, onClick }: CategoryItemProps) {

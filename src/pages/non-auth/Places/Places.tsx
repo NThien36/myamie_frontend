@@ -8,7 +8,7 @@ import Title from "@/components/Title/Title";
 
 function Places() {
   return (
-    <>
+    <div className="mt-10">
       <Title
         subTitle="Hơn 300 địa điểm gần đâ"
         title="Các địa điểm mới nhất"
@@ -27,7 +27,7 @@ function Places() {
         </div>
       </div>
       <Pagination currentPage={1} totalPage={10} onPageChange={() => "f"} />
-    </>
+    </div>
   );
 }
 

@@ -23,7 +23,6 @@ const styles = {
   menu: (base: any) => ({
     ...base,
     paddingLeft: "0.25rem",
-    paddingRight: "0.25rem",
     marginTop: "0.3rem",
     backgroundColor: "white",
     borderRadius: "0.375rem",

@@ -4,8 +4,15 @@ import Divider from "@/components/Divider/Divider";
 import Dropdown from "@/components/Dropdown/Dropdown";
 import IconText from "@/components/IconText/IconText";
 import Input from "@/components/Input/Input";
+import ConfirmEmail from "./components/ConfirmEmail";
+import { useState } from "react";
 
 function SignupBusiness() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
+
   return (
     <div className="mx-auto flex flex-col items-center">
       <p className="text-xl font-medium">Đăng ký cho người làm dịch vụ</p>
@@ -64,6 +71,11 @@ function SignupBusiness() {
           </div>
         </div>
       </div>
+      <ConfirmEmail
+        isOpen={isOpen}
+        closeModal={closeModal}
+        email="minhbee203@gmail.com"
+      />
     </div>
   );
 }

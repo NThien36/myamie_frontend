@@ -1,7 +1,14 @@
 import Button from "@/components/Buttons/Button";
 import Input from "@/components/Input/Input";
+import { useState } from "react";
+import ConfirmEmail from "./components/ConfirmEmail";
 
 function Signup() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
+
   return (
     <>
       <p className="text-lg font-semibold">Đăng ký</p>
@@ -29,6 +36,11 @@ function Signup() {
           Đăng ký
         </Button>
       </form>
+      <ConfirmEmail
+        isOpen={isOpen}
+        closeModal={closeModal}
+        email="minhbee203@gmail.com"
+      />
     </>
   );
 }

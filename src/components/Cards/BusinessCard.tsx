@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Avatar from "../Avatar/Avatar";
 import Rate from "../Rate/Rate";
 import IconText from "../IconText/IconText";
+import { noCover } from "@/assets/images";
 
 function BusinessCard({ business }: { business: Business }) {
   return (
@@ -12,9 +13,9 @@ function BusinessCard({ business }: { business: Business }) {
       className="flex flex-col border-2 rounded-lg relative transition-shadow duration-300 hover:shadow-xl bg-white"
     >
       <img
-        src={business.cover}
+        src={business.cover ? business.cover : noCover}
         alt={business.name}
-        className="w-full h-40 object-cover rounded-t-lg"
+        className="w-full min-h-40 h-40 object-cover rounded-t-lg"
       />
       <div className="p-4 flex flex-col h-full justify-between">
         <div>

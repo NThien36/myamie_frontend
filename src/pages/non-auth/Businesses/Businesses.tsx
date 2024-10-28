@@ -8,7 +8,7 @@ import Title from "@/components/Title/Title";
 
 function Businesses() {
   return (
-    <>
+    <div className="mt-10">
       <Title
         subTitle="Hơn 300 dịch vụ gần đây"
         title="Các dịch vụ nổi bật"
@@ -27,7 +27,7 @@ function Businesses() {
         </div>
       </div>
       <Pagination currentPage={1} totalPage={10} onPageChange={() => "f"} />
-    </>
+    </div>
   );
 }
 

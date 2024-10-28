@@ -14,7 +14,7 @@ function FilterModal({ isOpen, onClose, children }: FilterModalProps) {
     <ReactModal
       isOpen={isOpen}
       onRequestClose={onClose}
-      className="filter_modal"
+      className="filter_modal w-1/2"
       overlayClassName="filter_modal_overlay"
     >
       <div className="p-3.5 relative border-b">

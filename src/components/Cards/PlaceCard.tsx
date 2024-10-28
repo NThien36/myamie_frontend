@@ -3,6 +3,7 @@ import { ROUTE_PATH } from "@/routes/route-path";
 import { Link } from "react-router-dom";
 import Avatar from "../Avatar/Avatar";
 import IconText from "../IconText/IconText";
+import { noCover } from "@/assets/images";
 
 function PlaceCard({ place }: { place: Place }) {
   return (
@@ -11,9 +12,9 @@ function PlaceCard({ place }: { place: Place }) {
       className="flex flex-col border-2 rounded-lg relative transition-shadow duration-300 hover:shadow-xl bg-white"
     >
       <img
-        src={place.cover}
+        src={place.cover ? place.cover : noCover}
         alt={place.name}
-        className="w-full h-40 object-cover rounded-t-lg"
+        className="w-full min-h-40 h-40 object-cover rounded-t-lg"
       />
       <div className="p-4 h-full flex flex-col justify-between">
         <div>

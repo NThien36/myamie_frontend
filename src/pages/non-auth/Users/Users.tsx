@@ -2,14 +2,13 @@ import { userData } from "@/assets/data/user.data";
 import FilterBtn from "@/components/Buttons/FilterBtn";
 import UserCard from "@/components/Cards/UserCard";
 import CategoryContainer from "@/components/CategoryItem/CategoryContainer";
-import FilterByCities from "@/components/Filters/FilterByCities";
 import FilterByDistance from "@/components/Filters/FilterByDistance";
 import Pagination from "@/components/Pagination/Pagination";
 import Title from "@/components/Title/Title";
 
 function Users() {
   return (
-    <>
+    <div className="mt-10">
       <Title
         subTitle="Hơn 4200 bạn bè gần đây"
         title="Tìm bạn bè quanh đây"
@@ -30,7 +29,7 @@ function Users() {
         </div>
       </div>
       <Pagination currentPage={1} totalPage={10} onPageChange={() => "f"} />
-    </>
+    </div>
   );
 }
 
