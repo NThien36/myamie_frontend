@@ -21,7 +21,7 @@ function Avatar({
     size,
     className,
     {
-      "border-4 border-white": hasBorder,
+      "border-4 border-background": hasBorder,
     }
   );
 

@@ -14,7 +14,7 @@ function IconBtn({
   hasBackground = true,
 }: IconBtnProps) {
   const buttonClasses = cx(
-    "rounded-full size-8",
+    "rounded-full size-8 flex-none",
     {
       "hover:bg-gray-200 transition-colors": hasBackground,
     },

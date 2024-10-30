@@ -11,6 +11,11 @@ import SignupBusiness from "@/pages/non-auth/Signup/SignupBusiness";
 import UserProfile from "@/pages/non-auth/Profile/UserProfile";
 import BusinessProfile from "@/pages/non-auth/Profile/BusinessProfile";
 import PlaceProfile from "@/pages/non-auth/Profile/PlaceProfile";
+import SidebarLayout from "@/layouts/SidebarLayout";
+import RoleRoute from "./RoleRoute";
+import { RoleEnum } from "@/models/app.interface";
+import Settings from "@/pages/auth/Settings/Settings";
+import Account from "@/pages/auth/Account/Account";
 
 const router = createBrowserRouter([
   {
@@ -58,6 +63,23 @@ const router = createBrowserRouter([
       {
         path: ROUTE_PATH.REGISTER_BUSINESS,
         element: <SignupBusiness />,
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <SidebarLayout />,
+    children: [
+      {
+        element: (
+          <RoleRoute
+            allowedRoles={[RoleEnum.USER, RoleEnum.ADMIN, RoleEnum.BUSINESS]}
+          />
+        ),
+        children: [
+          { path: ROUTE_PATH.SETTINGS, element: <Settings /> },
+          { path: ROUTE_PATH.ACCOUNT, element: <Account /> },
+        ],
       },
     ],
   },

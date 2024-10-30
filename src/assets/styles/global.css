@@ -60,3 +60,9 @@ body {
   font-size: 0.875rem;
   color: #212325;
 }
+.auth-container {
+  padding: 1.25rem;
+  border-width: 2px;
+  background-color: white;
+  border-radius: 0.75rem;
+}

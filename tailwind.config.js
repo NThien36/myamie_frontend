@@ -12,6 +12,7 @@ export default {
           light: "#D5E9F9", // Light Blue
           lighter: "#EBF4FB", // Lighter Blue
         },
+        background: "#fbfbfb",
       },
       container: {
         center: true,

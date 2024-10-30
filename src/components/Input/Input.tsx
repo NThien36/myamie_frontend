@@ -5,7 +5,7 @@ interface InputProps {
   label?: string;
   placeholder?: string;
   value?: string;
-  type?: "text" | "password" | "email" | "number";
+  type?: "text" | "password" | "email" | "number" | "date";
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   readonly?: boolean;
   errorMessage?: string;

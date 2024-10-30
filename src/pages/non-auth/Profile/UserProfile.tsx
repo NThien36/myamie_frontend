@@ -9,6 +9,8 @@ import "./Profile.css";
 import Cover from "./components/Cover";
 import NameWCategories from "./components/NameWCategories";
 import ContactContainer from "./components/ContactContainer";
+import { placeData } from "@/assets/data/place.data";
+import CheckinPlace from "./components/CheckinPlace";
 
 interface UserProfileProps {
   user?: UserDetail;
@@ -89,6 +91,7 @@ function UserProfile({ user = userDetailData }: UserProfileProps) {
           </div>
         </div>
       </div>
+      <CheckinPlace places={placeData} />
     </div>
   );
 }

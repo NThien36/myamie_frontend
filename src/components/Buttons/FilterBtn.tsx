@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Button from "./Button";
-import FilterModal from "../Modals/FilterModal";
+import CustomModal from "../Modals/CustomModal";
 
 interface FilterBtnProps {
   children: React.ReactNode;
@@ -36,9 +36,14 @@ function FilterBtn({ children }: FilterBtnProps) {
         <i className="fa-solid fa-bars-filter"></i>
         <p>Bộ lọc</p>
       </Button>
-      <FilterModal isOpen={modalIsOpen} onClose={closeModal}>
+      <CustomModal
+        isOpen={modalIsOpen}
+        onClose={closeModal}
+        title="Tất cả bộ lọc"
+        saveButtonTitle="Xem kết quả"
+      >
         {children}
-      </FilterModal>
+      </CustomModal>
     </>
   );
 }
