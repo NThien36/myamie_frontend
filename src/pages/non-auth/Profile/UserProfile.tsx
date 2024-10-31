@@ -91,7 +91,7 @@ function UserProfile({ user = userDetailData }: UserProfileProps) {
           </div>
         </div>
       </div>
-      <CheckinPlace places={placeData} />
+      <CheckinPlace name={user.name} places={placeData} />
     </div>
   );
 }

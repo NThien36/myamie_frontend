@@ -6,14 +6,17 @@ import Dropdown from "@/components/Dropdown/Dropdown";
 import Input from "@/components/Input/Input";
 import Textarea from "@/components/Input/Textarea";
 import CustomModal from "@/components/Modals/CustomModal";
+import ImagesUpload from "@/components/ImagesUpload/ImagesUpload";
 import { Place } from "@/models/place.interface";
 import { useEffect, useState } from "react";
+import UpsertPlace from "@/components/Forms/UpsertPlace";
 
 interface UserProfileProps {
   places: Place[];
+  name: string;
 }
 
-function CheckinPlace({ places }: UserProfileProps) {
+function CheckinPlace({ places, name }: UserProfileProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const closeModal = () => setIsOpen(false);
@@ -35,7 +38,7 @@ function CheckinPlace({ places }: UserProfileProps) {
   return (
     <div className="mx-10 mt-20">
       <div className="flex justify-between items-end">
-        <p className="text-base font-medium">⭐ Nơi đã checkin ⭐</p>
+        <p className="text-base font-medium">⭐ Nơi {name} đã checkin ⭐</p>
         <Button
           variant="outline"
           className="text-xs font-medium"
@@ -55,18 +58,7 @@ function CheckinPlace({ places }: UserProfileProps) {
         onClose={closeModal}
         saveButtonTitle="Thêm"
       >
-        <Input label="Tên địa điểm" placeholder="Nhập tên địa điểm" />
-        <Input label="Mô tả ngắn" placeholder="Nhập mô tả ngắn" />
-        <Dropdown label="Loại địa điểm" options={cityData} />
-        <Dropdown
-          label="Thể loại (3)"
-          options={categoryData}
-          isMulti={true}
-          isClearable={true}
-          maxSelectItems={3}
-        />
-        <Input label="Địa chỉ" placeholder="Nhập địa chỉ" />
-        <Textarea label="Mô tả chi tiết" placeholder="Nhập mô tả chi tiết" />
+        <UpsertPlace />
       </CustomModal>
     </div>
   );

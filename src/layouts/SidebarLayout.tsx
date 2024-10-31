@@ -9,7 +9,7 @@ const ROUTE_LABEL_MAP: Record<string, string> = {
   [ROUTE_PATH.SETTINGS]: "Thông tin cá nhân",
   [ROUTE_PATH.ACCOUNT]: "Tài khoản & Mật khẩu",
   [ROUTE_PATH.ADMIN_USERS]: "Quản lý người dùng",
-  [ROUTE_PATH.ADMIN_LOCATIONS]: "Quản lý địa điểm",
+  [ROUTE_PATH.ADMIN_PLACES]: "Quản lý địa điểm",
   [ROUTE_PATH.BUSINESS_OVERVIEW]: "Tổng quan",
   [ROUTE_PATH.BUSINESS_FEEDBACK]: "Đánh giá",
 };
@@ -17,7 +17,7 @@ const ROUTE_LABEL_MAP: Record<string, string> = {
 function SidebarLayout() {
   const navigate = useNavigate();
   const location = useLocation();
-  const role = RoleEnum.USER;
+  const role = RoleEnum.ADMIN;
 
   useEffect(() => {
     window.onpopstate = () => {

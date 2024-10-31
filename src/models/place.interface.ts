@@ -26,3 +26,14 @@ export interface PlaceDetail {
 
   categories: Category[];
 }
+
+export interface PlaceAdmin {
+  id: number;
+  cover: string;
+  name: string;
+  city: string;
+  ownerAvatar: string;
+  ownerName: string;
+  status: string;
+  action?: string;
+}

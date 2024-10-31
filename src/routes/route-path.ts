@@ -21,10 +21,10 @@ export const ROUTE_PATH = {
   ACCOUNT: "/account",
   // admin
   ADMIN_USERS: "/admin-users",
-  ADMIN_LOCATIONS: "/admin-locations",
+  ADMIN_PLACES: "/admin-places",
   // service
   BUSINESS_OVERVIEW: "/overview",
-  BUSINESS_FEEDBACK: "/service-feedback",
+  BUSINESS_FEEDBACK: "/feedback",
 
   // Forbidden - 403
   FORBIDDEN: "/forbidden",

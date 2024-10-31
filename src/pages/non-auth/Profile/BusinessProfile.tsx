@@ -7,6 +7,7 @@ import ContactContainer from "./components/ContactContainer";
 import IconText from "@/components/IconText/IconText";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import "./Profile.css";
+import FeedbackTab from "./components/FeedbackTab";
 
 interface BusinessProfileProps {
   business?: BusinessDetail;
@@ -84,6 +85,9 @@ function BusinessProfile({
                     className="w-full h-64 object-cover rounded-lg"
                   />
                 ))}
+              </TabPanel>
+              <TabPanel classID="mt-4">
+                <FeedbackTab />
               </TabPanel>
             </Tabs>
           </div>

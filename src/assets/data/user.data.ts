@@ -1,4 +1,4 @@
-import { User, UserDetail } from "@/models/user.interface";
+import { User, UserAdmin, UserDetail } from "@/models/user.interface";
 
 export const userData: User[] = [
   {
@@ -78,3 +78,78 @@ export const userDetailData: UserDetail = {
     "https://picsum.photos/200/300?random=3",
   ],
 };
+
+export const userAdminData: UserAdmin[] = [
+  {
+    id: 1,
+    avatar: "https://i.pravatar.cc/150?img=1",
+    name: "Alice Johnson",
+    email: "alice.johnson@example.com",
+    city: "New York",
+    role: "USER",
+    status: "ACTIVATED",
+  },
+  {
+    id: 2,
+    avatar: "https://i.pravatar.cc/150?img=2",
+    name: "Bob Smith",
+    email: "bob.smith@example.com",
+    city: "Los Angeles",
+    role: "BUSINESS",
+    status: "SUSPENDED",
+  },
+  {
+    id: 3,
+    avatar: "https://i.pravatar.cc/150?img=3",
+    name: "Catherine Lee",
+    email: "catherine.lee@example.com",
+    city: "Chicago",
+    role: "USER",
+    status: "ACTIVATED",
+  },
+  {
+    id: 4,
+    avatar: "https://i.pravatar.cc/150?img=4",
+    name: "David Brown",
+    email: "david.brown@example.com",
+    city: "Houston",
+    role: "BUSINESS",
+    status: "ACTIVATED",
+  },
+  {
+    id: 5,
+    avatar: "https://i.pravatar.cc/150?img=5",
+    name: "Emma Wilson",
+    email: "emma.wilson@example.com",
+    city: "Phoenix",
+    role: "USER",
+    status: "SUSPENDED",
+  },
+  {
+    id: 6,
+    avatar: "https://i.pravatar.cc/150?img=6",
+    name: "Frank Martinez",
+    email: "frank.martinez@example.com",
+    city: "Philadelphia",
+    role: "BUSINESS",
+    status: "ACTIVATED",
+  },
+  {
+    id: 7,
+    avatar: "https://i.pravatar.cc/150?img=7",
+    name: "Grace Lopez",
+    email: "grace.lopez@example.com",
+    city: "San Antonio",
+    role: "USER",
+    status: "ACTIVATED",
+  },
+  {
+    id: 8,
+    avatar: "https://i.pravatar.cc/150?img=8",
+    name: "Henry Clark",
+    email: "henry.clark@example.com",
+    city: "San Diego",
+    role: "BUSINESS",
+    status: "SUSPENDED",
+  },
+];

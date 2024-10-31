@@ -11,7 +11,7 @@ function Sidebar({ role }: { role: RoleEnum }) {
   return (
     <>
       {roleRoutes.map((tab, index) => (
-        <div key={index} className={cx({ "mt-5": index > 1 })}>
+        <div key={index} className={cx({ "mt-5": index > 0 })}>
           <p className="font-medium text-gray-500 text-xs">{tab.type}</p>
           <div className="mt-3 flex flex-col gap-1">
             {tab.routes.map((route, idx) => (

@@ -16,6 +16,9 @@ import RoleRoute from "./RoleRoute";
 import { RoleEnum } from "@/models/app.interface";
 import Settings from "@/pages/auth/Settings/Settings";
 import Account from "@/pages/auth/Account/Account";
+import BusinessFeedbacks from "@/pages/auth/BusinessFeedbacks/BusinessFeedbacks";
+import AdminUsers from "@/pages/auth/AdminUsers/AdminUsers";
+import AdminPlaces from "@/pages/auth/AdminPlaces/AdminPlaces";
 
 const router = createBrowserRouter([
   {
@@ -79,6 +82,28 @@ const router = createBrowserRouter([
         children: [
           { path: ROUTE_PATH.SETTINGS, element: <Settings /> },
           { path: ROUTE_PATH.ACCOUNT, element: <Account /> },
+        ],
+      },
+      {
+        element: <RoleRoute allowedRoles={[RoleEnum.BUSINESS]} />,
+        children: [
+          {
+            path: ROUTE_PATH.BUSINESS_FEEDBACK,
+            element: <BusinessFeedbacks />,
+          },
+        ],
+      },
+      {
+        element: <RoleRoute allowedRoles={[RoleEnum.ADMIN]} />,
+        children: [
+          {
+            path: ROUTE_PATH.ADMIN_USERS,
+            element: <AdminUsers />,
+          },
+          {
+            path: ROUTE_PATH.ADMIN_PLACES,
+            element: <AdminPlaces />,
+          },
         ],
       },
     ],

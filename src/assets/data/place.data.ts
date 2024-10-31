@@ -1,4 +1,4 @@
-import { Place, PlaceDetail } from "@/models/place.interface";
+import { Place, PlaceAdmin, PlaceDetail } from "@/models/place.interface";
 
 export const placeData: Place[] = [
   {
@@ -87,3 +87,78 @@ export const placeDetailData: PlaceDetail = {
     },
   ],
 };
+
+export const placeAdminData: PlaceAdmin[] = [
+  {
+    id: 1,
+    cover: "https://picsum.photos/800/400?random=1",
+    name: "Central Park Café",
+    city: "New York",
+    ownerAvatar: "https://i.pravatar.cc/150?img=11",
+    ownerName: "James Carter",
+    status: "ACTIVATED",
+  },
+  {
+    id: 2,
+    cover: "https://picsum.photos/800/400?random=1",
+    name: "Sunset Coffee Shop",
+    city: "Los Angeles",
+    ownerAvatar: "https://i.pravatar.cc/150?img=12",
+    ownerName: "Sophia Smith",
+    status: "SUSPENDED",
+  },
+  {
+    id: 3,
+    cover: "https://picsum.photos/800/400?random=1",
+    name: "Mountain View Hotel",
+    city: "Chicago",
+    ownerAvatar: "https://i.pravatar.cc/150?img=13",
+    ownerName: "David Miller",
+    status: "ACTIVATED",
+  },
+  {
+    id: 4,
+    cover: "https://picsum.photos/800/400?random=1",
+    name: "Historic Park",
+    city: "Houston",
+    ownerAvatar: "https://i.pravatar.cc/150?img=14",
+    ownerName: "Emma Wilson",
+    status: "SUSPENDED",
+  },
+  {
+    id: 5,
+    cover: "https://picsum.photos/800/400?random=1",
+    name: "Crystal Lake Museum",
+    city: "San Francisco",
+    ownerAvatar: "https://i.pravatar.cc/150?img=15",
+    ownerName: "Olivia Brown",
+    status: "ACTIVATED",
+  },
+  {
+    id: 6,
+    cover: "https://picsum.photos/800/400?random=1",
+    name: "Ocean View Beach",
+    city: "Miami",
+    ownerAvatar: "https://i.pravatar.cc/150?img=16",
+    ownerName: "Lucas Garcia",
+    status: "ACTIVATED",
+  },
+  {
+    id: 7,
+    cover: "https://picsum.photos/800/400?random=1",
+    name: "Adventure Park",
+    city: "Orlando",
+    ownerAvatar: "https://i.pravatar.cc/150?img=17",
+    ownerName: "Mia Thompson",
+    status: "SUSPENDED",
+  },
+  {
+    id: 8,
+    cover: "https://picsum.photos/800/400?random=1",
+    city: "Seattle",
+    name: "Downtown Mall",
+    ownerAvatar: "https://i.pravatar.cc/150?img=18",
+    ownerName: "Noah Anderson",
+    status: "ACTIVATED",
+  },
+];

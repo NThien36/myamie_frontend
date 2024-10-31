@@ -6,6 +6,7 @@ import IconText from "@/components/IconText/IconText";
 import Input from "@/components/Input/Input";
 import ConfirmEmail from "./components/ConfirmEmail";
 import { useState } from "react";
+import Button from "@/components/Buttons/Button";
 
 function SignupBusiness() {
   const [isOpen, setIsOpen] = useState(false);
@@ -71,6 +72,12 @@ function SignupBusiness() {
           </div>
         </div>
       </div>
+      <Button variant="outline" shape="rounded" className="w-1/3 mt-8">
+        Đăng ký ngay
+      </Button>
+      <p className="text-red-500 mt-3 text-xs font-medium">
+        (*) Sau khi đăng ký vui lòng cập nhật đầy đủ thông tin tại mục hồ sơ
+      </p>
       <ConfirmEmail
         isOpen={isOpen}
         closeModal={closeModal}

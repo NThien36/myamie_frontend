@@ -15,7 +15,7 @@ function BusinessCard({ business }: { business: Business }) {
       <img
         src={business.cover ? business.cover : noCover}
         alt={business.name}
-        className="w-full min-h-40 h-40 object-cover rounded-t-lg"
+        className="w-full min-h-40 h-40 object-cover rounded-t-md"
       />
       <div className="p-4 flex flex-col h-full justify-between">
         <div>

@@ -32,7 +32,7 @@ export const ROLE_ROUTES = {
           label: "Người dùng",
         },
         {
-          path: ROUTE_PATH.ADMIN_LOCATIONS,
+          path: ROUTE_PATH.ADMIN_PLACES,
           icon: "fa-earth-asia",
           label: "Địa điểm",
         },
@@ -49,15 +49,15 @@ export const ROLE_ROUTES = {
       ],
     },
   ],
-  SERVICE: [
+  BUSINESS: [
     {
       type: "QUẢN LÝ",
       routes: [
-        {
-          path: ROUTE_PATH.BUSINESS_OVERVIEW,
-          icon: "fa-chart-simple",
-          label: "Tổng quan",
-        },
+        // {
+        //   path: ROUTE_PATH.BUSINESS_OVERVIEW,
+        //   icon: "fa-chart-simple",
+        //   label: "Tổng quan",
+        // },
         {
           path: ROUTE_PATH.BUSINESS_FEEDBACK,
           icon: "fa-comment",

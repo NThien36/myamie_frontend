@@ -23,3 +23,14 @@ export interface UserDetail {
   description: string;
   images: string[];
 }
+
+export interface UserAdmin {
+  id: number;
+  avatar: string;
+  name: string;
+  email: string;
+  city: string;
+  role: string;
+  status: string;
+  action?: string;
+}

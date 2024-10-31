@@ -1,6 +1,5 @@
 // import DropdownList from "react-dropdown";
 import Select from "react-select";
-import "./Dropdown.css";
 import { useState } from "react";
 
 interface DropdownProps<T> {
@@ -9,12 +8,17 @@ interface DropdownProps<T> {
   isClearable?: boolean;
   isMulti?: boolean;
   maxSelectItems?: number;
+  placeHolder?: string;
+  className?: string;
+  height?: string;
 }
 
-const styles = {
+const defaultHeight = "2.95rem";
+
+const styles = (height: string) => ({
   control: (base: any) => ({
     ...base,
-    height: "2.95rem",
+    height: height || defaultHeight,
     borderColor: "#E5E7EB",
     borderRadius: "0.375rem",
     boxShadow: "none",
@@ -59,7 +63,7 @@ const styles = {
       color: "#2c5282", // Maintain text color
     },
   }),
-};
+});
 
 function Dropdown<T extends { name: string; id: number }>({
   label,
@@ -67,6 +71,9 @@ function Dropdown<T extends { name: string; id: number }>({
   isClearable = false,
   isMulti = false,
   maxSelectItems = 1,
+  placeHolder = "Chọn " + label,
+  className = "w-full",
+  height = defaultHeight,
 }: DropdownProps<T>) {
   const [selectedOptions, setSelectedOptions] = useState([]);
 
@@ -81,17 +88,18 @@ function Dropdown<T extends { name: string; id: number }>({
   };
 
   return (
-    <div className="w-full">
+    <div className={className}>
       {label && <label className="mb-2 block font-medium">{label}</label>}
       <Select
         options={selectOptions}
-        placeholder={`Chọn ${label}`}
-        styles={styles}
+        placeholder={placeHolder}
+        styles={styles(height)}
         isClearable={isClearable}
         isMulti={isMulti}
         maxMenuHeight={240}
         minMenuHeight={50}
         onChange={handleChange}
+        menuPortalTarget={document.body}
         isOptionDisabled={() =>
           isMulti && maxSelectItems
             ? selectedOptions.length >= maxSelectItems
