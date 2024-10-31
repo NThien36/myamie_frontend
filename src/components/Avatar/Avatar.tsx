@@ -7,6 +7,7 @@ interface AvatarProps {
   size?: string;
   className?: string;
   hasBorder?: boolean;
+  onClick?: () => void;
 }
 
 function Avatar({
@@ -15,6 +16,7 @@ function Avatar({
   size = "size-16",
   className,
   hasBorder = true,
+  onClick,
 }: AvatarProps) {
   const avatarClasses = cx(
     "rounded-full object-cover relative",
@@ -25,7 +27,14 @@ function Avatar({
     }
   );
 
-  return <img src={src ? src : noAvatar} alt={alt} className={avatarClasses} />;
+  return (
+    <img
+      onClick={onClick}
+      src={src ? src : noAvatar}
+      alt={alt}
+      className={avatarClasses}
+    />
+  );
 }
 
 export default Avatar;

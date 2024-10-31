@@ -19,6 +19,9 @@ import Account from "@/pages/auth/Account/Account";
 import BusinessFeedbacks from "@/pages/auth/BusinessFeedbacks/BusinessFeedbacks";
 import AdminUsers from "@/pages/auth/AdminUsers/AdminUsers";
 import AdminPlaces from "@/pages/auth/AdminPlaces/AdminPlaces";
+import ChatLayout from "@/layouts/ChatLayout";
+import Chat from "@/pages/auth/Chat/Chat";
+import NoChat from "@/pages/auth/Chat/components/NoChat";
 
 const router = createBrowserRouter([
   {
@@ -105,6 +108,20 @@ const router = createBrowserRouter([
             element: <AdminPlaces />,
           },
         ],
+      },
+    ],
+  },
+  {
+    path: ROUTE_PATH.CHAT,
+    element: <ChatLayout />,
+    children: [
+      {
+        index: true,
+        element: <NoChat />,
+      },
+      {
+        path: ROUTE_PATH.CHAT_DETAIL,
+        element: <Chat />,
       },
     ],
   },
