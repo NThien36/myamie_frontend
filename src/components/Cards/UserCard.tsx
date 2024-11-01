@@ -21,7 +21,7 @@ function UserCard({ user }: { user: User }) {
           />
           <p className="text-base font-medium">{user.name}</p>
         </div>
-        <p className="text-gray-500 line-clamp-2 mt-2">
+        <p className="text-gray-500 line-clamp-3 lg:line-clamp-2 mt-2">
           {user.shortDescription}
         </p>
       </div>
@@ -36,8 +36,8 @@ function UserCard({ user }: { user: User }) {
             </span>
           ))}
         </div>
-        <div className="flex gap-10 justify-end mt-3">
-          <div className="flex gap-8">
+        <div className="flex flex-wrap gap-4 lg:gap-10 justify-end mt-3">
+          <div className="flex flex-wrap gap-3 sm:gap-8">
             <IconText icon="fa-location-dot" text={user.city} />
             <IconText icon="fa-compass" text={`${user.distance} km`} />
           </div>

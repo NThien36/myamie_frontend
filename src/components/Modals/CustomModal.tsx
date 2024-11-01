@@ -9,6 +9,7 @@ interface CustomModalProps {
   children: React.ReactNode;
   saveButtonTitle?: string;
   cancelButtonTitle?: string;
+  className?: string;
 }
 
 function CustomModal({
@@ -18,12 +19,13 @@ function CustomModal({
   children,
   saveButtonTitle = "Lưu",
   cancelButtonTitle = "Huỷ bỏ",
+  className = "w-1/2",
 }: CustomModalProps) {
   return (
     <ReactModal
       isOpen={isOpen}
       onRequestClose={onClose}
-      className="filter_modal w-1/2"
+      className={` filter_modal ${className} `}
       overlayClassName="filter_modal_overlay"
     >
       <div className="p-3.5 relative border-b">

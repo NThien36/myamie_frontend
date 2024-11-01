@@ -20,15 +20,15 @@ function UserProfile({ user = userDetailData }: UserProfileProps) {
   return (
     <div>
       <Cover src={user.cover} alt={user.name} />
-      <div className="mx-10">
+      <div className="mx-5 lg:mx-10">
         <Avatar
           src={user.avatar}
           alt={user.name}
           size="size-40"
-          className="-mt-24 border-8"
+          className="-mt-24 border-8 mx-auto lg:mx-0"
         />
-        <div className="grid grid-cols-3">
-          <div className="col-span-1 mt-3 mr-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3">
+          <div className="lg:col-span-1 mt-3 lg:mr-10">
             <NameWCategories
               name={user.name}
               shortDescription={user.shortDescription}
@@ -63,7 +63,7 @@ function UserProfile({ user = userDetailData }: UserProfileProps) {
               </div>
             </ContactContainer>
           </div>
-          <div className="col-span-2">
+          <div className="mt-7 lg:mt-0 lg:col-span-2">
             <Tabs>
               <TabList className="flex text-gray-600">
                 <Tab className="cursor-pointer py-2 px-5 transition-colors duration-500">
@@ -77,7 +77,7 @@ function UserProfile({ user = userDetailData }: UserProfileProps) {
               <TabPanel className="mt-4">
                 <p>{user.description}</p>
               </TabPanel>
-              <TabPanel className="mt-4 grid grid-cols-2 gap-3">
+              <TabPanel className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {user.images.map((image, index) => (
                   <img
                     key={index}

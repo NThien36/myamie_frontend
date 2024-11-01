@@ -30,11 +30,11 @@ function BusinessCard({ business }: { business: Business }) {
           </p>
         </div>
         <div>
-          <div className="flex gap-2 mt-3">
+          <div className="flex flex-wrap gap-2 mt-3">
             <Rate rate={business.rate} />
             <p className="text-gray-500">{business.totalFeedback} Đánh giá</p>
           </div>
-          <div className="flex gap-6 border-t mt-5 pt-4">
+          <div className="flex flex-wrap gap-3 justify-between border-t mt-5 pt-4">
             {business.city && (
               <IconText
                 icon="fa-location-dot"

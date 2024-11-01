@@ -8,15 +8,15 @@ import Rate from "@/components/Rate/Rate";
 function FeedbackTab() {
   return (
     <>
-      <div className="p-6 border-2 rounded-xl bg-white flex justify-between">
-        <div className="flex gap-7">
+      <div className="p-6 border-2 rounded-xl bg-white flex flex-wrap gap-4 justify-between">
+        <div className="w-full md:w-fit flex flex-wrap justify-between gap-7">
           <div>
             <p className="text-base text-gray-500 font-medium">
               Tổng lượt đánh giá
             </p>
             <p className="text-4xl font-medium mt-1">20</p>
           </div>
-          <Divider />
+          <Divider className="hidden md:block" />
           <div>
             <p className="text-base text-gray-500 font-medium">
               Tỷ lệ đánh giá
@@ -41,7 +41,7 @@ function FeedbackTab() {
           className="w-36"
         />
       </div>
-      <div className="p-6 space-y-10">
+      <div className="py-6 md:p-6 space-y-10">
         {feedbackData.map((feedback) => (
           <FeedbackItem key={feedback.id} feedback={feedback} />
         ))}

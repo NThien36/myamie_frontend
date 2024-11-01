@@ -30,12 +30,12 @@ function SidebarLayout() {
   return (
     <>
       <NavBar />
-      <div className="container px-14 min-h-screen">
-        <div className="grid grid-cols-5 mt-10 mb-32">
-          <div className="col-span-1 mr-14">
+      <div className="container px-3 md:px-14 min-h-screen">
+        <div className="grid grid-cols-1 xl:grid-cols-5 mt-10 mb-32">
+          <div className="col-span-1 xl:mr-14">
             {role && <Sidebar role={role} />}
           </div>
-          <div className="col-span-4">
+          <div className="col-span-4 mt-8 xl:mt-0">
             <p className="text-base font-semibold mb-3">{currentLabel}</p>
             <Outlet />
           </div>

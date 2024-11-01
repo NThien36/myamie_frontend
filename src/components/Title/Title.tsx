@@ -10,8 +10,8 @@ function Title({ subTitle, title, description }: TitleProps) {
       <p className="text-xs font-medium bg-primary-light py-1.5 px-4 rounded-full">
         {subTitle}
       </p>
-      <p className="text-primary text-4xl font-semibold">{title}</p>
-      <p>{description}</p>
+      <p className="text-center text-primary text-4xl font-semibold">{title}</p>
+      <p className="text-center ">{description}</p>
     </div>
   );
 }

@@ -14,10 +14,10 @@ function Settings() {
   return (
     <div className="auth-container">
       <CoverUpload />
-      <div className="flex gap-10 mt-7">
+      <div className="flex flex-wrap md:flex-nowrap gap-10 mt-7">
         <AvatarUpload />
         <div className="w-full flex flex-col gap-4">
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <Input label="Họ" placeholder="Nhập họ" />
             <Input label="Tên" placeholder="Nhập tên" />
             <Input

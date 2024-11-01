@@ -5,7 +5,7 @@ interface CharacteristicItemProps {
 
 function CharacteristicItem({ text, onRemove }: CharacteristicItemProps) {
   return (
-    <div className="py-1 px-3 rounded-full border-2 border-gray-300">
+    <div className="break-all py-1 px-3 rounded-full border-2 border-gray-300">
       {text}
       {onRemove && (
         <button className="ml-3 text-red-500" onClick={onRemove}>

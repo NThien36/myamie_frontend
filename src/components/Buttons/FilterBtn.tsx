@@ -41,6 +41,7 @@ function FilterBtn({ children }: FilterBtnProps) {
         onClose={closeModal}
         title="Tất cả bộ lọc"
         saveButtonTitle="Xem kết quả"
+        className="w-11/12 md:w-1/2"
       >
         {children}
       </CustomModal>

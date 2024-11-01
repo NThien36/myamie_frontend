@@ -22,7 +22,7 @@ function Users() {
             <FilterByDistance />
           </FilterBtn>
         </div>
-        <div className="grid grid-cols-2 gap-6 mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
           {userData.map((user) => (
             <UserCard key={user.id} user={user} />
           ))}

@@ -19,8 +19,8 @@ function FeedbackItem({ feedback }: FeedbackItemProps) {
 
   return (
     <>
-      <div className="flex gap-5">
-        <div className="flex flex-none gap-3 w-44">
+      <div className="flex flex-col sm:flex-row gap-5">
+        <div className="flex flex-none gap-3 w-full sm:w-44">
           <Avatar
             src={feedback.avatar}
             alt={feedback.name}
@@ -34,7 +34,7 @@ function FeedbackItem({ feedback }: FeedbackItemProps) {
             </p>
           </div>
         </div>
-        <Divider />
+        <Divider className="hidden sm:block" />
         <div className="w-full">
           <Rate rate={feedback.rating} />
           <p className="mt-2">{feedback.content}</p>
@@ -60,6 +60,7 @@ function FeedbackItem({ feedback }: FeedbackItemProps) {
         onClose={closeModal}
         saveButtonTitle="Trả lời"
         title="Trả lời đánh giá"
+        className="w-11/12 md:w-1/2"
       >
         <p>
           <span className="font-medium">Đánh giá: </span>

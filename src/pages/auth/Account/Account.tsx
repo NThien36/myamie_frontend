@@ -3,8 +3,8 @@ import Input from "@/components/Input/Input";
 
 function Account() {
   return (
-    <div className="auth-container w-2/3">
-      <div className="flex gap-6">
+    <div className="auth-container w-full xl:w-2/3">
+      <div className="flex flex-wrap md:flex-nowrap gap-6">
         <Input
           type="password"
           label="Mật khẩu mới"

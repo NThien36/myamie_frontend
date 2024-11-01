@@ -17,10 +17,10 @@ function IconText({
 }: IconTextProps) {
   return (
     <div className={cx(className, "flex items-center gap-2")}>
-      <div className={cx(iconClasses, "flex justify-center")}>
+      <div className={cx(iconClasses, "flex flex-none")}>
         <i className={cx("fa-regular", icon)}></i>
       </div>
-      <p className={cx(textClasses, "whitespace-nowrap")}>{text}</p>
+      <p className={cx(textClasses, "text-wrap")}>{text}</p>
     </div>
   );
 }

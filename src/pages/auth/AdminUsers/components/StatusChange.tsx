@@ -17,7 +17,11 @@ function StatusChange() {
       >
         Trạng thái
       </button>
-      <ConfirmModal isOpen={isModalOpen} onClose={closeModal} className="w-96">
+      <ConfirmModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        className="w-11/12 md:w-96"
+      >
         <Dropdown
           label="Trạng thái"
           options={[
@@ -25,7 +29,7 @@ function StatusChange() {
             { name: "Khóa", id: 2 },
           ]}
         />
-        <div className="flex gap-3 mt-4">
+        <div className="flex flex-wrap sm:flex-nowrap gap-3 mt-4">
           <Button className="w-full" variant="ghost" onClick={closeModal}>
             Trở lại
           </Button>

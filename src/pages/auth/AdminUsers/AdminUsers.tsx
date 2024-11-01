@@ -76,7 +76,7 @@ function AdminUsers() {
         </div>
       </div>
 
-      <div className="auth-container mt-5">
+      <div className="auth-container overflow-x-auto mt-5">
         <table
           {...getTableProps()}
           className="min-w-full bg-white rounded-lg overflow-hidden"
@@ -90,7 +90,7 @@ function AdminUsers() {
                 {headerGroup.headers.map((column) => (
                   <th
                     {...column.getHeaderProps()}
-                    className="p-4 text-left font-semibold uppercase text-xs"
+                    className="p-4 text-left font-semibold uppercase text-xs whitespace-nowrap"
                   >
                     {column.render("Header")}
                   </th>

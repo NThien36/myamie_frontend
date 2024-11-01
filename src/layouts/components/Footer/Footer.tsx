@@ -51,25 +51,25 @@ function Footer() {
   };
 
   return (
-    <footer className="bg-white px-16 border-t-2 mt-52 relative">
+    <footer className="bg-white px-3 sm:px-16 border-t-2 mt-52 relative">
       <Button
         onClick={handleScrollToTop}
         className="absolute -top-6 right-12 size-11"
       >
         <i className="fa-xl fa-regular fa-arrow-up"></i>
       </Button>
-      <div className="container px-10 grid grid-cols-2 gap-5 py-16">
+      <div className="container sm:px-10 grid grid-cols-1 md:grid-cols-2 gap-5 py-16">
         <Link to={ROUTE_PATH.BUSINESSES} className="m-auto">
           <Logo width={200} height={50} />
         </Link>
         <div>
-          <IconText
-            icon="fa-map-location-dot"
-            text="Da Nang City"
-            textClasses="text-base"
-            iconClasses="text-primary w-7"
-          />
-          <div className="flex gap-12 mt-4">
+          <div className="flex justify-center sm:justify-start flex-wrap gap-6 mt-4">
+            <IconText
+              icon="fa-map-location-dot"
+              text="Da Nang City"
+              textClasses="text-base"
+              iconClasses="text-primary w-7"
+            />
             <IconText
               icon="fa-phone-alt"
               text="(+84) 123 456 789"
@@ -83,7 +83,7 @@ function Footer() {
               iconClasses="text-primary w-7"
             />
           </div>
-          <div className="mt-10 flex items-center gap-10">
+          <div className="mt-10 flex flex-wrap items-center justify-center sm:justify-start gap-3 sm:gap-10">
             <p className="text-gray-600">Kết nối thêm:</p>
             <div className="flex gap-6 text-2xl text-primary">
               {socialLinks.map((link) => (
@@ -95,15 +95,21 @@ function Footer() {
           </div>
         </div>
       </div>
-      <div className="container border-t py-5 flex justify-between">
-        <div className="flex gap-7 font-medium">
+      <div className="container border-t py-5 flex gap-4 flex-wrap justify-between">
+        <div className="flex flex-wrap gap-3 sm:gap-7 font-medium mx-auto md:mx-0">
           {navlinks.map((link) => (
-            <Link key={link.id} to={link.href} className="hover:underline">
+            <Link
+              key={link.id}
+              to={link.href}
+              className="hover:underline mx-auto"
+            >
               {link.name}
             </Link>
           ))}
         </div>
-        <p className="text-gray-600">Bản quyền © 2024 - Công ty MYAmie</p>
+        <p className="text-gray-600 mx-auto md:mx-0">
+          Bản quyền © 2024 - Công ty MYAmie
+        </p>
       </div>
     </footer>
   );

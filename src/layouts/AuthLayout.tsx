@@ -20,14 +20,19 @@ function AuthLayout() {
   return (
     <div
       className={cx("h-screen", {
-        "grid grid-cols-3": !isSignupBusinessPage,
+        "grid grid-cols-1 md:grid-cols-3": !isSignupBusinessPage,
       })}
     >
       <div className="col-span-1 flex flex-col justify-between p-4 h-full">
         <Link to={ROUTE_PATH.BUSINESSES} className="mx-auto">
           <Logo />
         </Link>
-        <div className="w-2/3 mx-auto">
+        <div
+          className={cx("w-full md:w-full lg:w-3/4 mx-auto", {
+            "": isSignupBusinessPage,
+            "sm:w-1/2": !isSignupBusinessPage,
+          })}
+        >
           <Outlet />
         </div>
         {isLoginPage ? (
@@ -41,7 +46,7 @@ function AuthLayout() {
             </Link>
           </div>
         ) : (
-          <div className="flex justify-center gap-1">
+          <div className="flex flex-wrap justify-center gap-1">
             <p>Đã có tài khoản?</p>
             <Link to={ROUTE_PATH.LOGIN} className="hover:underline font-medium">
               Đăng nhập tại đây
@@ -50,7 +55,7 @@ function AuthLayout() {
         )}
       </div>
       {!isSignupBusinessPage && (
-        <div className="col-span-2 py-4 pr-4">
+        <div className="hidden md:block col-span-2 py-4 pr-4">
           <Carousel images={images} />
         </div>
       )}

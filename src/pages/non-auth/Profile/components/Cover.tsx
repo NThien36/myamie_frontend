@@ -3,7 +3,7 @@ function Cover({ src, alt }: { src: string; alt: string }) {
     <img
       src={src}
       alt={alt}
-      className="w-full object-cover rounded-b-2xl h-80"
+      className="w-full object-cover rounded-b-2xl h-64 md:h-80"
     />
   );
 }

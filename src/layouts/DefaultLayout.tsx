@@ -6,7 +6,7 @@ function DefaultLayout() {
   return (
     <div>
       <NavBar />
-      <div className="container px-14 min-h-screen">
+      <div className="container px-3 sm:px-14 min-h-screen">
         <Outlet />
       </div>
       <Footer />

@@ -52,7 +52,7 @@ function PlaceCard({ place }: { place: Place }) {
               {place.shortDescription}
             </p>
           </div>
-          <div className="flex justify-between items-end mt-5 gap-7">
+          <div className="flex flex-wrap justify-between items-end mt-5 gap-5">
             <div className="flex items-center gap-2 truncate">
               <Avatar
                 hasBorder={false}
@@ -75,7 +75,11 @@ function PlaceCard({ place }: { place: Place }) {
           </div>
         </Link>
       </div>
-      <ConfirmModal isOpen={isDeleteOpen} onClose={closeDeleteModal}>
+      <ConfirmModal
+        isOpen={isDeleteOpen}
+        onClose={closeDeleteModal}
+        className="w-11/12 sm:w-1/2"
+      >
         <div className="flex gap-5">
           <div className="flex items-center justify-center bg-gray-100 w-12 rounded-md">
             <i className="text-red-500 fa-xl fa-regular fa-circle-xmark"></i>
@@ -97,6 +101,7 @@ function PlaceCard({ place }: { place: Place }) {
         isOpen={isEditOpen}
         onClose={closeEditModal}
         saveButtonTitle="Cập nhật"
+        className="w-11/12 lg:w-1/2"
       >
         <UpsertPlace />
       </CustomModal>

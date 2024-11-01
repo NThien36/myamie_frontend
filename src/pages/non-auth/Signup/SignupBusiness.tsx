@@ -15,13 +15,15 @@ function SignupBusiness() {
   const closeModal = () => setIsOpen(false);
 
   return (
-    <div className="mx-auto flex flex-col items-center">
-      <p className="text-xl font-medium">Đăng ký cho người làm dịch vụ</p>
-      <p className="mt-1 text-gray-600">
+    <div className="mx-auto flex flex-col items-center py-10 sm:py-0">
+      <p className="text-xl font-medium text-center">
+        Đăng ký cho người làm dịch vụ
+      </p>
+      <p className="mt-1 text-gray-600 text-center">
         Gia nhập cộng đồng MYAmie giúp nghiệp tiếp cận dễ dàng hơn đến các khách
         hàng tiềm năng
       </p>
-      <div className="flex gap-7 mt-14 w-full">
+      <div className="flex flex-wrap sm:flex-nowrap gap-7 mt-10 sm-14 w-full">
         <div className="w-full">
           <IconText
             className="w-fit mx-auto"
@@ -47,8 +49,8 @@ function SignupBusiness() {
             />
           </div>
         </div>
-        <Divider />
-        <div className="w-full">
+        <Divider className="hidden sm:block" />
+        <div className="w-full mt-5 sm:mt-0">
           <IconText
             className="w-fit mx-auto"
             icon="fa-paper-plane"
@@ -72,10 +74,14 @@ function SignupBusiness() {
           </div>
         </div>
       </div>
-      <Button variant="outline" shape="rounded" className="w-1/3 mt-8">
+      <Button
+        variant="outline"
+        shape="rounded"
+        className="w-full sm:w-1/3 mt-8"
+      >
         Đăng ký ngay
       </Button>
-      <p className="text-red-500 mt-3 text-xs font-medium">
+      <p className="text-red-500 mt-3 text-xs font-medium text-center">
         (*) Sau khi đăng ký vui lòng cập nhật đầy đủ thông tin tại mục hồ sơ
       </p>
       <ConfirmEmail

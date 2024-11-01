@@ -11,7 +11,7 @@ function FilterSelects({ label, options }: FilterSelectsProps) {
 
   return (
     <div className="flex gap-4 text-xs items-center">
-      <p className="font-medium">{label}:</p>
+      <p className="font-medium flex-none">{label}:</p>
       <div className="flex flex-wrap gap-3">
         {options.map((option, index) => (
           <button

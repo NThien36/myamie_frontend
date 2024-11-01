@@ -24,7 +24,7 @@ function AvatarUpload() {
   };
 
   return (
-    <div className="flex-none">
+    <div className="flex-none mx-auto md:mx-0">
       <label className="mb-2 block font-medium text-center">Ảnh đại diện</label>
       <img
         src={src}

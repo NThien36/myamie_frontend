@@ -11,10 +11,10 @@ function ConversationItem({ conversation }: ConversationItemProps) {
   return (
     <Link
       to={ROUTE_PATH.CHAT_DETAIL}
-      className="flex gap-2 items-center hover:bg-primary-lighter px-2 py-3 rounded-md"
+      className="w-fit flex gap-2 items-center hover:bg-primary-lighter px-2 py-3 rounded-md"
     >
       <Avatar src={conversation.avatar} alt="avatar" size="size-14" />
-      <div className="w-full overflow-hidden mr-2">
+      <div className="hidden md:block w-full overflow-hidden mr-2">
         <div className="flex items-center justify-between">
           <p className="font-medium">{conversation.name}</p>
           <p className="text-xs text-gray-400">{conversation.sentAt}</p>

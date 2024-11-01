@@ -29,7 +29,7 @@ function CoverUpload() {
       <img
         src={coverImg}
         alt="cover image"
-        className="object-cover h-64 w-full rounded-lg"
+        className="object-cover h-48 sm:h-64 w-full rounded-lg"
       />
       <Button
         onClick={handleButtonClick}

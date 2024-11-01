@@ -14,11 +14,11 @@ function Messages({ currentUserId, otherUserId }: MessageProps) {
   return (
     <>
       <div className="h-full overflow-y-auto flex flex-col-reverse">
-        <div className="">
+        <div className="p-2 space-y-2">
           {messages.map((msg) => (
             <div
               key={msg.id}
-              className={`group relative p-2 m-2 rounded-xl w-fit max-w-[37rem] ${
+              className={`group relative p-2 rounded-xl w-fit max-w-[37rem] ${
                 msg.senderId === currentUserId
                   ? "ml-auto bg-primary-lighter"
                   : "bg-gray-200"

@@ -3,7 +3,7 @@ import CategoryItem from "./CategoryItem";
 
 function CategoryContainer() {
   return (
-    <div className="flex justify-center gap-3 mt-7 flex-wrap w-4/5 mx-auto">
+    <div className="flex justify-center gap-3 mt-7 flex-wrap md:w-4/5 mx-auto">
       {categoryData.map((category) => (
         <CategoryItem
           key={category.id}

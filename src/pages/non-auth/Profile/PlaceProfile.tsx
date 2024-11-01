@@ -17,12 +17,16 @@ function PlaceProfile({ place = placeDetailData }: PlaceProfileProps) {
   return (
     <div>
       <Cover src={noCover} alt={place.name} />
-      <div className="mx-10 mt-7">
-        <p className="text-3xl font-semibold">{place.name}</p>
-        <p className="mt-1 text-gray-500">{place.shortDescription}</p>
-        <div className="grid grid-cols-3">
-          <div className="col-span-1 mt-3 mr-10">
-            <div className="flex flex-wrap gap-2">
+      <div className="mx-5 lg:mx-10 mt-7">
+        <p className="text-3xl font-semibold text-center lg:text-left">
+          {place.name}
+        </p>
+        <p className="mt-1 text-gray-500 text-center lg:text-left">
+          {place.shortDescription}
+        </p>
+        <div className="grid grid-cols-1 lg:grid-cols-3">
+          <div className="col-span-1 mt-3 lg:mr-10">
+            <div className="flex justify-center lg:justify-start flex-wrap gap-2">
               {place.categories.map((category) => (
                 <CategoryItem key={category.id} category={category} />
               ))}
@@ -65,7 +69,7 @@ function PlaceProfile({ place = placeDetailData }: PlaceProfileProps) {
               </div>
             </ContactContainer>
           </div>
-          <div className="col-span-2">
+          <div className="mt-7 lg:mt-0 col-span-2">
             <Tabs>
               <TabList className="flex text-gray-600">
                 <Tab className="cursor-pointer py-2 px-5 transition-colors duration-500">
@@ -82,7 +86,7 @@ function PlaceProfile({ place = placeDetailData }: PlaceProfileProps) {
               <TabPanel className="mt-4">
                 <p>{place.description}</p>
               </TabPanel>
-              <TabPanel className="mt-4 grid grid-cols-2 gap-3">
+              <TabPanel className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {place.images.map((image, index) => (
                   <img
                     key={index}
