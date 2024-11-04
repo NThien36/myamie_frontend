@@ -1,3 +1,4 @@
+import { ApiResponse, FilterParams, Pagination } from "./app.interface";
 import { Category } from "./category.interface";
 
 export interface User {
@@ -33,4 +34,24 @@ export interface UserAdmin {
   role: string;
   status: string;
   action?: string;
+}
+
+export interface UsersParams extends FilterParams {
+  categoryId?: number;
+  distanceInKm?: number;
+  latitude?: number;
+  longitude?: number;
+}
+
+interface DataResponse {
+  users: User[];
+  pagination: Pagination;
+}
+
+export interface UsersResponse extends ApiResponse {
+  data: DataResponse;
+}
+
+export interface UserDetailResponse extends ApiResponse {
+  data: UserDetail;
 }

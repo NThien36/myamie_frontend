@@ -66,3 +66,7 @@ body {
   background-color: white;
   border-radius: 0.75rem;
 }
+.error {
+  color: #dc2626;
+  text-align: center;
+}

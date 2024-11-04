@@ -1,3 +1,4 @@
+import { ApiResponse, FilterParams, Pagination } from "./app.interface";
 import { Category } from "./category.interface";
 
 export interface Business {
@@ -25,4 +26,22 @@ export interface BusinessDetail {
   operatingHours: string;
   description: string;
   images: string[];
+}
+
+export interface BusinessesParams extends FilterParams {
+  cityId?: number;
+  categoryId?: number;
+}
+
+interface DataResponse {
+  businesses: Business[];
+  pagination: Pagination;
+}
+
+export interface BusinessesResponse extends ApiResponse {
+  data: DataResponse;
+}
+
+export interface BusinessDetailResponse extends ApiResponse {
+  data: BusinessDetail;
 }

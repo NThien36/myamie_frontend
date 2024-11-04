@@ -11,6 +11,8 @@ interface DropdownProps<T> {
   placeHolder?: string;
   className?: string;
   height?: string;
+  isLoading?: boolean;
+  isError?: boolean;
 }
 
 const defaultHeight = "2.95rem";
@@ -71,9 +73,11 @@ function Dropdown<T extends { name: string; id: number }>({
   isClearable = false,
   isMulti = false,
   maxSelectItems = 1,
-  placeHolder = "Chọn " + label,
+  placeHolder = "Chọn một hoặc nhiều mục",
   className = "w-full",
   height = defaultHeight,
+  isLoading = false,
+  isError = false,
 }: DropdownProps<T>) {
   const [selectedOptions, setSelectedOptions] = useState([]);
 
@@ -87,12 +91,18 @@ function Dropdown<T extends { name: string; id: number }>({
     setSelectedOptions(isMulti ? selected : selected ? [selected] : []);
   };
 
+  const currentPlaceholder = isLoading
+    ? "Đang tải..."
+    : isError
+    ? "Lỗi khi tải dữ liệu"
+    : placeHolder;
+
   return (
     <div className={className}>
       {label && <label className="mb-2 block font-medium">{label}</label>}
       <Select
         options={selectOptions}
-        placeholder={placeHolder}
+        placeholder={currentPlaceholder}
         styles={styles(height)}
         isClearable={isClearable}
         isMulti={isMulti}
@@ -100,6 +110,7 @@ function Dropdown<T extends { name: string; id: number }>({
         minMenuHeight={50}
         onChange={handleChange}
         menuPortalTarget={document.body}
+        isDisabled={isLoading || isError} // Disable if loading or error
         isOptionDisabled={() =>
           isMulti && maxSelectItems
             ? selectedOptions.length >= maxSelectItems

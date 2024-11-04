@@ -1,5 +1,3 @@
-import { businessDetailData } from "@/assets/data/business.data";
-import { BusinessDetail } from "@/models/business.interface";
 import Cover from "./components/Cover";
 import Avatar from "@/components/Avatar/Avatar";
 import NameWCategories from "./components/NameWCategories";
@@ -8,14 +6,27 @@ import IconText from "@/components/IconText/IconText";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import "./Profile.css";
 import FeedbackTab from "./components/FeedbackTab";
+import { useParams } from "react-router-dom";
+import { useGetBusinessById } from "@/services/business.service";
+import Loader from "@/components/Loader/Loader";
+import NotFound from "@/components/NotFound/NotFound";
 
-interface BusinessProfileProps {
-  business?: BusinessDetail;
-}
+function BusinessProfile() {
+  const { id } = useParams();
 
-function BusinessProfile({
-  business = businessDetailData,
-}: BusinessProfileProps) {
+  const { data, isLoading, isError } = useGetBusinessById(Number(id));
+  const business = data?.data;
+
+  if (isLoading) {
+    return <Loader className="mt-10" />;
+  } else if (isError) {
+    return <p className="error mt-10">Lỗi, vui lòng thử lại</p>;
+  }
+
+  if (!business) {
+    return <NotFound className="mt-16" type="business" />;
+  }
+
   return (
     <div>
       <Cover src={business.cover} alt={business.name} />

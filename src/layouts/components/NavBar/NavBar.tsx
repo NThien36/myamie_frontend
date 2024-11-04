@@ -78,7 +78,7 @@ function NavBar() {
           </div>
         ) : (
           <div className="hidden md:block space-x-6">
-            <Link to={ROUTE_PATH.REGISTER_BUSINESS} className="font-medium">
+            <Link to={ROUTE_PATH.SIGNUP_BUSINESS} className="font-medium">
               Kinh doanh
             </Link>
             <Button shape="rounded" to={ROUTE_PATH.LOGIN}>
@@ -115,10 +115,7 @@ function NavBar() {
             </>
           ) : (
             <>
-              <Link
-                to={ROUTE_PATH.REGISTER_BUSINESS}
-                className="hover:underline"
-              >
+              <Link to={ROUTE_PATH.SIGNUP_BUSINESS} className="hover:underline">
                 Kinh doanh
               </Link>
               <Link to={ROUTE_PATH.LOGIN} className="hover:underline">

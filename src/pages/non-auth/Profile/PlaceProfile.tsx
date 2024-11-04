@@ -1,5 +1,3 @@
-import { placeDetailData } from "@/assets/data/place.data";
-import { PlaceDetail } from "@/models/place.interface";
 import Cover from "./components/Cover";
 import { noCover } from "@/assets/images";
 import Avatar from "@/components/Avatar/Avatar";
@@ -8,12 +6,27 @@ import IconText from "@/components/IconText/IconText";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import CategoryItem from "@/components/CategoryItem/CategoryItem";
 import Divider from "@/components/Divider/Divider";
+import { useParams } from "react-router-dom";
+import { useGetPlaceById } from "@/services/place.service";
+import Loader from "@/components/Loader/Loader";
+import NotFound from "@/components/NotFound/NotFound";
 
-interface PlaceProfileProps {
-  place?: PlaceDetail;
-}
+function PlaceProfile() {
+  const { id } = useParams();
 
-function PlaceProfile({ place = placeDetailData }: PlaceProfileProps) {
+  const { data, isLoading, isError } = useGetPlaceById(Number(id));
+  const place = data?.data;
+
+  if (isLoading) {
+    return <Loader className="mt-10" />;
+  } else if (isError) {
+    return <p className="error mt-10">Lỗi, vui lòng thử lại</p>;
+  }
+
+  if (!place) {
+    return <NotFound className="mt-16" type="place" />;
+  }
+
   return (
     <div>
       <Cover src={noCover} alt={place.name} />

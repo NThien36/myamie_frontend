@@ -3,13 +3,13 @@ import { ROUTE_PATH } from "@/routes/route-path";
 import { Link } from "react-router-dom";
 import Avatar from "../Avatar/Avatar";
 import IconText from "../IconText/IconText";
-import { noCover } from "@/assets/images";
 import IconBtn from "../Buttons/IconBtn";
 import { useState } from "react";
 import ConfirmModal from "../Modals/ConfirmModal";
 import Button from "../Buttons/Button";
 import CustomModal from "../Modals/CustomModal";
 import UpsertPlace from "../Forms/UpsertPlace";
+import getImageUrl from "@/utils/getImageUrl";
 
 function PlaceCard({ place }: { place: Place }) {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -38,7 +38,7 @@ function PlaceCard({ place }: { place: Place }) {
           />
         </div>
         <img
-          src={place.cover ? place.cover : noCover}
+          src={getImageUrl(place.cover, "cover")}
           alt={place.name}
           className="w-full min-h-40 h-40 object-cover rounded-t-md"
         />
@@ -56,7 +56,7 @@ function PlaceCard({ place }: { place: Place }) {
             <div className="flex items-center gap-2 truncate">
               <Avatar
                 hasBorder={false}
-                src={place.ownerAvatar}
+                src={getImageUrl(place.ownerAvatar, "avatar")}
                 alt={place.ownerName}
                 size="size-11"
               />

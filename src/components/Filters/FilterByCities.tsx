@@ -3,8 +3,9 @@ import { remove as removeDiacritics } from "diacritics";
 import { useState } from "react";
 import Input from "../Input/Input";
 import IconBtn from "../Buttons/IconBtn";
-import { cityData } from "@/assets/data/city";
 import useDebounce from "@/hooks/useDebounce";
+import Loader from "../Loader/Loader";
+import { useCities } from "@/hooks/useCities";
 
 const normalizeString = (str: string) => removeDiacritics(str.toLowerCase());
 
@@ -13,6 +14,8 @@ interface FilterByCitiesProps {
 }
 
 function FilterByCities({ onCitySelect }: FilterByCitiesProps) {
+  const { cities, isLoading, isError } = useCities();
+
   const [term, setTerm] = useState("");
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
 
@@ -37,10 +40,38 @@ function FilterByCities({ onCitySelect }: FilterByCitiesProps) {
     setTerm("");
   };
 
+  console.log("cities", cities);
+
   // filter city data
-  const filteredCities = cityData.filter((city) =>
+  const filteredCities = cities?.filter((city) =>
     normalizeString(city.name).includes(normalizeString(debouncedTerm))
   );
+
+  let content;
+  if (isLoading) {
+    content = <Loader className="mt-2" />;
+  } else if (isError) {
+    content = <p className="error mt-2">Lỗi, vui lòng thử lại</p>;
+  } else {
+    content = (
+      <ul
+        className="text-gray-600 h-40 overflow-y-auto mt-2"
+        aria-label="Danh sách thành phố"
+        role="listbox"
+      >
+        {filteredCities?.map((city: City) => (
+          <li
+            key={city.id}
+            onClick={() => handleCitySelect(city)}
+            className="py-1.5 pl-3 mr-2 hover:bg-primary-lighter rounded-md cursor-pointer"
+            role="option"
+          >
+            {city.name}
+          </li>
+        ))}
+      </ul>
+    );
+  }
 
   return (
     <div>
@@ -61,24 +92,7 @@ function FilterByCities({ onCitySelect }: FilterByCitiesProps) {
           />
         )}
       </div>
-      {!selectedCity && (
-        <ul
-          className="text-gray-600 h-40 overflow-y-auto mt-2"
-          aria-label="Danh sách thành phố"
-          role="listbox"
-        >
-          {filteredCities.map((city) => (
-            <li
-              key={city.id}
-              onClick={() => handleCitySelect(city)}
-              className="py-1.5 pl-3 mr-2 hover:bg-primary-lighter rounded-md cursor-pointer"
-              role="option"
-            >
-              {city.name}
-            </li>
-          ))}
-        </ul>
-      )}
+      {!selectedCity && content}
     </div>
   );
 }

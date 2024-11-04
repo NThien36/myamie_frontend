@@ -1,3 +1,4 @@
+import { ApiResponse, FilterParams, Pagination } from "./app.interface";
 import { Category } from "./category.interface";
 
 export interface Place {
@@ -36,4 +37,22 @@ export interface PlaceAdmin {
   ownerName: string;
   status: string;
   action?: string;
+}
+
+export interface PlacesParams extends FilterParams {
+  cityId?: number;
+  categoryId?: number;
+}
+
+interface DataResponse {
+  places: Place[];
+  pagination: Pagination;
+}
+
+export interface PlacesResponse extends ApiResponse {
+  data: DataResponse;
+}
+
+export interface PlaceDetailResponse extends ApiResponse {
+  data: PlaceDetail;
 }

@@ -1,8 +1,8 @@
 export const ROUTE_PATH = {
   // Auth
   LOGIN: "/login",
-  REGISTER: "/signup",
-  REGISTER_BUSINESS: "/signup-business",
+  SIGNUP: "/signup",
+  SIGNUP_BUSINESS: "/signup-business",
 
   // Public
   BUSINESSES: "/",

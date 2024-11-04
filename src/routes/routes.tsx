@@ -63,11 +63,11 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: ROUTE_PATH.REGISTER,
+        path: ROUTE_PATH.SIGNUP,
         element: <Signup />,
       },
       {
-        path: ROUTE_PATH.REGISTER_BUSINESS,
+        path: ROUTE_PATH.SIGNUP_BUSINESS,
         element: <SignupBusiness />,
       },
     ],

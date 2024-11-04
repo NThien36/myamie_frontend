@@ -19,7 +19,7 @@ function Avatar({
   onClick,
 }: AvatarProps) {
   const avatarClasses = cx(
-    "rounded-full object-cover relative",
+    "rounded-full object-cover relative flex-none",
     size,
     className,
     {

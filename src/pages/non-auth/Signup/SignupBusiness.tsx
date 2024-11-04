@@ -1,5 +1,3 @@
-import { categoryData } from "@/assets/data/category";
-import { cityData } from "@/assets/data/city";
 import Divider from "@/components/Divider/Divider";
 import Dropdown from "@/components/Dropdown/Dropdown";
 import IconText from "@/components/IconText/IconText";
@@ -7,9 +5,21 @@ import Input from "@/components/Input/Input";
 import ConfirmEmail from "./components/ConfirmEmail";
 import { useState } from "react";
 import Button from "@/components/Buttons/Button";
+import { useCities } from "@/hooks/useCities";
+import { useCategories } from "@/hooks/useCategories";
 
 function SignupBusiness() {
   const [isOpen, setIsOpen] = useState(false);
+  const {
+    cities,
+    isLoading: isLoadingCities,
+    isError: isErrorCities,
+  } = useCities();
+  const {
+    categories,
+    isLoading: isLoadingCategories,
+    isError: isErrorCategories,
+  } = useCategories();
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
@@ -63,13 +73,22 @@ function SignupBusiness() {
               type="text"
               placeholder="Nhập tên dịch vụ..."
             />
-            <Dropdown label="Thành phố" options={cityData} />
+            <Dropdown
+              label="Thành phố"
+              options={cities}
+              isLoading={isLoadingCities}
+              isError={isErrorCities}
+              placeHolder="Chọn thành phố"
+            />
             <Dropdown
               label="Thể loại (3)"
-              options={categoryData}
+              options={categories}
               isMulti={true}
               isClearable={true}
               maxSelectItems={3}
+              isLoading={isLoadingCategories}
+              isError={isErrorCategories}
+              placeHolder="Chọn thể loại"
             />
           </div>
         </div>

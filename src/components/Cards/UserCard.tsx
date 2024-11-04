@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Avatar from "../Avatar/Avatar";
 import IconText from "../IconText/IconText";
 import Button from "../Buttons/Button";
+import getImageUrl from "@/utils/getImageUrl";
 
 function UserCard({ user }: { user: User }) {
   return (
@@ -14,7 +15,7 @@ function UserCard({ user }: { user: User }) {
       <div>
         <div className="flex items-center gap-3">
           <Avatar
-            src={user.avatar}
+            src={getImageUrl(user.avatar, "avatar")}
             alt={user.name}
             size="size-12"
             hasBorder={false}
@@ -38,7 +39,7 @@ function UserCard({ user }: { user: User }) {
         </div>
         <div className="flex flex-wrap gap-4 lg:gap-10 justify-end mt-3">
           <div className="flex flex-wrap gap-3 sm:gap-8">
-            <IconText icon="fa-location-dot" text={user.city} />
+            {user.city && <IconText icon="fa-location-dot" text={user.city} />}
             <IconText icon="fa-compass" text={`${user.distance} km`} />
           </div>
           <Button variant="outline" padding="px-4 py-1.5">

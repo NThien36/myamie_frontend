@@ -14,8 +14,7 @@ function AuthLayout() {
   const location = useLocation();
 
   const isLoginPage = location.pathname === ROUTE_PATH.LOGIN;
-  const isSignupBusinessPage =
-    location.pathname === ROUTE_PATH.REGISTER_BUSINESS;
+  const isSignupBusinessPage = location.pathname === ROUTE_PATH.SIGNUP_BUSINESS;
 
   return (
     <div
@@ -39,7 +38,7 @@ function AuthLayout() {
           <div className="flex justify-center gap-1">
             <p>Chưa có tài khoản?</p>
             <Link
-              to={ROUTE_PATH.REGISTER}
+              to={ROUTE_PATH.SIGNUP}
               className="hover:underline font-medium"
             >
               Đăng ký tại đây
