@@ -1,4 +1,4 @@
-import { RoleEnum } from "./app.interface";
+import { ApiResponse, RoleEnum } from "./app.interface";
 
 export interface AuthInfo {
   id: number;
@@ -12,24 +12,28 @@ export interface AuthInfo {
 }
 
 export interface AuthPayload {
-  user: AuthInfo;
+  account: AuthInfo;
   accessToken: string;
   refreshToken?: string;
 }
 
-export interface AuthResponse {
-  accessToken: string;
-  refreshToken: string;
-  account: AuthInfo;
+export interface LoginResponse extends ApiResponse {
+  data: AuthPayload;
 }
+
+// export interface AuthResponse {
+//   accessToken: string;
+//   refreshToken: string;
+//   account: AuthInfo;
+// }
 
 export interface SignupPayload {
   email: string;
   password: string;
   firstName: string;
   lastName: string;
-  latitude: number;
-  longitude: number;
+  latitude?: number;
+  longitude?: number;
 }
 
 export interface SignupBusinessPayload {

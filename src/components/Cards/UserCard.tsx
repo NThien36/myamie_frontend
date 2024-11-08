@@ -1,21 +1,19 @@
 import { User } from "@/models/user.interface";
-import { ROUTE_PATH } from "@/routes/route-path";
 import { Link } from "react-router-dom";
 import Avatar from "../Avatar/Avatar";
 import IconText from "../IconText/IconText";
 import Button from "../Buttons/Button";
-import getImageUrl from "@/utils/getImageUrl";
 
 function UserCard({ user }: { user: User }) {
   return (
     <Link
-      to={ROUTE_PATH.USER_DETAIL}
+      to={`/user/${user.id}`}
       className="flex flex-col justify-between p-4 border-2 rounded-lg relative bg-white"
     >
       <div>
         <div className="flex items-center gap-3">
           <Avatar
-            src={getImageUrl(user.avatar, "avatar")}
+            src={user.avatar}
             alt={user.name}
             size="size-12"
             hasBorder={false}

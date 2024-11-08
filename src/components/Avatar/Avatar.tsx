@@ -1,4 +1,5 @@
 import { noAvatar } from "@/assets/images";
+import getImageUrl from "@/utils/getImageUrl";
 import cx from "classnames";
 
 interface AvatarProps {
@@ -30,7 +31,7 @@ function Avatar({
   return (
     <img
       onClick={onClick}
-      src={src ? src : noAvatar}
+      src={getImageUrl(src, "avatar")}
       alt={alt}
       className={avatarClasses}
     />

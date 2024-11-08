@@ -1,5 +1,4 @@
 import { Place } from "@/models/place.interface";
-import { ROUTE_PATH } from "@/routes/route-path";
 import { Link } from "react-router-dom";
 import Avatar from "../Avatar/Avatar";
 import IconText from "../IconText/IconText";
@@ -43,12 +42,12 @@ function PlaceCard({ place }: { place: Place }) {
           className="w-full min-h-40 h-40 object-cover rounded-t-md"
         />
         <Link
-          to={ROUTE_PATH.PLACE_DETAIL}
+          to={`/place/${place.id}`}
           className="p-4 h-full flex flex-col justify-between"
         >
           <div>
             <p className="text-lg font-semibold truncate">{place.name}</p>
-            <p className="line-clamp-3 text-gray-500 leading-snug mt-2">
+            <p className="line-clamp-3 text-gray-500 leading-snug">
               {place.shortDescription}
             </p>
           </div>
@@ -56,7 +55,7 @@ function PlaceCard({ place }: { place: Place }) {
             <div className="flex items-center gap-2 truncate">
               <Avatar
                 hasBorder={false}
-                src={getImageUrl(place.ownerAvatar, "avatar")}
+                src={place.ownerAvatar}
                 alt={place.ownerName}
                 size="size-11"
               />

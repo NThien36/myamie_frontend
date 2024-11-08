@@ -1,16 +1,15 @@
 import Button from "@/components/Buttons/Button";
-import PlaceCard from "@/components/Cards/PlaceCard";
 import CustomModal from "@/components/Modals/CustomModal";
-import { Place } from "@/models/place.interface";
 import { useEffect, useState } from "react";
 import UpsertPlace from "@/components/Forms/UpsertPlace";
+import UserPlaces from "./UserPlaces";
 
 interface UserProfileProps {
-  places: Place[];
   name: string;
+  id: number;
 }
 
-function CheckinPlace({ places, name }: UserProfileProps) {
+function CheckinPlace({ name, id }: UserProfileProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const closeModal = () => setIsOpen(false);
@@ -41,11 +40,7 @@ function CheckinPlace({ places, name }: UserProfileProps) {
           Thêm địa điểm
         </Button>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mt-5">
-        {places.map((place) => (
-          <PlaceCard key={place.id} place={place} />
-        ))}
-      </div>
+      <UserPlaces id={id} />
       <CustomModal
         title="Thêm địa điểm mới"
         isOpen={isOpen}

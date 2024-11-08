@@ -12,8 +12,7 @@ import CheckinPlace from "./components/CheckinPlace";
 import { useParams } from "react-router-dom";
 import { useGetUserById } from "@/services/user.service";
 import Loader from "@/components/Loader/Loader";
-import getImageUrl from "@/utils/getImageUrl";
-import NotFound from "@/components/NotFound/NotFound";
+import NotFound from "@/components/PlaceholderPages/NotFound";
 
 function UserProfile() {
   const { id } = useParams();
@@ -31,12 +30,14 @@ function UserProfile() {
     return <NotFound className="mt-16" />;
   }
 
+  console.log(user);
+
   return (
     <div>
-      <Cover src={getImageUrl(user.cover, "cover")} alt={user.name} />
+      <Cover src={user.cover} alt={user.name} />
       <div className="mx-5 lg:mx-10">
         <Avatar
-          src={getImageUrl(user.avatar, "avatar")}
+          src={user.avatar}
           alt={user.name}
           size="size-40"
           className="-mt-24 border-8 mx-auto lg:mx-0"
@@ -95,10 +96,14 @@ function UserProfile() {
               </TabList>
 
               <TabPanel className="mt-4">
-                <p>{user.description}</p>
+                {user.description ? (
+                  <p>{user.description}</p>
+                ) : (
+                  <p>Chưa có mô tả</p>
+                )}
               </TabPanel>
               <TabPanel className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {user.images &&
+                {user.images.length !== 0 ? (
                   user.images.map((image, index) => (
                     <img
                       key={index}
@@ -106,13 +111,16 @@ function UserProfile() {
                       alt={user.name}
                       className="w-full h-64 object-cover rounded-lg"
                     />
-                  ))}
+                  ))
+                ) : (
+                  <p>Chưa có ảnh</p>
+                )}
               </TabPanel>
             </Tabs>
           </div>
         </div>
       </div>
-      <CheckinPlace name={user.name} places={placeData} />
+      <CheckinPlace name={user.name} id={user.id} />
     </div>
   );
 }

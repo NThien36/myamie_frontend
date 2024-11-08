@@ -6,6 +6,8 @@ interface CustomModalProps {
   title: string;
   isOpen: boolean;
   onClose: () => void;
+  onActiveClick?: () => void;
+  onInactiveClick?: () => void;
   children: React.ReactNode;
   saveButtonTitle?: string;
   cancelButtonTitle?: string;
@@ -20,6 +22,8 @@ function CustomModal({
   saveButtonTitle = "Lưu",
   cancelButtonTitle = "Huỷ bỏ",
   className = "w-1/2",
+  onActiveClick,
+  onInactiveClick,
 }: CustomModalProps) {
   return (
     <ReactModal
@@ -40,10 +44,16 @@ function CustomModal({
         {children}
       </div>
       <div className="p-3 flex justify-between border-t">
-        <Button variant="ghost" onClick={onClose} padding="py-1.5 px-2.5">
+        <Button
+          variant="ghost"
+          onClick={onInactiveClick}
+          padding="py-1.5 px-2.5"
+        >
           {cancelButtonTitle}
         </Button>
-        <Button padding="py-1.5 px-2.5">{saveButtonTitle}</Button>
+        <Button onClick={onActiveClick} padding="py-1.5 px-2.5">
+          {saveButtonTitle}
+        </Button>
       </div>
     </ReactModal>
   );

@@ -2,7 +2,10 @@ import Logo from "@/assets/images/Logo";
 import cx from "classnames";
 import Carousel from "@/components/Carousel/Carousel";
 import { ROUTE_PATH } from "@/routes/route-path";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Navigate, Outlet, useLocation } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { isLoginSelector } from "@/store/auth/auth.selector";
 
 const images = [
   "https://statics.vinwonders.com/canh-dep-viet-nam-15_1634999578.jpg",
@@ -12,6 +15,10 @@ const images = [
 
 function AuthLayout() {
   const location = useLocation();
+  const isLoggedIn = useSelector(isLoginSelector);
+  if (isLoggedIn) {
+    return <Navigate to={ROUTE_PATH.BUSINESSES} replace={true} />;
+  }
 
   const isLoginPage = location.pathname === ROUTE_PATH.LOGIN;
   const isSignupBusinessPage = location.pathname === ROUTE_PATH.SIGNUP_BUSINESS;
@@ -22,6 +29,7 @@ function AuthLayout() {
         "grid grid-cols-1 md:grid-cols-3": !isSignupBusinessPage,
       })}
     >
+      <Toaster />
       <div className="col-span-1 flex flex-col justify-between p-4 h-full">
         <Link to={ROUTE_PATH.BUSINESSES} className="mx-auto">
           <Logo />

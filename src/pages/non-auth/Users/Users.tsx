@@ -3,27 +3,64 @@ import UserCard from "@/components/Cards/UserCard";
 import CategoryContainer from "@/components/CategoryItem/CategoryContainer";
 import FilterByDistance from "@/components/Filters/FilterByDistance";
 import Loader from "@/components/Loader/Loader";
-import NotFound from "@/components/NotFound/NotFound";
+import NotFound from "@/components/PlaceholderPages/NotFound";
 import Pagination from "@/components/Pagination/Pagination";
 import Title from "@/components/Title/Title";
 import { UsersParams } from "@/models/user.interface";
 import { useGetUsers } from "@/services/user.service";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import UnprovidedLocation from "@/components/PlaceholderPages/UnprovidedLocation";
 
 function Users() {
   const [params, setParams] = useState<UsersParams>({
     pageNumber: 1,
-    latitude: 16.046094935025476,
-    longitude: 108.24336285930981,
+    latitude: 0,
+    longitude: 0,
   });
+  const [tempDistance, setTempDistance] = useState<number | null>(5);
+
+  useEffect(() => {
+    // Fetch current location on mount
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        setParams((prev) => ({ ...prev, latitude, longitude }));
+      });
+    }
+  }, []);
 
   const { data, isLoading, isError } = useGetUsers(params);
 
-  let content;
+  const updateParams = (newParams: UsersParams) => {
+    setParams((prev) => ({ ...prev, ...newParams, pageNumber: 1 }));
+  };
+
+  const handleCategorySelect = (categoryId: number) =>
+    updateParams({ categoryId });
+
+  const handlePageChange = (pageNumber: number) =>
+    setParams((prev) => ({ ...prev, pageNumber }));
+
+  const handleDistanceChange = (distance: number) => setTempDistance(distance);
+
+  const handleFilterApply = () => {
+    updateParams({ distanceInKm: tempDistance ?? 5 });
+  };
+
+  const handleClearFilter = () => {
+    if (tempDistance === null) return;
+
+    setTempDistance(null);
+    updateParams({ distanceInKm: 0 });
+  };
+
+  if (params.latitude === 0 || params.longitude === 0) {
+    return <UnprovidedLocation />;
+  }
+
   const pagination = data?.data.pagination;
 
-  console.log(data);
-
+  let content;
   if (isLoading) {
     content = <Loader />;
   } else if (isError) {
@@ -47,14 +84,17 @@ function Users() {
         title="Tìm bạn bè quanh đây"
         description="Kết nối với những người bạn mới, khám phá các địa điểm và trải nghiệm dịch vụ tuyệt vời cùng nhau"
       />
-      <CategoryContainer />
+      <CategoryContainer onSelect={handleCategorySelect} />
       <div className="mt-10">
         <div className="flex justify-between items-end mb-4">
           <p className="font-semibold text-base">
             Danh sách {pagination?.totalCount} bạn gần đây
           </p>
-          <FilterBtn>
-            <FilterByDistance />
+          <FilterBtn
+            onActiveClick={handleFilterApply}
+            onInactiveClick={handleClearFilter}
+          >
+            <FilterByDistance onChange={handleDistanceChange} />
           </FilterBtn>
         </div>
         {content}
@@ -62,7 +102,7 @@ function Users() {
       <Pagination
         currentPage={pagination?.currentPage ?? 1}
         totalPage={pagination?.totalPages ?? 1}
-        onPageChange={() => "f"}
+        onPageChange={handlePageChange}
       />
     </div>
   );

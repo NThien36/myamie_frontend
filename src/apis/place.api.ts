@@ -18,7 +18,7 @@ export const getPlaces = async (params: PlacesParams) => {
 
 export const getPlaceById = async (id: number) => {
   const response: AxiosResponse<PlaceDetailResponse> = await fetchAPI.request({
-    url: `/Place/get-by-id/${id}`,
+    url: `/Place/get-by-id?Id=${id}`,
     method: "get",
   });
 

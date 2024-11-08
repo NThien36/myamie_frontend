@@ -3,14 +3,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface AuthenticationState {
   isLogin?: boolean;
-  user: AuthInfo;
+  account: AuthInfo;
   accessToken: string;
   refreshToken?: string;
 }
 
 const initialState: AuthenticationState = {
   isLogin: false,
-  user: {
+  account: {
     id: -1,
   },
   accessToken: "",
@@ -22,13 +22,13 @@ export const authSlice = createSlice({
   reducers: {
     login: (state, action: PayloadAction<AuthPayload>) => {
       state.isLogin = true;
-      state.user = action.payload.user;
+      state.account = action.payload.account;
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
     },
     logout: (state) => {
       state.isLogin = false;
-      state.user = initialState.user;
+      state.account = initialState.account;
       state.accessToken = initialState.accessToken;
       state.refreshToken = initialState.refreshToken;
     },

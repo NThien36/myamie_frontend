@@ -3,14 +3,34 @@ import Button from "./Button";
 import CustomModal from "../Modals/CustomModal";
 
 interface FilterBtnProps {
+  onActiveClick?: () => void;
+  onInactiveClick?: () => void;
   children: React.ReactNode;
 }
 
-function FilterBtn({ children }: FilterBtnProps) {
+function FilterBtn({
+  children,
+  onActiveClick,
+  onInactiveClick,
+}: FilterBtnProps) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
+
+  const handleActiveClick = () => {
+    if (onActiveClick) {
+      onActiveClick();
+    }
+    closeModal();
+  };
+
+  const handleInactiveClick = () => {
+    if (onInactiveClick) {
+      onInactiveClick();
+    }
+    closeModal();
+  };
 
   // Prevent background scroll when modal is open
   useEffect(() => {
@@ -41,7 +61,10 @@ function FilterBtn({ children }: FilterBtnProps) {
         onClose={closeModal}
         title="Tất cả bộ lọc"
         saveButtonTitle="Xem kết quả"
+        cancelButtonTitle="Xoá bộ lọc"
         className="w-11/12 md:w-1/2"
+        onActiveClick={handleActiveClick}
+        onInactiveClick={handleInactiveClick}
       >
         {children}
       </CustomModal>

@@ -1,10 +1,17 @@
-import { noAvatar } from "@/assets/images";
 import Avatar from "@/components/Avatar/Avatar";
 import { useState } from "react";
 import useClickOutside from "@/hooks/useClickOutside";
+import { useDispatch } from "react-redux";
+import { logout } from "@/store/auth/auth.slice";
 
-function ProfileOptions() {
+interface ProfileOptionsProps {
+  src: string;
+  name: string;
+}
+
+function ProfileOptions({ src, name }: ProfileOptionsProps) {
   const [isShow, setIsShow] = useState(false);
+  const dispatch = useDispatch();
 
   const handleShowOptions = () => {
     setIsShow(!isShow);
@@ -14,28 +21,36 @@ function ProfileOptions() {
 
   return (
     <div className="relative" ref={ref}>
-      <Avatar
-        onClick={handleShowOptions}
-        src={noAvatar}
-        alt="avatar"
-        size="size-10"
-        hasBorder={false}
-        className="hover:cursor-pointer"
-      />
+      <div className="flex items-center gap-2">
+        <Avatar
+          onClick={handleShowOptions}
+          src={src}
+          alt="avatar"
+          size="size-10"
+          hasBorder={false}
+          className="hover:cursor-pointer"
+        />
+        <p className="font-medium">{name}</p>
+      </div>
       {isShow && (
         <div className="absolute text-nowrap bg-white rounded-md right-0 border-2 shadow-xl p-1 mt-2">
-          <div className="p-1.5 hover:bg-primary-lighter rounded-sm flex items-center">
-            <i className="w-7 fa-regular fa-user"></i>
+          <button className="p-1.5 hover:bg-primary-lighter rounded-sm flex gap-4 items-center w-full">
+            <i className="fa-regular fa-user"></i>
             <p className="">Trang cá nhân</p>
-          </div>
-          <div className="p-1.5 hover:bg-primary-lighter rounded-sm flex items-center">
-            <i className="w-7 fa-regular fa-user-pen"></i>
+          </button>
+          <button className="p-1.5 hover:bg-primary-lighter rounded-sm flex gap-4 items-center w-full">
+            <i className="fa-regular fa-gear"></i>
             <p className="">Thông tin</p>
-          </div>
-          <div className="p-1.5 hover:bg-primary-lighter rounded-sm flex items-center">
-            <i className="w-7 fa-regular fa-arrow-right-from-bracket"></i>
+          </button>
+          <button
+            onClick={() => {
+              dispatch(logout());
+            }}
+            className="p-1.5 hover:bg-primary-lighter rounded-sm flex gap-4 items-center w-full"
+          >
+            <i className="fa-regular fa-arrow-right-from-bracket"></i>
             <p className="">Đăng suất</p>
-          </div>
+          </button>
         </div>
       )}
     </div>

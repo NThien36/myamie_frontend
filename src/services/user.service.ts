@@ -6,6 +6,7 @@ export const useGetUsers = (params: UsersParams) => {
   return useQuery({
     queryKey: ["users", params],
     queryFn: () => getUsers(params),
+    enabled: !!params.latitude && !!params.longitude,
   });
 };
 

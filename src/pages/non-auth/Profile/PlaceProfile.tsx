@@ -9,7 +9,8 @@ import Divider from "@/components/Divider/Divider";
 import { useParams } from "react-router-dom";
 import { useGetPlaceById } from "@/services/place.service";
 import Loader from "@/components/Loader/Loader";
-import NotFound from "@/components/NotFound/NotFound";
+import NotFound from "@/components/PlaceholderPages/NotFound";
+import getImageUrl from "@/utils/getImageUrl";
 
 function PlaceProfile() {
   const { id } = useParams();
@@ -27,9 +28,11 @@ function PlaceProfile() {
     return <NotFound className="mt-16" type="place" />;
   }
 
+  console.log(place);
+
   return (
     <div>
-      <Cover src={noCover} alt={place.name} />
+      <Cover src={place.images[0]} alt={place.name} />
       <div className="mx-5 lg:mx-10 mt-7">
         <p className="text-3xl font-semibold text-center lg:text-left">
           {place.name}
@@ -66,18 +69,22 @@ function PlaceProfile() {
               <div>
                 <p className="font-medium text-gray-400">THÔNG TIN CHI TIẾT</p>
                 <div className="mt-3 flex flex-col gap-2.5">
-                  <IconText
-                    icon="fa-location-dot"
-                    text={place.address}
-                    className="font-medium"
-                    iconClasses="w-5"
-                  />
-                  <IconText
-                    icon="fa-location-dot"
-                    text={place.city}
-                    className="font-medium"
-                    iconClasses="w-5"
-                  />
+                  {place.address && (
+                    <IconText
+                      icon="fa-location-dot"
+                      text={place.address}
+                      className="font-medium"
+                      iconClasses="w-5"
+                    />
+                  )}
+                  {place.city && (
+                    <IconText
+                      icon="fa-location-dot"
+                      text={place.city}
+                      className="font-medium"
+                      iconClasses="w-5"
+                    />
+                  )}
                 </div>
               </div>
             </ContactContainer>
@@ -91,23 +98,25 @@ function PlaceProfile() {
                 <Tab className="cursor-pointer py-2 px-5 transition-colors duration-500">
                   Ảnh chi tiết
                 </Tab>
-                <Tab className="cursor-pointer py-2 px-5 transition-colors duration-500">
-                  Đánh giá
-                </Tab>
               </TabList>
 
               <TabPanel className="mt-4">
-                <p>{place.description}</p>
+                {place.description ? (
+                  <p>{place.description}</p>
+                ) : (
+                  <p>Chưa có mô tả</p>
+                )}
               </TabPanel>
               <TabPanel className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {place.images.map((image, index) => (
-                  <img
-                    key={index}
-                    src={image}
-                    alt={place.name}
-                    className="w-full h-64 object-cover rounded-lg"
-                  />
-                ))}
+                {place.images &&
+                  place.images.map((image, index) => (
+                    <img
+                      key={index}
+                      src={getImageUrl(image, "cover")}
+                      alt={place.name}
+                      className="w-full h-64 object-cover rounded-lg"
+                    />
+                  ))}
               </TabPanel>
             </Tabs>
           </div>

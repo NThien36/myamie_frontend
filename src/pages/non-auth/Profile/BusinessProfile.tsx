@@ -9,7 +9,8 @@ import FeedbackTab from "./components/FeedbackTab";
 import { useParams } from "react-router-dom";
 import { useGetBusinessById } from "@/services/business.service";
 import Loader from "@/components/Loader/Loader";
-import NotFound from "@/components/NotFound/NotFound";
+import NotFound from "@/components/PlaceholderPages/NotFound";
+import getImageUrl from "@/utils/getImageUrl";
 
 function BusinessProfile() {
   const { id } = useParams();
@@ -48,24 +49,38 @@ function BusinessProfile() {
               <div>
                 <p className="font-medium text-gray-400">THÔNG TIN CHI TIẾT</p>
                 <div className="mt-3 flex flex-col gap-2.5">
-                  <IconText
-                    icon="fa-phone"
-                    text={business.phone}
-                    className="font-medium"
-                    iconClasses="w-5"
-                  />
-                  <IconText
-                    icon="fa-location-dot"
-                    text={business.address}
-                    className="font-medium"
-                    iconClasses="w-5"
-                  />
-                  <IconText
-                    icon="fa-clock"
-                    text={business.operatingHours}
-                    className="font-medium"
-                    iconClasses="w-5"
-                  />
+                  {business.phone && (
+                    <IconText
+                      icon="fa-phone"
+                      text={business.phone}
+                      className="font-medium"
+                      iconClasses="w-5"
+                    />
+                  )}
+                  {business.address && (
+                    <IconText
+                      icon="fa-location-arrow"
+                      text={business.address}
+                      className="font-medium"
+                      iconClasses="w-5"
+                    />
+                  )}
+                  {business.city && (
+                    <IconText
+                      icon="fa-location-dot"
+                      text={business.city}
+                      className="font-medium"
+                      iconClasses="w-5"
+                    />
+                  )}
+                  {business.operatingHours && (
+                    <IconText
+                      icon="fa-clock"
+                      text={business.operatingHours}
+                      className="font-medium"
+                      iconClasses="w-5"
+                    />
+                  )}
                 </div>
               </div>
             </ContactContainer>
@@ -85,20 +100,28 @@ function BusinessProfile() {
               </TabList>
 
               <TabPanel className="mt-4">
-                <p>{business.description}</p>
+                {business.description ? (
+                  <p>{business.description}</p>
+                ) : (
+                  <p>Chưa có mô tả</p>
+                )}
               </TabPanel>
               <TabPanel className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {business.images.map((image, index) => (
-                  <img
-                    key={index}
-                    src={image}
-                    alt={business.name}
-                    className="w-full h-64 object-cover rounded-lg"
-                  />
-                ))}
+                {business.images.length !== 0 ? (
+                  business.images.map((image, index) => (
+                    <img
+                      key={index}
+                      src={getImageUrl(image, "cover")}
+                      alt={business.name}
+                      className="w-full h-64 object-cover rounded-lg"
+                    />
+                  ))
+                ) : (
+                  <p>Chưa có ảnh</p>
+                )}
               </TabPanel>
-              <TabPanel classID="mt-4">
-                <FeedbackTab />
+              <TabPanel className="mt-4">
+                <FeedbackTab id={business.id} />
               </TabPanel>
             </Tabs>
           </div>

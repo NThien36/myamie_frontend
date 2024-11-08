@@ -42,6 +42,7 @@ export interface PlaceAdmin {
 export interface PlacesParams extends FilterParams {
   cityId?: number;
   categoryId?: number;
+  userId?: number;
 }
 
 interface DataResponse {

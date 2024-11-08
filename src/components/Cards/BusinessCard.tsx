@@ -1,5 +1,4 @@
 import { Business } from "@/models/business.interface";
-import { ROUTE_PATH } from "@/routes/route-path";
 import { Link } from "react-router-dom";
 import Avatar from "../Avatar/Avatar";
 import Rate from "../Rate/Rate";
@@ -9,7 +8,7 @@ import getImageUrl from "@/utils/getImageUrl";
 function BusinessCard({ business }: { business: Business }) {
   return (
     <Link
-      to={ROUTE_PATH.BUSINESS_DETAIL}
+      to={`/service/${business.id}`}
       className="flex flex-col border-2 rounded-lg relative transition-shadow duration-300 hover:shadow-xl bg-white"
     >
       <img

@@ -1,20 +1,20 @@
 import { ApiResponse } from "@/models/app.interface";
 import {
+  LoginResponse,
   SignupBusinessPayload,
   SignupPayload,
 } from "./../models/auth.interface";
-import { AuthResponse } from "@/models/auth.interface";
 import fetchAPI from "@/utils/fetchApi";
 import { AxiosResponse } from "axios";
 
-export const login = async ({
+export const loginByEmail = async ({
   email,
   password,
 }: {
   email: string;
   password: string;
 }) => {
-  const response: AxiosResponse<AuthResponse> = await fetchAPI.request({
+  const response: AxiosResponse<LoginResponse> = await fetchAPI.request({
     method: "post",
     url: "/Auth/login",
     data: { email, password },
@@ -23,7 +23,7 @@ export const login = async ({
 };
 
 export const loginByFacebook = async (accessToken: string) => {
-  const response: AxiosResponse<AuthResponse> = await fetchAPI.request({
+  const response: AxiosResponse<LoginResponse> = await fetchAPI.request({
     url: "/Auth/login-facebook",
     method: "post",
     data: {

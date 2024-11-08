@@ -7,6 +7,9 @@ import ProfileOptions from "../ProfileOptions/ProfileOptions";
 import { useState } from "react";
 import "./NavBar.css";
 import useClickOutside from "@/hooks/useClickOutside";
+import { useSelector } from "react-redux";
+import { accountSelector, isLoginSelector } from "@/store/auth/auth.selector";
+import { noAvatar } from "@/assets/images";
 
 const navlinks = [
   {
@@ -28,12 +31,12 @@ const navlinks = [
 
 function NavBar() {
   const [showDropdown, setShowDropdown] = useState(false);
+  const isLoggedIn = useSelector(isLoginSelector);
+  const account = useSelector(accountSelector);
 
   const toggleDropdown = () => setShowDropdown((prev) => !prev);
 
   const dropdownRef = useClickOutside(() => setShowDropdown(false));
-
-  const isLogged = true;
 
   return (
     <div ref={dropdownRef} className="relative">
@@ -41,8 +44,8 @@ function NavBar() {
         className={cx(
           "container px-3 md:px-7 flex justify-between items-center",
           {
-            "py-4": isLogged,
-            "py-6": !isLogged,
+            "py-4": isLoggedIn,
+            "py-6": !isLoggedIn,
           }
         )}
       >
@@ -66,7 +69,7 @@ function NavBar() {
         >
           <Logo />
         </Link>
-        {isLogged ? (
+        {isLoggedIn ? (
           <div className="hidden md:flex gap-3 items-center">
             <Link
               to={ROUTE_PATH.CHAT}
@@ -74,7 +77,10 @@ function NavBar() {
             >
               <i className="text-primary fa-lg fa-solid fa-comments"></i>
             </Link>
-            <ProfileOptions />
+            <ProfileOptions
+              src={account.avatar ?? noAvatar}
+              name={`${account.lastName ?? ""} ${account.firstName ?? ""}`}
+            />
           </div>
         ) : (
           <div className="hidden md:block space-x-6">
@@ -98,7 +104,7 @@ function NavBar() {
           <Link to={ROUTE_PATH.USERS} className="hover:underline">
             Người dùng
           </Link>
-          {isLogged ? (
+          {isLoggedIn ? (
             <>
               <Link to={ROUTE_PATH.CHAT} className="hover:underline">
                 Tin nhắn

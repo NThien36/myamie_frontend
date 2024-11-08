@@ -19,7 +19,7 @@ export const getBusinesses = async (params: BusinessesParams) => {
 export const getBusinessById = async (id: number) => {
   const response: AxiosResponse<BusinessDetailResponse> =
     await fetchAPI.request({
-      url: `/Business/get-by-id/${id}`,
+      url: `/Business/get-by-id?Id=${id}`,
       method: "get",
     });
 

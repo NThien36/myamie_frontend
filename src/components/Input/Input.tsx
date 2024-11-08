@@ -17,13 +17,14 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     {
       id,
       label,
-      type,
+      type = "text",
       placeholder,
       value,
       onChange,
       readonly,
       errorMessage,
       className,
+      ...rest
     },
     ref
   ) => {
@@ -50,6 +51,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             onChange={onChange}
             readOnly={readonly}
             className="p-3 outline-gray-300 w-full border border-gray-200 rounded-md"
+            {...rest}
           />
           {type === "password" && (
             <button
@@ -62,7 +64,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
         </div>
         {errorMessage && (
-          <p className="text-xs text-red-500 my-1 inline-block">
+          <p className="text-xs text-red-500 mt-1.5 inline-block">
             {errorMessage}
           </p>
         )}

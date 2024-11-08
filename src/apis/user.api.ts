@@ -1,5 +1,4 @@
 import {
-  UserDetail,
   UserDetailResponse,
   UsersParams,
   UsersResponse,

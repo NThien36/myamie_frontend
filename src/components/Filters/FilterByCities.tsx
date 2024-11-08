@@ -1,6 +1,6 @@
 import { City } from "@/models/city.interface";
 import { remove as removeDiacritics } from "diacritics";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Input from "../Input/Input";
 import IconBtn from "../Buttons/IconBtn";
 import useDebounce from "@/hooks/useDebounce";
@@ -11,9 +11,15 @@ const normalizeString = (str: string) => removeDiacritics(str.toLowerCase());
 
 interface FilterByCitiesProps {
   onCitySelect: (cityId: number) => void;
+  onClear?: () => void;
+  currentCityId?: number | null;
 }
 
-function FilterByCities({ onCitySelect }: FilterByCitiesProps) {
+function FilterByCities({
+  onCitySelect,
+  onClear,
+  currentCityId,
+}: FilterByCitiesProps) {
   const { cities, isLoading, isError } = useCities();
 
   const [term, setTerm] = useState("");
@@ -22,9 +28,20 @@ function FilterByCities({ onCitySelect }: FilterByCitiesProps) {
   // Debounced search term
   const debouncedTerm = useDebounce(term, 300);
 
+  useEffect(() => {
+    if (currentCityId && cities) {
+      const foundCity = cities.find((city) => city.id === currentCityId);
+      if (foundCity) {
+        setSelectedCity(foundCity);
+        setTerm(foundCity.name);
+      }
+    }
+  }, [currentCityId, cities]);
+
   // handle input change
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTerm(e.target.value);
+    if (selectedCity) setSelectedCity(null);
   };
 
   // handle city select
@@ -38,14 +55,17 @@ function FilterByCities({ onCitySelect }: FilterByCitiesProps) {
   const clearSelectedCity = () => {
     setSelectedCity(null);
     setTerm("");
+    if (onClear) {
+      onClear();
+    }
   };
 
-  console.log("cities", cities);
-
   // filter city data
-  const filteredCities = cities?.filter((city) =>
-    normalizeString(city.name).includes(normalizeString(debouncedTerm))
-  );
+  const filteredCities = useMemo(() => {
+    return cities?.filter((city) =>
+      normalizeString(city.name).includes(normalizeString(debouncedTerm))
+    );
+  }, [cities, debouncedTerm]);
 
   let content;
   if (isLoading) {
