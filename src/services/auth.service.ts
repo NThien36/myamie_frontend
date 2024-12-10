@@ -8,7 +8,6 @@ import toast from "react-hot-toast";
 export const useLoginByEmail = () => {
   const dispatch = useDispatch();
   return useMutation({
-    mutationKey: ["loginByEmail"],
     mutationFn: loginByEmail,
     onSuccess: (data) => {
       dispatch(login(data.data));
@@ -19,7 +18,6 @@ export const useLoginByEmail = () => {
 
 export const useSignup = () => {
   return useMutation({
-    mutationKey: ["signup"],
     mutationFn: signup,
     onSuccess: () => {
       toast.success("Đăng ký thành công");

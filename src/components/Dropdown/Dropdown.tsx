@@ -1,6 +1,6 @@
 // import DropdownList from "react-dropdown";
-import Select from "react-select";
-import { useState } from "react";
+import Select, { SingleValue, MultiValue } from "react-select";
+import { Control, useController } from "react-hook-form";
 
 interface DropdownProps<T> {
   label?: string;
@@ -13,6 +13,9 @@ interface DropdownProps<T> {
   height?: string;
   isLoading?: boolean;
   isError?: boolean;
+  control: Control<any>;
+  name: string;
+  value?: number | number[];
 }
 
 const defaultHeight = "2.95rem";
@@ -78,18 +81,22 @@ function Dropdown<T extends { name: string; id: number }>({
   height = defaultHeight,
   isLoading = false,
   isError = false,
+  control,
+  name,
+  value,
 }: DropdownProps<T>) {
-  const [selectedOptions, setSelectedOptions] = useState([]);
-
   const selectOptions: { label: string; value: number }[] = options.map(
     (option) => ({
       label: option.name,
       value: option.id,
     })
   );
-  const handleChange = (selected: any) => {
-    setSelectedOptions(isMulti ? selected : selected ? [selected] : []);
-  };
+
+  const { field, fieldState } = useController({
+    control,
+    name,
+    defaultValue: isMulti ? value || [] : value || undefined,
+  });
 
   const currentPlaceholder = isLoading
     ? "Đang tải..."
@@ -101,6 +108,8 @@ function Dropdown<T extends { name: string; id: number }>({
     <div className={className}>
       {label && <label className="mb-2 block font-medium">{label}</label>}
       <Select
+        ref={field.ref}
+        onBlur={field.onBlur}
         options={selectOptions}
         placeholder={currentPlaceholder}
         styles={styles(height)}
@@ -108,15 +117,45 @@ function Dropdown<T extends { name: string; id: number }>({
         isMulti={isMulti}
         maxMenuHeight={240}
         minMenuHeight={50}
-        onChange={handleChange}
+        value={
+          isMulti
+            ? selectOptions.filter((option) =>
+                (field.value as number[])?.includes(option.value)
+              )
+            : selectOptions.find((option) => option.value === field.value)
+        }
         menuPortalTarget={document.body}
         isDisabled={isLoading || isError} // Disable if loading or error
         isOptionDisabled={() =>
           isMulti && maxSelectItems
-            ? selectedOptions.length >= maxSelectItems
+            ? Array.isArray(field.value) && field.value.length >= maxSelectItems
             : false
         }
+        onChange={(selected) => {
+          if (isMulti) {
+            const selectedValues = (
+              selected as MultiValue<{
+                label: string;
+                value: number;
+              }>
+            ).map((item) => item.value);
+            field.onChange(selectedValues);
+          } else {
+            const selectedValue = (
+              selected as SingleValue<{
+                label: string;
+                value: number;
+              }>
+            )?.value;
+            field.onChange(selectedValue ?? undefined);
+          }
+        }}
       />
+      {fieldState.error && (
+        <p className="text-xs text-red-500 mt-1.5 inline-block">
+          {fieldState.error.message}
+        </p>
+      )}
     </div>
   );
 }

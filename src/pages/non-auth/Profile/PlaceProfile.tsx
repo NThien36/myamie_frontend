@@ -6,7 +6,7 @@ import IconText from "@/components/IconText/IconText";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import CategoryItem from "@/components/CategoryItem/CategoryItem";
 import Divider from "@/components/Divider/Divider";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetPlaceById } from "@/services/place.service";
 import Loader from "@/components/Loader/Loader";
 import NotFound from "@/components/PlaceholderPages/NotFound";
@@ -27,8 +27,6 @@ function PlaceProfile() {
   if (!place) {
     return <NotFound className="mt-16" type="place" />;
   }
-
-  console.log(place);
 
   return (
     <div>
@@ -58,7 +56,12 @@ function PlaceProfile() {
                     size="size-10"
                   />
                   <div className="truncate">
-                    <p className="font-medium truncate">{place.ownerName}</p>
+                    <Link
+                      to={`/user/${place.ownerId}`}
+                      className="font-medium truncate hover:underline"
+                    >
+                      {place.ownerName}
+                    </Link>
                     <p className="text-xs font-medium text-gray-400 mt-0.5">
                       {place.dateCreated}
                     </p>
@@ -80,7 +83,7 @@ function PlaceProfile() {
                   {place.city && (
                     <IconText
                       icon="fa-location-dot"
-                      text={place.city}
+                      text={place.city.name}
                       className="font-medium"
                       iconClasses="w-5"
                     />

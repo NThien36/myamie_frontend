@@ -20,8 +20,7 @@ function IconBtn({
 }: IconBtnProps) {
   const effectClasses = {
     default: "hover:bg-gray-200",
-    opacity:
-      "border-2 border-white bg-black bg-opacity-35 hover:bg-opacity-50 text-white",
+    opacity: "bg-black bg-opacity-50 hover:bg-opacity-80 text-white",
     scale: "hover:scale-110",
   };
 
@@ -33,7 +32,7 @@ function IconBtn({
   );
 
   return (
-    <button className={buttonClasses} onClick={onClick}>
+    <button type="button" className={buttonClasses} onClick={onClick}>
       <i className={cx("fa-regular", iconSize, icon)}></i>
     </button>
   );

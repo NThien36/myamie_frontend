@@ -7,7 +7,6 @@ import "./Profile.css";
 import Cover from "./components/Cover";
 import NameWCategories from "./components/NameWCategories";
 import ContactContainer from "./components/ContactContainer";
-import { placeData } from "@/assets/data/place.data";
 import CheckinPlace from "./components/CheckinPlace";
 import { useParams } from "react-router-dom";
 import { useGetUserById } from "@/services/user.service";
@@ -27,10 +26,8 @@ function UserProfile() {
   }
 
   if (!user) {
-    return <NotFound className="mt-16" />;
+    return <NotFound className="mt-16" type="user" />;
   }
-
-  console.log(user);
 
   return (
     <div>
@@ -57,14 +54,14 @@ function UserProfile() {
                     icon="fa-circle-location-arrow"
                     text={user.distance + " km"}
                     className="font-medium"
-                    iconClasses="w-5"
+                    iconClasses="w-5 justify-center"
                   />
                   {user.city && (
                     <IconText
                       icon="fa-location-dot"
                       text={user.city}
                       className="font-medium"
-                      iconClasses="w-5"
+                      iconClasses="w-5 justify-center"
                     />
                   )}
                 </div>

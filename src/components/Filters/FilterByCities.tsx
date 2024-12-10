@@ -5,7 +5,7 @@ import Input from "../Input/Input";
 import IconBtn from "../Buttons/IconBtn";
 import useDebounce from "@/hooks/useDebounce";
 import Loader from "../Loader/Loader";
-import { useCities } from "@/hooks/useCities";
+import { useGetCities } from "@/services/city.service";
 
 const normalizeString = (str: string) => removeDiacritics(str.toLowerCase());
 
@@ -20,13 +20,14 @@ function FilterByCities({
   onClear,
   currentCityId,
 }: FilterByCitiesProps) {
-  const { cities, isLoading, isError } = useCities();
-
+  const { data, isLoading, isError } = useGetCities();
   const [term, setTerm] = useState("");
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
 
   // Debounced search term
   const debouncedTerm = useDebounce(term, 300);
+
+  const cities = data?.data;
 
   useEffect(() => {
     if (currentCityId && cities) {

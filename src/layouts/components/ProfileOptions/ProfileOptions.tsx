@@ -1,15 +1,18 @@
 import Avatar from "@/components/Avatar/Avatar";
 import { useState } from "react";
 import useClickOutside from "@/hooks/useClickOutside";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/store/auth/auth.slice";
+import { Link } from "react-router-dom";
+import { ROUTE_PATH } from "@/routes/route-path";
 
 interface ProfileOptionsProps {
   src: string;
   name: string;
+  accountId: number;
 }
 
-function ProfileOptions({ src, name }: ProfileOptionsProps) {
+function ProfileOptions({ src, name, accountId }: ProfileOptionsProps) {
   const [isShow, setIsShow] = useState(false);
   const dispatch = useDispatch();
 
@@ -34,14 +37,20 @@ function ProfileOptions({ src, name }: ProfileOptionsProps) {
       </div>
       {isShow && (
         <div className="absolute text-nowrap bg-white rounded-md right-0 border-2 shadow-xl p-1 mt-2">
-          <button className="p-1.5 hover:bg-primary-lighter rounded-sm flex gap-4 items-center w-full">
+          <Link
+            to={`/user/${accountId}`}
+            className="p-1.5 hover:bg-primary-lighter rounded-sm flex gap-4 items-center w-full"
+          >
             <i className="fa-regular fa-user"></i>
             <p className="">Trang cá nhân</p>
-          </button>
-          <button className="p-1.5 hover:bg-primary-lighter rounded-sm flex gap-4 items-center w-full">
+          </Link>
+          <Link
+            to={ROUTE_PATH.SETTINGS}
+            className="p-1.5 hover:bg-primary-lighter rounded-sm flex gap-4 items-center w-full"
+          >
             <i className="fa-regular fa-gear"></i>
             <p className="">Thông tin</p>
-          </button>
+          </Link>
           <button
             onClick={() => {
               dispatch(logout());

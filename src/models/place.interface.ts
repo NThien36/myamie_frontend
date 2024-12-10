@@ -1,5 +1,6 @@
 import { ApiResponse, FilterParams, Pagination } from "./app.interface";
 import { Category } from "./category.interface";
+import { City } from "./city.interface";
 
 export interface Place {
   id: number;
@@ -8,6 +9,7 @@ export interface Place {
   cover: string;
   city: string;
   dateCreated: string;
+  ownerId: number;
   ownerAvatar: string;
   ownerName: string;
 }
@@ -20,7 +22,7 @@ export interface PlaceDetail {
   images: string[];
   address: string;
   dateCreated: string;
-  city: string;
+  city: City;
   ownerId: number;
   ownerAvatar: string;
   ownerName: string;
@@ -56,4 +58,19 @@ export interface PlacesResponse extends ApiResponse {
 
 export interface PlaceDetailResponse extends ApiResponse {
   data: PlaceDetail;
+}
+
+export interface UpsertPlaceParams {
+  id?: number;
+  name: string;
+  shortDescription: string;
+  description: string;
+  cityId: number;
+  categoryIds: number[];
+  address: string;
+
+  // for update
+  images?: string;
+  imageFiles?: File[];
+  keptImages?: string[];
 }

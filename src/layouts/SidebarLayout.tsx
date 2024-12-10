@@ -1,9 +1,14 @@
 import { ROUTE_PATH } from "@/routes/route-path";
 import { useEffect } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import { RoleEnum } from "@/models/app.interface";
+import { useSelector } from "react-redux";
+import {
+  accountRoleSelector,
+  isLoginSelector,
+} from "@/store/auth/auth.selector";
 
 const ROUTE_LABEL_MAP: Record<string, string> = {
   [ROUTE_PATH.SETTINGS]: "Thông tin cá nhân",
@@ -17,13 +22,24 @@ const ROUTE_LABEL_MAP: Record<string, string> = {
 function SidebarLayout() {
   const navigate = useNavigate();
   const location = useLocation();
-  const role = RoleEnum.ADMIN;
+  const isLoggedIn = useSelector(isLoginSelector);
+  const role = useSelector(accountRoleSelector);
 
   useEffect(() => {
-    window.onpopstate = () => {
+    const handlePopState = () => {
       navigate("/");
     };
+
+    window.onpopstate = handlePopState;
+
+    return () => {
+      window.onpopstate = null; // Cleanup the event listener
+    };
   }, [navigate]);
+
+  if (!isLoggedIn) {
+    return <Navigate to={ROUTE_PATH.LOGIN} replace={true} />;
+  }
 
   const currentLabel = ROUTE_LABEL_MAP[location.pathname] || "";
 

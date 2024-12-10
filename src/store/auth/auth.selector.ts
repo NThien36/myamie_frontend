@@ -7,3 +7,4 @@ export const refreshTokenSelector = (state: AppState) =>
 export const accountSelector = (state: AppState) => state.auth.account;
 export const isLoginSelector = (state: AppState) => state.auth.isLogin;
 export const accountRoleSelector = (state: AppState) => state.auth.account.role;
+export const accountIdSelector = (state: AppState) => state.auth.account.id;

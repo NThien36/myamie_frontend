@@ -5,21 +5,21 @@ import Input from "@/components/Input/Input";
 import ConfirmEmail from "./components/ConfirmEmail";
 import { useState } from "react";
 import Button from "@/components/Buttons/Button";
-import { useCities } from "@/hooks/useCities";
-import { useCategories } from "@/hooks/useCategories";
+import { useGetCities } from "@/services/city.service";
+import { useGetCategories } from "@/services/category.service";
 
 function SignupBusiness() {
   const [isOpen, setIsOpen] = useState(false);
   const {
-    cities,
+    data: cities,
     isLoading: isLoadingCities,
     isError: isErrorCities,
-  } = useCities();
+  } = useGetCities();
   const {
-    categories,
+    data: categories,
     isLoading: isLoadingCategories,
     isError: isErrorCategories,
-  } = useCategories();
+  } = useGetCategories();
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
@@ -75,14 +75,14 @@ function SignupBusiness() {
             />
             <Dropdown
               label="Thành phố"
-              options={cities}
+              options={cities?.data}
               isLoading={isLoadingCities}
               isError={isErrorCities}
               placeHolder="Chọn thành phố"
             />
             <Dropdown
               label="Thể loại (3)"
-              options={categories}
+              options={categories?.data}
               isMulti={true}
               isClearable={true}
               maxSelectItems={3}

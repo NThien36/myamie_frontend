@@ -13,7 +13,6 @@ import { useState } from "react";
 function Businesses() {
   const [params, setParams] = useState<BusinessesParams>({
     pageNumber: 1,
-    pageSize: 1,
   });
   const [tempCityId, setTempCityId] = useState<number | null>(null);
 

@@ -38,7 +38,7 @@ axiosInstance.refreshToken({
   success: (response, config) => {
     store.dispatch(
       login({
-        user: store.getState().auth.user,
+        account: store.getState().auth.account,
         accessToken: response.data.accessToken,
         refreshToken: response.data.refreshToken,
       })

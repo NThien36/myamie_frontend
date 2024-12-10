@@ -4,7 +4,7 @@ import cx from "classnames";
 interface CategoryItemProps {
   category: Category;
   onClick?: () => void;
-  isActive: boolean;
+  isActive?: boolean;
 }
 
 function CategoryItem({ category, onClick, isActive }: CategoryItemProps) {

@@ -78,6 +78,7 @@ function NavBar() {
               <i className="text-primary fa-lg fa-solid fa-comments"></i>
             </Link>
             <ProfileOptions
+              accountId={account.id}
               src={account.avatar ?? noAvatar}
               name={`${account.lastName ?? ""} ${account.firstName ?? ""}`}
             />
@@ -94,7 +95,7 @@ function NavBar() {
         )}
       </div>
       {showDropdown && (
-        <div className="animate-slide-down absolute bg-background shadow-2xl w-full px-5 py-8 flex flex-col gap-5 text-lg font-medium">
+        <div className="animate-slide-down absolute bg-background shadow-2xl w-full px-5 py-8 flex flex-col gap-5 text-lg font-medium z-10">
           <Link to={ROUTE_PATH.BUSINESSES} className="hover:underline">
             Dịch vụ
           </Link>

@@ -3,39 +3,78 @@ import { Link } from "react-router-dom";
 import Avatar from "../Avatar/Avatar";
 import IconText from "../IconText/IconText";
 import IconBtn from "../Buttons/IconBtn";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ConfirmModal from "../Modals/ConfirmModal";
 import Button from "../Buttons/Button";
 import CustomModal from "../Modals/CustomModal";
-import UpsertPlace from "../Forms/UpsertPlace";
 import getImageUrl from "@/utils/getImageUrl";
+import { useSelector } from "react-redux";
+import { accountIdSelector } from "@/store/auth/auth.selector";
+import { useDeletePlace } from "@/services/place.service";
+import { useQueryClient } from "@tanstack/react-query";
+import { PLACE_QUERY_KEY } from "@/utils/constants";
+import UpdatePlace from "../Forms/UpdatePlace";
 
 function PlaceCard({ place }: { place: Place }) {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isPending, setIsPending] = useState(false);
+  const updatePlaceRef = useRef<{ submit: () => void } | null>(null); // Ref for UpdatePlace
+  const accountId = useSelector(accountIdSelector);
+  const queryClient = useQueryClient(); // Query client for invalidating queries
+
+  const { isPending: isDeleting, mutateAsync } = useDeletePlace();
 
   const openDeleteModal = () => setIsDeleteOpen(true);
   const closeDeleteModal = () => setIsDeleteOpen(false);
   const openEditModal = () => setIsEditOpen(true);
   const closeEditModal = () => setIsEditOpen(false);
 
+  // Manage body overflow for modals
+  useEffect(() => {
+    document.body.style.overflow =
+      isEditOpen || isDeleteOpen ? "hidden" : "auto";
+
+    // Clean up when the component unmounts
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isEditOpen, isDeleteOpen]);
+
+  const handleDelete = async () => {
+    await mutateAsync(place.id, {
+      onSuccess: () => {
+        // Invalidate query to refetch data
+        queryClient.invalidateQueries({ queryKey: [PLACE_QUERY_KEY] });
+        closeDeleteModal();
+      },
+      onError: closeDeleteModal,
+    });
+  };
+
+  const handleUpdateSubmit = () => {
+    updatePlaceRef.current?.submit(); // Trigger form submission
+  };
+
   return (
     <>
       <div className="flex flex-col border-2 rounded-lg relative transition-shadow duration-300 hover:shadow-xl bg-white">
-        <div className="absolute top-2 right-2 flex flex-col gap-2">
-          <IconBtn
-            onClick={openEditModal}
-            effect="opacity"
-            icon="fa-pen"
-            size="size-9"
-          />
-          <IconBtn
-            effect="opacity"
-            icon="fa-trash"
-            size="size-9"
-            onClick={openDeleteModal}
-          />
-        </div>
+        {place.ownerId === accountId && (
+          <div className="absolute top-2 right-2 flex flex-col gap-2">
+            <IconBtn
+              onClick={openEditModal}
+              effect="opacity"
+              icon="fa-pen"
+              size="size-9"
+            />
+            <IconBtn
+              effect="opacity"
+              icon="fa-trash"
+              size="size-9"
+              onClick={openDeleteModal}
+            />
+          </div>
+        )}
         <img
           src={getImageUrl(place.cover, "cover")}
           alt={place.name}
@@ -77,10 +116,10 @@ function PlaceCard({ place }: { place: Place }) {
       <ConfirmModal
         isOpen={isDeleteOpen}
         onClose={closeDeleteModal}
-        className="w-11/12 sm:w-1/2"
+        className="w-11/12 sm:w-1/2 xl:w-1/3"
       >
         <div className="flex gap-5">
-          <div className="flex items-center justify-center bg-gray-100 w-12 rounded-md">
+          <div className="flex items-center justify-center bg-gray-100 w-12 p-2 rounded-md">
             <i className="text-red-500 fa-xl fa-regular fa-circle-xmark"></i>
           </div>
           <div>
@@ -92,7 +131,13 @@ function PlaceCard({ place }: { place: Place }) {
           <Button className="w-full" variant="ghost" onClick={closeDeleteModal}>
             Trở lại
           </Button>
-          <Button className="w-full">Đồng ý</Button>
+          <Button
+            className="w-full"
+            onClick={handleDelete}
+            disabled={isDeleting}
+          >
+            {isDeleting ? "Đang xoá..." : "Đồng ý"}
+          </Button>
         </div>
       </ConfirmModal>
       <CustomModal
@@ -101,8 +146,16 @@ function PlaceCard({ place }: { place: Place }) {
         onClose={closeEditModal}
         saveButtonTitle="Cập nhật"
         className="w-11/12 lg:w-1/2"
+        isPending={isPending}
+        onActiveClick={handleUpdateSubmit}
+        onInactiveClick={closeEditModal}
       >
-        <UpsertPlace />
+        <UpdatePlace
+          id={place.id}
+          onCloseModal={closeEditModal}
+          ref={updatePlaceRef}
+          setIsPending={setIsPending}
+        />
       </CustomModal>
     </>
   );

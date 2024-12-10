@@ -52,6 +52,14 @@ const router = createBrowserRouter([
         path: ROUTE_PATH.PLACE_DETAIL,
         element: <PlaceProfile />,
       },
+      {
+        path: ROUTE_PATH.FORBIDDEN,
+        element: <Businesses />,
+      },
+      {
+        path: "*",
+        element: <PlaceProfile />,
+      },
     ],
   },
   {

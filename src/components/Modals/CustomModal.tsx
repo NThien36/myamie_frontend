@@ -1,6 +1,7 @@
 import ReactModal from "react-modal";
 import IconBtn from "../Buttons/IconBtn";
 import Button from "../Buttons/Button";
+import { isPending } from "@reduxjs/toolkit";
 
 interface CustomModalProps {
   title: string;
@@ -12,6 +13,7 @@ interface CustomModalProps {
   saveButtonTitle?: string;
   cancelButtonTitle?: string;
   className?: string;
+  isPending?: boolean;
 }
 
 function CustomModal({
@@ -24,6 +26,7 @@ function CustomModal({
   className = "w-1/2",
   onActiveClick,
   onInactiveClick,
+  isPending = false,
 }: CustomModalProps) {
   return (
     <ReactModal
@@ -51,8 +54,12 @@ function CustomModal({
         >
           {cancelButtonTitle}
         </Button>
-        <Button onClick={onActiveClick} padding="py-1.5 px-2.5">
-          {saveButtonTitle}
+        <Button
+          disabled={isPending}
+          onClick={onActiveClick}
+          padding="py-1.5 px-2.5"
+        >
+          {isPending ? "Đang " + saveButtonTitle + "..." : saveButtonTitle}
         </Button>
       </div>
     </ReactModal>

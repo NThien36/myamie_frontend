@@ -66,7 +66,7 @@ function Users() {
   } else if (isError) {
     content = <p className="error">Lỗi, vui lòng thử lại {data?.message}</p>;
   } else if (data?.data.users?.length === 0) {
-    content = <NotFound />;
+    content = <NotFound type="user" />;
   } else {
     content = (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

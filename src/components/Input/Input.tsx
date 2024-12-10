@@ -4,12 +4,14 @@ interface InputProps {
   id?: string;
   label?: string;
   placeholder?: string;
-  value?: string;
+  value?: string | number | undefined;
   type?: "text" | "password" | "email" | "number" | "date";
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   readonly?: boolean;
   errorMessage?: string;
   className?: string;
+  disabled?: boolean;
+  hidden?: boolean;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -24,6 +26,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       readonly,
       errorMessage,
       className,
+      disabled = false,
+      hidden = false,
       ...rest
     },
     ref
@@ -47,9 +51,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             id={id}
             type={showPassword && type === "password" ? "text" : type}
             placeholder={placeholder}
-            value={value}
+            defaultValue={value}
             onChange={onChange}
             readOnly={readonly}
+            disabled={disabled}
+            hidden={hidden}
             className="p-3 outline-gray-300 w-full border border-gray-200 rounded-md"
             {...rest}
           />
