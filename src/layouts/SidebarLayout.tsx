@@ -3,12 +3,12 @@ import { useEffect } from "react";
 import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
 import Sidebar from "./components/Sidebar/Sidebar";
-import { RoleEnum } from "@/models/app.interface";
 import { useSelector } from "react-redux";
 import {
   accountRoleSelector,
   isLoginSelector,
 } from "@/store/auth/auth.selector";
+import { Toaster } from "react-hot-toast";
 
 const ROUTE_LABEL_MAP: Record<string, string> = {
   [ROUTE_PATH.SETTINGS]: "Thông tin cá nhân",
@@ -45,6 +45,7 @@ function SidebarLayout() {
 
   return (
     <>
+      <Toaster />
       <NavBar />
       <div className="container px-3 md:px-14 min-h-screen">
         <div className="grid grid-cols-1 xl:grid-cols-5 mt-10 mb-32">

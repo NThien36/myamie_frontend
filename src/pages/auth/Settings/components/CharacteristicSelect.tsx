@@ -4,10 +4,14 @@ import { useState } from "react";
 
 interface CharacteristicSelectProps {
   currentCharacteristics?: string[];
+  onChange: (characteristics: string[]) => void;
+  errorMessage?: string;
 }
 
 function CharacteristicSelect({
   currentCharacteristics,
+  onChange,
+  errorMessage,
 }: CharacteristicSelectProps) {
   const [characteristics, setCharacteristics] = useState<string[]>(
     currentCharacteristics || []
@@ -22,15 +26,19 @@ function CharacteristicSelect({
       !characteristics.includes(inputValue) && // No duplicates
       characteristics.length < 5
     ) {
-      setCharacteristics([...characteristics, inputValue.trim()]);
+      const updatedCharacteristics = [...characteristics, inputValue.trim()];
+      setCharacteristics(updatedCharacteristics);
+      onChange(updatedCharacteristics);
       setInputValue("");
     }
   };
 
   const handleRemoveCharacteristic = (characteristic: string) => {
-    setCharacteristics(
-      characteristics.filter((item) => item !== characteristic)
+    const updatedCharacteristics = characteristics.filter(
+      (item) => item !== characteristic
     );
+    setCharacteristics(updatedCharacteristics);
+    onChange(updatedCharacteristics);
   };
 
   return (
@@ -56,6 +64,9 @@ function CharacteristicSelect({
           />
         ))}
       </div>
+      {errorMessage && (
+        <p className="text-xs text-red-500 mt-2">{errorMessage}</p>
+      )}
     </div>
   );
 }

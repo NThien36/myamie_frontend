@@ -1,4 +1,9 @@
+import {
+  AccountProfileResponse,
+  UpdateProfileParams,
+} from "@/models/account.interface";
 import fetchAPI from "@/utils/fetchApi";
+import createFormData from "@/utils/formatDataUtils";
 import { AxiosResponse } from "axios";
 
 export const resetPassword = async ({
@@ -14,6 +19,56 @@ export const resetPassword = async ({
     url: "/Account/reset-password",
     method: "post",
     data: { email, code, newPassword },
+  });
+
+  return response.data;
+};
+
+export const updateCover = async (image: File) => {
+  const formData = createFormData({ imageFile: image });
+
+  const response: AxiosResponse<string> = await fetchAPI.request({
+    url: "/Account/update-cover",
+    method: "put",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    data: formData,
+  });
+
+  return response.data;
+};
+
+export const updateAvatar = async (image: File) => {
+  const formData = createFormData({ imageFile: image });
+
+  const response: AxiosResponse<string> = await fetchAPI.request({
+    url: "/Account/update-avatar",
+    method: "put",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    data: formData,
+  });
+
+  return response.data;
+};
+
+export const getProfile = async () => {
+  const response: AxiosResponse<AccountProfileResponse> =
+    await fetchAPI.request({
+      url: "/Account/get-profile",
+      method: "get",
+    });
+
+  return response.data;
+};
+
+export const updateProfile = async (data: UpdateProfileParams) => {
+  const response: AxiosResponse<string> = await fetchAPI.request({
+    url: "/Account/update-profile",
+    method: "put",
+    data,
   });
 
   return response.data;
