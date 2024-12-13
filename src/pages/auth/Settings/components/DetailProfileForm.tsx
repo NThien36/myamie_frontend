@@ -13,12 +13,17 @@ import { useUpdatePorfile } from "@/services/account.service";
 import { PROFILE_QUERY_KEY } from "@/utils/constants";
 import { formatDateForInput } from "@/utils/dateTimeUtils";
 import Button from "@/components/Buttons/Button";
+import ImagesDisplay from "@/components/ImagesUpload/ImagesDisplay";
+import ImagesUpload from "@/components/ImagesUpload/ImagesUpload";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 interface DetailProfileFormProps {
   detail: AccountProfile;
 }
 
 const schema = z.object({
+  images: z.string(),
   lastName: z
     .string()
     .min(1, { message: "Họ không được để trống" })
@@ -43,11 +48,15 @@ const schema = z.object({
   characteristics: z
     .array(z.string())
     .max(5, { message: "Chọn tối đa 5 đặc điểm" }),
+  imageFiles: z
+    .array(z.instanceof(File))
+    .max(10, { message: "Tải lên tối đa 10 hình ảnh" }),
 });
 
 type FormUpdateProfileFields = z.infer<typeof schema>;
 
 function DetailProfileForm({ detail }: DetailProfileFormProps) {
+  const [displayImages, setDisplayImages] = useState<string[]>(detail.images);
   const queryClient = useQueryClient();
   const {
     register,
@@ -58,6 +67,7 @@ function DetailProfileForm({ detail }: DetailProfileFormProps) {
     mode: "onBlur",
     resolver: zodResolver(schema),
     defaultValues: {
+      images: detail.images.join(";"),
       lastName: detail.lastName,
       firstName: detail.firstName,
       dateOfBirth: formatDateForInput(detail.dateOfBirth),
@@ -83,11 +93,28 @@ function DetailProfileForm({ detail }: DetailProfileFormProps) {
   const { isPending, mutateAsync } = useUpdatePorfile();
 
   const onSubmit = async (data: FormUpdateProfileFields) => {
-    await mutateAsync(data, {
+    const totalImages = data.imageFiles.length + displayImages.length;
+    if (totalImages > 10) {
+      toast.error("Tối đa 10 hình ảnh");
+      return;
+    }
+
+    // Include kept images
+    const finalData = {
+      ...data,
+      keptImages: displayImages, // Add kept images
+    };
+
+    await mutateAsync(finalData, {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: [PROFILE_QUERY_KEY] });
       },
     });
+  };
+
+  // Remove display image
+  const handleRemoveDisplayImage = (index: number) => {
+    setDisplayImages((prev) => prev.filter((_, i) => i !== index));
   };
 
   return (
@@ -158,11 +185,21 @@ function DetailProfileForm({ detail }: DetailProfileFormProps) {
           />
         )}
       />
+      <ImagesDisplay
+        images={displayImages}
+        onRemove={handleRemoveDisplayImage}
+      />
+      <ImagesUpload
+        control={control}
+        name="imageFiles"
+        limit={10 - displayImages.length}
+      />
+      <Input type="text" {...register("images")} hidden />
       <Button
         disabled={isPending}
         type="submit"
         variant="outline"
-        className="mt-10 ml-auto w-fit text-xs font-medium"
+        className="ml-auto w-fit text-xs font-medium"
       >
         {isPending ? "Đang cập nhật..." : "Lưu thay đổi"}
       </Button>

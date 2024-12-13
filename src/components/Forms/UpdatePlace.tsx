@@ -113,7 +113,7 @@ const UpdatePlace = forwardRef(
         return;
       }
 
-      // Combine kept images and uploaded files
+      // Combine kept images
       const finalData = {
         ...data,
         keptImages: displayImages, // Add kept images

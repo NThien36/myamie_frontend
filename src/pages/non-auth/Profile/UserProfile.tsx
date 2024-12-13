@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 import { useGetUserById } from "@/services/user.service";
 import Loader from "@/components/Loader/Loader";
 import NotFound from "@/components/PlaceholderPages/NotFound";
+import getImageUrl from "@/utils/getImageUrl";
 
 function UserProfile() {
   const { id } = useParams();
@@ -104,7 +105,7 @@ function UserProfile() {
                   user.images.map((image, index) => (
                     <img
                       key={index}
-                      src={image}
+                      src={getImageUrl(image, "cover")}
                       alt={user.name}
                       className="w-full h-64 object-cover rounded-lg"
                     />

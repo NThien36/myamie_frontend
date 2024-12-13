@@ -1,4 +1,5 @@
 import {
+  changePassword,
   getProfile,
   resetPassword,
   updateAvatar,
@@ -64,6 +65,18 @@ export const useUpdatePorfile = () => {
     },
     onError: (error) => {
       handleMessageError(error, "Xảy ra lỗi khi cập nhật thông tin");
+    },
+  });
+};
+
+export const useChangePassword = () => {
+  return useMutation({
+    mutationFn: changePassword,
+    onSuccess: () => {
+      toast.success("Đổi mật khẩu thành công");
+    },
+    onError: (error) => {
+      handleMessageError(error, "Mật khẩu cũ không đúng");
     },
   });
 };

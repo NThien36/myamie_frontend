@@ -45,8 +45,6 @@ export const createPlace = async (data: UpsertPlaceParams) => {
 export const updatePlace = async (data: UpsertPlaceParams) => {
   const formData = createFormData(data);
 
-  console.log(formData);
-
   const response: AxiosResponse<string> = await fetchAPI.request({
     url: "/Place/update",
     method: "put",

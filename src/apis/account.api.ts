@@ -1,10 +1,12 @@
 import {
   AccountProfileResponse,
+  ChangePasswordParams,
   UpdateProfileParams,
 } from "@/models/account.interface";
 import fetchAPI from "@/utils/fetchApi";
 import createFormData from "@/utils/formatDataUtils";
 import { AxiosResponse } from "axios";
+import { date } from "zod";
 
 export const resetPassword = async ({
   email,
@@ -65,8 +67,23 @@ export const getProfile = async () => {
 };
 
 export const updateProfile = async (data: UpdateProfileParams) => {
+  const formData = createFormData(data);
+
   const response: AxiosResponse<string> = await fetchAPI.request({
     url: "/Account/update-profile",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    method: "put",
+    data: formData,
+  });
+
+  return response.data;
+};
+
+export const changePassword = async (data: ChangePasswordParams) => {
+  const response: AxiosResponse<string> = await fetchAPI.request({
+    url: "/Account/change-password",
     method: "put",
     data,
   });

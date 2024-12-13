@@ -27,8 +27,17 @@ export interface UpdateProfileParams {
   shortDescription: string;
   description: string;
   dateOfBirth?: string;
-  // images: string[];
   characteristics?: string[];
   cityId: number;
   categoryIds: number[];
+
+  // for update
+  images?: string;
+  imageFiles?: File[];
+  keptImages?: string[];
+}
+
+export interface ChangePasswordParams {
+  oldPassword: string;
+  newPassword: string;
 }
