@@ -4,6 +4,22 @@ export enum RoleEnum {
   BUSINESS = "BUSINESS",
 }
 
+export enum AccountStatusEnum {
+  ACTIVATED = 1,
+  SUSPENDED = 2,
+}
+
+export enum AccountRoleEnum {
+  USER = 2,
+  BUSINESS = 3,
+}
+
+export enum PlaceStatusEnum {
+  ACTIVATED = 1,
+  SUSPENDED = 2,
+  DELETED = 3,
+}
+
 export interface ApiResponse {
   isSuccess: boolean;
   message: string;

@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/store/auth/auth.slice";
 import { Link } from "react-router-dom";
 import { ROUTE_PATH } from "@/routes/route-path";
+import { accountRoleSelector } from "@/store/auth/auth.selector";
+import { RoleEnum } from "@/models/app.interface";
 
 interface ProfileOptionsProps {
   src: string;
@@ -14,6 +16,7 @@ interface ProfileOptionsProps {
 
 function ProfileOptions({ src, name, accountId }: ProfileOptionsProps) {
   const [isShow, setIsShow] = useState(false);
+  const role = useSelector(accountRoleSelector);
   const dispatch = useDispatch();
 
   const handleShowOptions = () => {
@@ -37,20 +40,32 @@ function ProfileOptions({ src, name, accountId }: ProfileOptionsProps) {
       </div>
       {isShow && (
         <div className="absolute text-nowrap bg-white rounded-md right-0 border-2 shadow-xl p-1 mt-2">
-          <Link
-            to={`/user/${accountId}`}
-            className="p-1.5 hover:bg-primary-lighter rounded-sm flex gap-4 items-center w-full"
-          >
-            <i className="fa-regular fa-user"></i>
-            <p className="">Trang cá nhân</p>
-          </Link>
-          <Link
-            to={ROUTE_PATH.SETTINGS}
-            className="p-1.5 hover:bg-primary-lighter rounded-sm flex gap-4 items-center w-full"
-          >
-            <i className="fa-regular fa-gear"></i>
-            <p className="">Thông tin</p>
-          </Link>
+          {role === RoleEnum.ADMIN ? (
+            <Link
+              to={ROUTE_PATH.ADMIN_USERS}
+              className="p-1.5 hover:bg-primary-lighter rounded-sm flex gap-4 items-center w-full"
+            >
+              <i className="fa-regular fa-user"></i>
+              <p className="">Quản trị</p>
+            </Link>
+          ) : (
+            <>
+              <Link
+                to={`/user/${accountId}`}
+                className="p-1.5 hover:bg-primary-lighter rounded-sm flex gap-4 items-center w-full"
+              >
+                <i className="fa-regular fa-user"></i>
+                <p className="">Trang cá nhân</p>
+              </Link>
+              <Link
+                to={ROUTE_PATH.SETTINGS}
+                className="p-1.5 hover:bg-primary-lighter rounded-sm flex gap-4 items-center w-full"
+              >
+                <i className="fa-regular fa-gear"></i>
+                <p className="">Thông tin</p>
+              </Link>
+            </>
+          )}
           <button
             onClick={() => {
               dispatch(logout());

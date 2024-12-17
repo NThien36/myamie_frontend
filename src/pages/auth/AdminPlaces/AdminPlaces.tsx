@@ -1,54 +1,90 @@
-import { cityData } from "@/assets/data/city";
-import { placeAdminData } from "@/assets/data/place.data";
 import Button from "@/components/Buttons/Button";
-import Dropdown from "@/components/Dropdown/Dropdown";
 import FilterSelects from "@/components/FilterSelects/FilterSelects";
 import Input from "@/components/Input/Input";
 import { PlaceAdmin } from "@/models/place.interface";
-import React from "react";
+import React, { useState } from "react";
 import { Column, useTable } from "react-table";
 import StatusChange from "./components/StatusChange";
+import {
+  ACTIVE_OPTION,
+  ALL_OPTIONS,
+  DELETE_OPTION,
+  SUSPEND_OPTION,
+} from "@/utils/constants";
+import { useGetPlacesByAdmin } from "@/services/admin.service";
+import { PlacesAdminParams } from "@/models/admin.interface";
+import Loader from "@/components/Loader/Loader";
+import Pagination from "@/components/Pagination/Pagination";
+import getImageUrl from "@/utils/getImageUrl";
+import { PlaceStatusEnum } from "@/models/app.interface";
 
 function AdminPlaces() {
-  const data = React.useMemo(() => placeAdminData, []);
+  const [params, setParams] = useState<PlacesAdminParams>({
+    pageNumber: 1,
+  });
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const { data, isLoading, isError } = useGetPlacesByAdmin(params);
+  const pagination = data?.data.pagination;
+
+  const updateParams = (newParams: PlacesAdminParams) => {
+    setParams((prev) => ({ ...prev, ...newParams, pageNumber: 1 }));
+  };
+
+  // Handle status changes
+  const handleStatusChange = (statusLabel: string) => {
+    let status: PlaceStatusEnum | undefined = undefined;
+    if (statusLabel === ACTIVE_OPTION) status = PlaceStatusEnum.ACTIVATED;
+    else if (statusLabel === SUSPEND_OPTION) status = PlaceStatusEnum.SUSPENDED;
+    else if (statusLabel === DELETE_OPTION) status = PlaceStatusEnum.DELETED;
+
+    updateParams({ Status: status });
+  };
+
+  const handleSearch = () => {
+    updateParams({ searchTerm });
+  };
+
+  const handlePageChange = (pageNumber: number) => {
+    setParams((prev) => ({ ...prev, pageNumber }));
+  };
 
   const columns = React.useMemo(
     (): Column<PlaceAdmin>[] => [
       {
-        Header: "Cover",
+        Header: "Ảnh bìa",
         accessor: "cover",
         Cell: ({ value }: { value: string }) => (
           <img
-            src={value}
+            src={getImageUrl(value, "cover")}
             alt="Cover"
             className="h-16 w-full object-cover rounded"
           />
         ),
       },
       {
-        Header: "Name",
+        Header: "Tên",
         accessor: "name",
       },
       {
-        Header: "City",
+        Header: "Thành phố",
         accessor: "city",
       },
       {
-        Header: "Owner",
+        Header: "Người đăng",
         accessor: "ownerName",
         Cell: ({ row }: { row: any }) => (
           <div className="flex items-center space-x-2">
             <img
-              src={row.original.ownerAvatar}
+              src={getImageUrl(row.original.ownerAvatar, "avatar")}
               alt="Owner Avatar"
-              className="h-8 w-8 rounded-full"
+              className="h-8 w-8 rounded-full object-cover flex-none"
             />
             <span>{row.original.ownerName}</span>
           </div>
         ),
       },
       {
-        Header: "Status",
+        Header: "Trạng thái",
         accessor: "status",
         Cell: ({ value }: { value: string }) => (
           <span
@@ -76,64 +112,95 @@ function AdminPlaces() {
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable<PlaceAdmin>({ columns, data });
+    useTable<PlaceAdmin>({ columns, data: data?.data.places ?? [] });
+
+  let content;
+  if (isLoading) {
+    content = <Loader />;
+  } else if (isError) {
+    content = <p className="error">Lỗi, vui lòng thử lại {data?.message}</p>;
+  } else if (data?.data.places?.length === 0) {
+    content = <p className="mx-auto w-fit">Không có dữ liệu</p>;
+  } else {
+    content = (
+      <table
+        {...getTableProps()}
+        className="min-w-full bg-white rounded-lg overflow-hidden"
+      >
+        <thead>
+          {headerGroups.map((headerGroup) => {
+            const { key, ...rest } = headerGroup.getHeaderGroupProps();
+            return (
+              <tr key={key} {...rest} className="bg-gray-100 border-b">
+                {headerGroup.headers.map((column) => {
+                  const { key: columnKey, ...columnRest } =
+                    column.getHeaderProps();
+                  return (
+                    <th
+                      key={columnKey}
+                      {...columnRest}
+                      className="p-4 text-left font-semibold uppercase text-xs whitespace-nowrap"
+                    >
+                      {column.render("Header")}
+                    </th>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row) => {
+            prepareRow(row);
+            const { key, ...rest } = row.getRowProps();
+            return (
+              <tr key={key} {...rest} className="border-b">
+                {row.cells.map((cell) => {
+                  const { key: cellKey, ...cellRest } = cell.getCellProps();
+                  return (
+                    <td key={cellKey} {...cellRest} className="p-4">
+                      {cell.render("Cell")}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    );
+  }
 
   return (
     <>
       <div className="space-y-3">
         <FilterSelects
           label="Trạng thái"
-          options={["Tất cả (90)", "Đang hoạt động (90)", "Bị khoá (90)"]}
+          options={[ALL_OPTIONS, ACTIVE_OPTION, SUSPEND_OPTION, DELETE_OPTION]}
+          onFilterChange={handleStatusChange}
         />
         <div className="grid grid-cols-2 gap-3">
-          <Dropdown
-            height="2.93rem"
-            placeHolder="Chọn thành phố"
-            options={cityData}
-          />
           <div className="flex gap-2">
-            <Input placeholder="Nhập tên hoặc email" className="h-full" />
-            <Button variant="ghost">Tìm kiếm</Button>
+            <Input
+              placeholder="Nhập tên hoặc email"
+              className="h-full"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <Button variant="ghost" onClick={handleSearch}>
+              Tìm kiếm
+            </Button>
           </div>
         </div>
       </div>
-      <div className="auth-container mt-5">
-        <table
-          {...getTableProps()}
-          className="min-w-full bg-white rounded-lg overflow-hidden"
-        >
-          <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr
-                {...headerGroup.getHeaderGroupProps()}
-                className="bg-gray-100 border-b"
-              >
-                {headerGroup.headers.map((column) => (
-                  <th
-                    {...column.getHeaderProps()}
-                    className="p-4 text-left font-semibold uppercase text-xs"
-                  >
-                    {column.render("Header")}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} className="border-b">
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()} className="p-4">
-                      {cell.render("Cell")}
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <div className="auth-container overflow-x-auto mt-5">
+        {content}
+        <Pagination
+          className="mt-10"
+          currentPage={pagination?.currentPage ?? 1}
+          totalPage={pagination?.totalPages ?? 1}
+          onPageChange={handlePageChange}
+        />
       </div>
     </>
   );

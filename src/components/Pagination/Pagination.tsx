@@ -4,12 +4,14 @@ interface PaginationProps {
   currentPage: number;
   totalPage: number;
   onPageChange: (page: number) => void;
+  className?: string;
 }
 
 function Pagination({
   currentPage = 1,
   totalPage = 1,
   onPageChange,
+  className = "mt-20",
 }: PaginationProps) {
   const handlePreviousPage = () => {
     if (currentPage > 1) {
@@ -24,7 +26,7 @@ function Pagination({
   };
 
   return (
-    <div className="flex items-center gap-4 w-fit mx-auto mt-20">
+    <div className={`flex items-center gap-4 w-fit mx-auto ${className}`}>
       <Button
         variant="ghost"
         padding="px-3 py-1.5"
@@ -40,7 +42,7 @@ function Pagination({
         variant="ghost"
         padding="px-3 py-1.5"
         onClick={handleNextPage}
-        disabled={currentPage === totalPage}
+        disabled={currentPage === totalPage || totalPage === 0}
       >
         <i className="fa-solid fa-chevron-right"></i>
       </Button>
