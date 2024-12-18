@@ -39,7 +39,8 @@ export interface SignupPayload {
 export interface SignupBusinessPayload {
   email: string;
   password: string;
+  shortDescription: string;
   name: string;
-  city: number;
-  categories: number[];
+  cityId: number;
+  categoryIds: number[];
 }

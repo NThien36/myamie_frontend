@@ -9,7 +9,7 @@ interface AvatarUploadProps {
 }
 
 function AvatarUpload({ image }: AvatarUploadProps) {
-  const [src, setSrc] = useState<string>(image || noAvatar);
+  const [src, setSrc] = useState<string>(image || "");
   const [isModified, setIsModified] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);

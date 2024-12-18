@@ -3,9 +3,14 @@ import CoverUpload from "./components/CoverUpload";
 import DetailProfileForm from "./components/DetailProfileForm";
 import { useGetProfile } from "@/services/account.service";
 import Loader from "@/components/Loader/Loader";
+import { useSelector } from "react-redux";
+import { accountRoleSelector } from "@/store/auth/auth.selector";
+import { RoleEnum } from "@/models/app.interface";
+import DetailProfileFormBusiness from "./components/DetailProfileFormBusiness";
 
 function Settings() {
   const { data, isLoading, isError } = useGetProfile();
+  const role = useSelector(accountRoleSelector);
   const profile = data?.data;
 
   if (isLoading) {
@@ -23,7 +28,11 @@ function Settings() {
       <CoverUpload image={profile.cover} />
       <div className="flex flex-wrap md:flex-nowrap gap-10 mt-7">
         <AvatarUpload image={profile.avatar} />
-        <DetailProfileForm detail={profile} />
+        {role === RoleEnum.BUSINESS ? (
+          <DetailProfileFormBusiness detail={profile} />
+        ) : (
+          <DetailProfileForm detail={profile} />
+        )}
       </div>
     </div>
   );

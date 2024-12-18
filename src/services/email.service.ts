@@ -39,13 +39,9 @@ export const useRequestEmailResetPassword = () => {
 
 export const useVerifyEmail = () => {
   return useMutation({
-    mutationKey: ["verifyEmail"],
     mutationFn: verifyEmail,
-    onSuccess: (data) => {
-      // Display success message from backend if present
-      const successMessage =
-        typeof data === "string" ? data : "Xác minh email thành công!";
-      toast.success(successMessage);
+    onSuccess: () => {
+      toast.success("Xác minh email thành công!");
     },
     onError: (error) => {
       handleMessageError(error, "Mã xác minh không hợp lệ hoặc đã hết hạn");

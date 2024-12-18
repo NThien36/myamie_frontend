@@ -17,7 +17,6 @@ export enum AccountRoleEnum {
 export enum PlaceStatusEnum {
   ACTIVATED = 1,
   SUSPENDED = 2,
-  DELETED = 3,
 }
 
 export interface ApiResponse {

@@ -10,7 +10,11 @@ import { useGetCities } from "@/services/city.service";
 import { useGetPlaceById, useUpdatePlace } from "@/services/place.service";
 import Loader from "../Loader/Loader";
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
-import { PLACE_DETAIL_QUERY_KEY, PLACE_QUERY_KEY } from "@/utils/constants";
+import {
+  PLACE_DETAIL_QUERY_KEY,
+  PLACE_QUERY_KEY,
+  PLACES_ADMIN_QUERY_KEY,
+} from "@/utils/constants";
 import { useQueryClient } from "@tanstack/react-query";
 import ImagesDisplay from "../ImagesUpload/ImagesDisplay";
 import toast from "react-hot-toast";
@@ -122,7 +126,12 @@ const UpdatePlace = forwardRef(
       await mutateAsync(finalData, {
         onSuccess: async () => {
           // Invalidate the places query to refetch the data
-          queryClient.invalidateQueries({ queryKey: [PLACE_QUERY_KEY] });
+          queryClient.invalidateQueries({
+            queryKey: [PLACE_QUERY_KEY],
+          });
+          queryClient.invalidateQueries({
+            queryKey: [PLACES_ADMIN_QUERY_KEY],
+          });
           if (place) {
             queryClient.invalidateQueries({
               queryKey: [PLACE_DETAIL_QUERY_KEY, place.id],

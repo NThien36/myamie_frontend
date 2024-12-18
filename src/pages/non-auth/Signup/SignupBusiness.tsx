@@ -7,9 +7,53 @@ import { useState } from "react";
 import Button from "@/components/Buttons/Button";
 import { useGetCities } from "@/services/city.service";
 import { useGetCategories } from "@/services/category.service";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useSignupBusiness } from "@/services/auth.service";
+import toast from "react-hot-toast";
+
+const schema = z.object({
+  email: z
+    .string()
+    .min(1, { message: "Email không được để trống" })
+    .email({ message: "Email không đúng định dạng" }),
+  password: z
+    .string()
+    .min(1, { message: "Mật khẩu không được để trống" })
+    .min(6, { message: "Mật khẩu phải dài hơn 6 ký tự" }),
+  shortDescription: z
+    .string()
+    .min(1, { message: "Mô tả không được để trống" })
+    .max(250, { message: "Mô tả ngắn không được dài quá 250 ký tự" }),
+  name: z
+    .string()
+    .min(1, { message: "Tên không được để trống" })
+    .max(50, { message: "Tên không được dài quá 50 ký tự" }),
+  cityId: z
+    .number({ required_error: "Thành phố không được để trống" })
+    .min(1, { message: "Vui lòng chọn một thành phố" }),
+  categoryIds: z
+    .array(z.number(), { required_error: "Thể loại không được để trống" })
+    .min(1, { message: "Chọn ít nhất một thể loại" })
+    .max(3, { message: "Chọn tối đa 3 thể loại" }),
+});
+
+export type FormSignupBusinessFields = z.infer<typeof schema>;
 
 function SignupBusiness() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [submittedEmail, setSubmittedEmail] = useState<string>("");
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<FormSignupBusinessFields>({
+    mode: "onBlur",
+    resolver: zodResolver(schema),
+  });
+
   const {
     data: cities,
     isLoading: isLoadingCities,
@@ -21,11 +65,23 @@ function SignupBusiness() {
     isError: isErrorCategories,
   } = useGetCategories();
 
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+  const { isPending, mutateAsync } = useSignupBusiness();
+  const navigate = useNavigate();
+
+  const onSubmit = async (data: FormSignupBusinessFields) => {
+    setSubmittedEmail(data.email);
+    await mutateAsync(data, {
+      onSuccess: () => {
+        navigate("/login");
+      },
+    });
+  };
 
   return (
-    <div className="mx-auto flex flex-col items-center py-10 sm:py-0">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="mx-auto flex flex-col items-center py-10 sm:py-0"
+    >
       <p className="text-xl font-medium text-center">
         Đăng ký cho người làm dịch vụ
       </p>
@@ -46,16 +102,22 @@ function SignupBusiness() {
               label="Email"
               placeholder="Nhập email của bạn"
               type="email"
+              {...register("email")}
+              errorMessage={errors.email?.message}
             />
             <Input
               label="Mật khẩu"
               placeholder="Nhập mật khẩu của bạn"
               type="password"
+              {...register("password")}
+              errorMessage={errors.password?.message}
             />
             <Input
-              label="Nhập lại mật khẩu"
-              placeholder="Nhập lại mật khẩu của bạn"
-              type="password"
+              label="Nhập mô tả ngắn dịch vụ"
+              placeholder="Nhập lại mô tả ngắn của bạn"
+              type="text"
+              {...register("shortDescription")}
+              errorMessage={errors.shortDescription?.message}
             />
           </div>
         </div>
@@ -72,6 +134,8 @@ function SignupBusiness() {
               label="Tên dịch vụ"
               type="text"
               placeholder="Nhập tên dịch vụ..."
+              {...register("name")}
+              errorMessage={errors.name?.message}
             />
             <Dropdown
               label="Thành phố"
@@ -79,6 +143,8 @@ function SignupBusiness() {
               isLoading={isLoadingCities}
               isError={isErrorCities}
               placeHolder="Chọn thành phố"
+              name="cityId"
+              control={control}
             />
             <Dropdown
               label="Thể loại (3)"
@@ -89,26 +155,25 @@ function SignupBusiness() {
               isLoading={isLoadingCategories}
               isError={isErrorCategories}
               placeHolder="Chọn thể loại"
+              name="categoryIds"
+              control={control}
             />
           </div>
         </div>
       </div>
       <Button
+        disabled={isPending}
+        type="submit"
         variant="outline"
         shape="rounded"
-        className="w-full sm:w-1/3 mt-8"
+        className="w-full sm:w-1/3 mt-8 mx-auto"
       >
-        Đăng ký ngay
+        {isPending ? "Đang xử lý..." : "Đăng ký"}
       </Button>
       <p className="text-red-500 mt-3 text-xs font-medium text-center">
         (*) Sau khi đăng ký vui lòng cập nhật đầy đủ thông tin tại mục hồ sơ
       </p>
-      <ConfirmEmail
-        isOpen={isOpen}
-        closeModal={closeModal}
-        email="minhbee203@gmail.com"
-      />
-    </div>
+    </form>
   );
 }
 

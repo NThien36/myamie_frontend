@@ -17,6 +17,7 @@ import Loader from "@/components/Loader/Loader";
 import Pagination from "@/components/Pagination/Pagination";
 import getImageUrl from "@/utils/getImageUrl";
 import { PlaceStatusEnum } from "@/models/app.interface";
+import { Link } from "react-router-dom";
 
 function AdminPlaces() {
   const [params, setParams] = useState<PlacesAdminParams>({
@@ -35,7 +36,6 @@ function AdminPlaces() {
     let status: PlaceStatusEnum | undefined = undefined;
     if (statusLabel === ACTIVE_OPTION) status = PlaceStatusEnum.ACTIVATED;
     else if (statusLabel === SUSPEND_OPTION) status = PlaceStatusEnum.SUSPENDED;
-    else if (statusLabel === DELETE_OPTION) status = PlaceStatusEnum.DELETED;
 
     updateParams({ Status: status });
   };
@@ -64,6 +64,15 @@ function AdminPlaces() {
       {
         Header: "Tên",
         accessor: "name",
+        Cell: ({ row }: { row: any }) => (
+          <Link
+            to={`/place/${row.original.id}`}
+            target="_blank"
+            className="hover:underline"
+          >
+            {row.original.name}
+          </Link>
+        ),
       },
       {
         Header: "Thành phố",
@@ -101,9 +110,9 @@ function AdminPlaces() {
       {
         Header: "Hành động",
         accessor: "action",
-        Cell: () => (
+        Cell: ({ row }: { row: any }) => (
           <div className="flex flex-col text-xs gap-2">
-            <StatusChange />
+            <StatusChange id={row.original.id} />
           </div>
         ),
       },
@@ -176,7 +185,7 @@ function AdminPlaces() {
       <div className="space-y-3">
         <FilterSelects
           label="Trạng thái"
-          options={[ALL_OPTIONS, ACTIVE_OPTION, SUSPEND_OPTION, DELETE_OPTION]}
+          options={[ALL_OPTIONS, ACTIVE_OPTION, SUSPEND_OPTION]}
           onFilterChange={handleStatusChange}
         />
         <div className="grid grid-cols-2 gap-3">

@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { ROUTE_PATH } from "@/routes/route-path";
 import { accountRoleSelector } from "@/store/auth/auth.selector";
 import { RoleEnum } from "@/models/app.interface";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface ProfileOptionsProps {
   src: string;
@@ -15,6 +16,7 @@ interface ProfileOptionsProps {
 }
 
 function ProfileOptions({ src, name, accountId }: ProfileOptionsProps) {
+  const queryClient = useQueryClient();
   const [isShow, setIsShow] = useState(false);
   const role = useSelector(accountRoleSelector);
   const dispatch = useDispatch();
@@ -24,6 +26,11 @@ function ProfileOptions({ src, name, accountId }: ProfileOptionsProps) {
   };
 
   const ref = useClickOutside(() => setIsShow(false));
+
+  const handleLogout = () => {
+    queryClient.clear();
+    dispatch(logout());
+  };
 
   return (
     <div className="relative" ref={ref}>
@@ -67,9 +74,7 @@ function ProfileOptions({ src, name, accountId }: ProfileOptionsProps) {
             </>
           )}
           <button
-            onClick={() => {
-              dispatch(logout());
-            }}
+            onClick={handleLogout}
             className="p-1.5 hover:bg-primary-lighter rounded-sm flex gap-4 items-center w-full"
           >
             <i className="fa-regular fa-arrow-right-from-bracket"></i>

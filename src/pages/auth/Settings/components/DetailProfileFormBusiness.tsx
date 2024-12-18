@@ -1,6 +1,5 @@
 import Input from "@/components/Input/Input";
 import Textarea from "@/components/Input/Textarea";
-import CharacteristicSelect from "./CharacteristicSelect";
 import { AccountProfile } from "@/models/account.interface";
 import Dropdown from "@/components/Dropdown/Dropdown";
 import { useGetCities } from "@/services/city.service";
@@ -8,10 +7,9 @@ import { useGetCategories } from "@/services/category.service";
 import { z } from "zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useUpdatePorfile } from "@/services/account.service";
 import { PROFILE_QUERY_KEY } from "@/utils/constants";
-import { formatDateForInput } from "@/utils/dateTimeUtils";
 import Button from "@/components/Buttons/Button";
 import ImagesDisplay from "@/components/ImagesUpload/ImagesDisplay";
 import ImagesUpload from "@/components/ImagesUpload/ImagesUpload";
@@ -24,15 +22,10 @@ interface DetailProfileFormProps {
 
 const schema = z.object({
   images: z.string(),
-  lastName: z
-    .string()
-    .min(1, { message: "Họ không được để trống" })
-    .max(50, { message: "Họ không được dài quá 50 ký tự" }),
   firstName: z
     .string()
     .min(1, { message: "Tên không được để trống" })
     .max(50, { message: "Tên không được dài quá 50 ký tự" }),
-  dateOfBirth: z.string(),
   cityId: z
     .number({ required_error: "Thành phố không được để trống" })
     .min(1, { message: "Vui lòng chọn một thành phố" }),
@@ -40,14 +33,11 @@ const schema = z.object({
     .string()
     .min(1, { message: "Mô tả ngắn không được để trống" })
     .max(250, { message: "Mô tả ngắn không được dài quá 250 ký tự" }),
-  description: z.string(),
+  description: z.string().optional(),
   categoryIds: z
     .array(z.number(), { required_error: "Sở thích không được để trống" })
     .min(1, { message: "Chọn ít nhất một sở thích" })
     .max(3, { message: "Chọn tối đa 3 sở thích" }),
-  characteristics: z
-    .array(z.string())
-    .max(5, { message: "Chọn tối đa 5 đặc điểm" }),
   imageFiles: z
     .array(z.instanceof(File))
     .max(10, { message: "Tải lên tối đa 10 hình ảnh" }),
@@ -68,14 +58,11 @@ function DetailProfileForm({ detail }: DetailProfileFormProps) {
     resolver: zodResolver(schema),
     defaultValues: {
       images: detail.images.join(";"),
-      lastName: detail.lastName,
       firstName: detail.firstName,
-      dateOfBirth: formatDateForInput(detail.dateOfBirth),
       cityId: detail.city.id,
       shortDescription: detail.shortDescription,
-      description: detail.description,
+      description: detail.description ?? undefined,
       categoryIds: detail.categories.map((category) => category.id),
-      characteristics: detail.characteristics,
     },
   });
 
@@ -126,23 +113,10 @@ function DetailProfileForm({ detail }: DetailProfileFormProps) {
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <Input
-          label="Họ"
-          placeholder="Nhập họ"
-          {...register("lastName")}
-          errorMessage={errors.lastName?.message}
-        />
-        <Input
-          label="Tên"
-          placeholder="Nhập tên"
+          label="Tên dịch vụ"
+          placeholder="Nhập tên dịch vụ"
           {...register("firstName")}
           errorMessage={errors.firstName?.message}
-        />
-        <Input
-          type="date"
-          label="Ngày sinh"
-          placeholder="Nhập ngày sinh..."
-          {...register("dateOfBirth")}
-          errorMessage={errors.dateOfBirth?.message}
         />
         <Dropdown
           label="Thành phố"
@@ -175,17 +149,6 @@ function DetailProfileForm({ detail }: DetailProfileFormProps) {
         maxSelectItems={3}
         name="categoryIds"
         control={control}
-      />
-      <Controller
-        name="characteristics"
-        control={control}
-        render={({ field }) => (
-          <CharacteristicSelect
-            currentCharacteristics={field.value}
-            onChange={field.onChange}
-            errorMessage={errors.characteristics?.message}
-          />
-        )}
       />
       <ImagesDisplay
         images={displayImages}

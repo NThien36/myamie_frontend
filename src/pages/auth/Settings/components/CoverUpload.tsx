@@ -9,7 +9,7 @@ interface CoverUploadProps {
 }
 
 function CoverUpload({ image }: CoverUploadProps) {
-  const [coverImg, setCoverImg] = useState<string>(image || noCover);
+  const [coverImg, setCoverImg] = useState<string>(image || "");
   const [isModified, setIsModified] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);

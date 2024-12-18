@@ -13,10 +13,13 @@ import { useGetUserById } from "@/services/user.service";
 import Loader from "@/components/Loader/Loader";
 import NotFound from "@/components/PlaceholderPages/NotFound";
 import getImageUrl from "@/utils/getImageUrl";
+import { useSelector } from "react-redux";
+import { accountRoleSelector } from "@/store/auth/auth.selector";
+import { RoleEnum } from "@/models/app.interface";
 
 function UserProfile() {
   const { id } = useParams();
-
+  const role = useSelector(accountRoleSelector);
   const { data, isLoading, isError } = useGetUserById(Number(id));
   const user = data?.data;
 
@@ -118,7 +121,7 @@ function UserProfile() {
           </div>
         </div>
       </div>
-      <CheckinPlace name={user.name} id={user.id} />
+      {role === RoleEnum.USER && <CheckinPlace name={user.name} id={user.id} />}
     </div>
   );
 }

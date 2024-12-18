@@ -23,9 +23,9 @@ export interface AccountProfileResponse extends ApiResponse {
 
 export interface UpdateProfileParams {
   firstName: string;
-  lastName: string;
+  lastName?: string;
   shortDescription: string;
-  description: string;
+  description?: string;
   dateOfBirth?: string;
   characteristics?: string[];
   cityId: number;

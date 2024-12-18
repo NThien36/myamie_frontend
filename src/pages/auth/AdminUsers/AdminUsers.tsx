@@ -19,6 +19,7 @@ import {
 import { useGetUsersByAdmin } from "@/services/admin.service";
 import Pagination from "@/components/Pagination/Pagination";
 import Loader from "@/components/Loader/Loader";
+import { Link } from "react-router-dom";
 
 function AdminUsers() {
   const [params, setParams] = useState<UsersAdminParams>({
@@ -70,7 +71,19 @@ function AdminUsers() {
           <Avatar src={value} alt="avatar" size="size-10" hasBorder={false} />
         ),
       },
-      { Header: "Tên", accessor: "name" },
+      {
+        Header: "Tên",
+        accessor: "name",
+        Cell: ({ row }: { row: any }) => (
+          <Link
+            to={`/user/${row.original.id}`}
+            className="hover:underline"
+            target="_blank"
+          >
+            {row.original.name}
+          </Link>
+        ),
+      },
       { Header: "Email", accessor: "email" },
       { Header: "Thành phố", accessor: "city" },
       { Header: "Vai trò", accessor: "role" },
