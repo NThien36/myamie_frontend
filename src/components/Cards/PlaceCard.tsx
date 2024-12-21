@@ -14,6 +14,7 @@ import { useDeletePlace } from "@/services/place.service";
 import { useQueryClient } from "@tanstack/react-query";
 import { PLACE_QUERY_KEY } from "@/utils/constants";
 import UpdatePlace from "../Forms/UpdatePlace";
+import DeleteConfirmModal from "../CustomModals/DeleteConfirmModal/DeleteConfirmModal";
 
 function PlaceCard({ place }: { place: Place }) {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -113,33 +114,12 @@ function PlaceCard({ place }: { place: Place }) {
           </div>
         </Link>
       </div>
-      <ConfirmModal
+      <DeleteConfirmModal
         isOpen={isDeleteOpen}
         onClose={closeDeleteModal}
-        className="w-11/12 sm:w-1/2 xl:w-1/3"
-      >
-        <div className="flex gap-5">
-          <div className="flex items-center justify-center bg-gray-100 w-12 p-2 rounded-md">
-            <i className="text-red-500 fa-xl fa-regular fa-circle-xmark"></i>
-          </div>
-          <div>
-            <p className="text-lg">Xác nhận xoá</p>
-            <p className="text-gray-500">Hành động này không thể hoàn tác</p>
-          </div>
-        </div>
-        <div className="flex gap-3 mt-7">
-          <Button className="w-full" variant="ghost" onClick={closeDeleteModal}>
-            Trở lại
-          </Button>
-          <Button
-            className="w-full"
-            onClick={handleDelete}
-            disabled={isDeleting}
-          >
-            {isDeleting ? "Đang xoá..." : "Đồng ý"}
-          </Button>
-        </div>
-      </ConfirmModal>
+        handleDelete={handleDelete}
+        isPending={isDeleting}
+      />
       <CustomModal
         title="Cập nhật địa điểm"
         isOpen={isEditOpen}

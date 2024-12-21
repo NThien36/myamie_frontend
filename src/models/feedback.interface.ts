@@ -1,4 +1,27 @@
-import { FilterParams, Pagination } from "./app.interface";
+import {
+  ApiResponse,
+  FeedbackTargetType,
+  FilterParams,
+  Pagination,
+} from "./app.interface";
+
+export interface AddFeedbackParams {
+  targetId: number;
+  targetType: FeedbackTargetType;
+  content: string;
+  rating: number;
+}
+
+export interface UpdateFeedbackParams {
+  id: number;
+  rating: number;
+  content?: string;
+}
+
+export interface ResponseFeedbackParams {
+  id: number;
+  message: string;
+}
 
 export interface Feedback {
   id: number;
@@ -8,6 +31,8 @@ export interface Feedback {
   rating: number;
   content: string;
   response?: string;
+  targetId: number;
+  senderId: number;
 }
 
 export interface FeedbackInfo {
@@ -22,9 +47,13 @@ export interface FeedbacksParams extends FilterParams {
   rate?: number;
 }
 
-export interface FeedbacksResponse {
+export interface Feedbacks {
   feebacks: Feedback[];
   averageRating: number;
   totalFeedback: number;
   pagination: Pagination;
+}
+
+export interface FeedbacksResponse extends ApiResponse {
+  data: Feedbacks;
 }

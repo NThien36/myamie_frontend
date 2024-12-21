@@ -19,6 +19,12 @@ export enum PlaceStatusEnum {
   SUSPENDED = 2,
 }
 
+export enum FeedbackTargetType {
+  BUSINESS = 1,
+  PLACE = 2,
+  USER = 3,
+}
+
 export interface ApiResponse {
   isSuccess: boolean;
   message: string;

@@ -2,6 +2,7 @@ import env from "@/env";
 import ConfigureAxios from "./configAxios";
 import { store } from "@/store/store";
 import { login, logout } from "@/store/auth/auth.slice";
+import toast from "react-hot-toast";
 
 const axiosInstance = new ConfigureAxios({
   configure: {
@@ -49,6 +50,7 @@ axiosInstance.refreshToken({
     }
   },
   failure: (error) => {
+    toast.error("Phiên đăng nhập hết hạn");
     store.dispatch(logout());
   },
 });

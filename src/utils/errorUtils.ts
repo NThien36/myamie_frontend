@@ -14,8 +14,13 @@ export const handleMutationError = (error: unknown) => {
 // Generalized Axios error handler for other Axios requests
 export const handleMessageError = (error: unknown, message: string) => {
   if (axios.isAxiosError(error)) {
-    const errorMessage = error.response?.data || message;
-    toast.error(errorMessage);
+    // Check for 403 status code
+    if (error.response?.status === 403) {
+      toast.error("Bạn không có quyền truy cập");
+    } else {
+      const errorMessage = error.response?.data || message;
+      toast.error(errorMessage);
+    }
   } else {
     toast.error("Đã xảy ra lỗi không xác định");
   }

@@ -10,6 +10,9 @@ export const PROFILE_QUERY_KEY = "profile";
 export const USERS_ADMIN_QUERY_KEY = "userAdmin";
 export const PLACES_ADMIN_QUERY_KEY = "placeAdmin";
 
+// 3. Feedback
+export const FEEDBACK_QUERY_KEY = "feedbacks";
+
 // Filter Options
 export const ALL_OPTIONS = "Tất cả";
 export const ACTIVE_OPTION = "Đang hoạt động";

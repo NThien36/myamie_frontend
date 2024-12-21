@@ -15,6 +15,11 @@ export interface AccountProfile {
 
   city: City;
   categories: Category[];
+
+  phone: string;
+  address: string;
+  openHour: number;
+  closeHour: number;
 }
 
 export interface AccountProfileResponse extends ApiResponse {
@@ -30,6 +35,11 @@ export interface UpdateProfileParams {
   characteristics?: string[];
   cityId: number;
   categoryIds: number[];
+
+  phone?: string;
+  address?: string;
+  openHour?: number;
+  closeHour?: number;
 
   // for update
   images?: string;

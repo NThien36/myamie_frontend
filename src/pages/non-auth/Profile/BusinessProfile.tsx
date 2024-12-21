@@ -76,7 +76,7 @@ function BusinessProfile() {
                   {business.operatingHours && (
                     <IconText
                       icon="fa-clock"
-                      text={business.operatingHours}
+                      text={business.operatingHours + "h"}
                       className="font-medium"
                       iconClasses="w-5"
                     />
@@ -120,7 +120,7 @@ function BusinessProfile() {
                   <p>Chưa có ảnh</p>
                 )}
               </TabPanel>
-              <TabPanel className="mt-4">
+              <TabPanel>
                 <FeedbackTab id={business.id} />
               </TabPanel>
             </Tabs>

@@ -44,7 +44,7 @@ function BusinessCard({ business }: { business: Business }) {
             {business.operatingHours && (
               <IconText
                 icon="fa-clock"
-                text={business.operatingHours}
+                text={business.operatingHours + "h"}
                 textClasses="text-xs"
               />
             )}

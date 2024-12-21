@@ -13,35 +13,58 @@ import { PROFILE_QUERY_KEY } from "@/utils/constants";
 import Button from "@/components/Buttons/Button";
 import ImagesDisplay from "@/components/ImagesUpload/ImagesDisplay";
 import ImagesUpload from "@/components/ImagesUpload/ImagesUpload";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 interface DetailProfileFormProps {
   detail: AccountProfile;
 }
 
-const schema = z.object({
-  images: z.string(),
-  firstName: z
-    .string()
-    .min(1, { message: "Tên không được để trống" })
-    .max(50, { message: "Tên không được dài quá 50 ký tự" }),
-  cityId: z
-    .number({ required_error: "Thành phố không được để trống" })
-    .min(1, { message: "Vui lòng chọn một thành phố" }),
-  shortDescription: z
-    .string()
-    .min(1, { message: "Mô tả ngắn không được để trống" })
-    .max(250, { message: "Mô tả ngắn không được dài quá 250 ký tự" }),
-  description: z.string().optional(),
-  categoryIds: z
-    .array(z.number(), { required_error: "Sở thích không được để trống" })
-    .min(1, { message: "Chọn ít nhất một sở thích" })
-    .max(3, { message: "Chọn tối đa 3 sở thích" }),
-  imageFiles: z
-    .array(z.instanceof(File))
-    .max(10, { message: "Tải lên tối đa 10 hình ảnh" }),
-});
+const schema = z
+  .object({
+    images: z.string(),
+    firstName: z
+      .string()
+      .min(1, { message: "Tên không được để trống" })
+      .max(50, { message: "Tên không được dài quá 50 ký tự" }),
+    cityId: z
+      .number({ required_error: "Thành phố không được để trống" })
+      .min(1, { message: "Vui lòng chọn một thành phố" }),
+    address: z
+      .string()
+      .max(250, { message: "Địa chỉ không được dài quá 250 ký tự" })
+      .optional(),
+    shortDescription: z
+      .string()
+      .min(1, { message: "Mô tả ngắn không được để trống" })
+      .max(250, { message: "Mô tả ngắn không được dài quá 250 ký tự" }),
+    description: z.string().optional(),
+    phone: z
+      .string()
+      .regex(/^\d{1,15}$/, { message: "Số điện thoại không hợp lệ" })
+      .optional(),
+    openHour: z
+      .number()
+      .min(0, { message: "Giờ mở cửa không được nhỏ hơn 0" })
+      .max(24, { message: "Giờ mở cửa không được lớn hơn 24" })
+      .optional(),
+    closeHour: z
+      .number()
+      .min(1, { message: "Giờ đóng cửa không được nhỏ hơn 1" })
+      .max(24, { message: "Giờ đóng cửa không được lớn hơn 24" })
+      .optional(),
+    categoryIds: z
+      .array(z.number(), { required_error: "Sở thích không được để trống" })
+      .min(1, { message: "Chọn ít nhất một sở thích" })
+      .max(3, { message: "Chọn tối đa 3 sở thích" }),
+    imageFiles: z
+      .array(z.instanceof(File))
+      .max(10, { message: "Tải lên tối đa 10 hình ảnh" }),
+  })
+  .refine((data) => (data.closeHour ?? 0) > (data.openHour ?? 0), {
+    message: "Giờ đóng cửa phải lớn hơn giờ mở cửa",
+    path: ["closeHour"],
+  });
 
 type FormUpdateProfileFields = z.infer<typeof schema>;
 
@@ -63,10 +86,21 @@ function DetailProfileForm({ detail }: DetailProfileFormProps) {
       shortDescription: detail.shortDescription,
       description: detail.description ?? undefined,
       categoryIds: detail.categories.map((category) => category.id),
+      phone: detail.phone,
+      address: detail.address,
+      openHour: detail.openHour === 0 ? 8 : detail.openHour,
+      closeHour: detail.closeHour === 0 ? 17 : detail.closeHour,
     },
   });
 
-  console.log(detail);
+  // console.log(detail);
+
+  // Log validation errors
+  // useEffect(() => {
+  //   if (Object.keys(errors).length > 0) {
+  //     console.error("Validation Errors:", errors);
+  //   }
+  // }, [errors]);
 
   const {
     data: categories,
@@ -127,7 +161,37 @@ function DetailProfileForm({ detail }: DetailProfileFormProps) {
           control={control}
           name="cityId"
         />
+        <Input
+          type="number"
+          min={1}
+          max={24}
+          label="Giờ mở cửa (0-24h)"
+          placeholder="Nhập giờ mở cửa"
+          {...register("openHour", { valueAsNumber: true })}
+          errorMessage={errors.openHour?.message}
+        />
+        <Input
+          type="number"
+          min={1}
+          max={24}
+          label="Giờ đóng cửa (1-24h)"
+          placeholder="Nhập giờ đóng cửa"
+          {...register("closeHour", { valueAsNumber: true })}
+          errorMessage={errors.closeHour?.message}
+        />
       </div>
+      <Input
+        label="Số điện thoại (liên tiếp, không khoảng trắng)"
+        placeholder="Nhập số điện thoại..."
+        {...register("phone")}
+        errorMessage={errors.phone?.message}
+      />
+      <Input
+        label="Địa chỉ"
+        placeholder="Nhập địa chỉ..."
+        {...register("address")}
+        errorMessage={errors.address?.message}
+      />
       <Input
         label="Mô tả ngắn"
         placeholder="Nhập mô tả..."
