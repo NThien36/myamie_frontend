@@ -1,8 +1,12 @@
 import { noAvatar } from "@/assets/images";
 import Button from "@/components/Buttons/Button";
 import { useUpdateAvatar } from "@/services/account.service";
+import { updateAvatar } from "@/store/auth/auth.slice";
+import { PROFILE_QUERY_KEY } from "@/utils/constants";
 import getImageUrl from "@/utils/getImageUrl";
-import { useRef, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 
 interface AvatarUploadProps {
   image?: string;
@@ -13,6 +17,8 @@ function AvatarUpload({ image }: AvatarUploadProps) {
   const [isModified, setIsModified] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const queryClient = useQueryClient();
+  const dispatch = useDispatch();
 
   const { isPending, mutateAsync } = useUpdateAvatar();
 
@@ -46,15 +52,27 @@ function AvatarUpload({ image }: AvatarUploadProps) {
 
   const handleSave = async () => {
     if (!selectedFile) return;
-    await mutateAsync(selectedFile);
+    await mutateAsync(selectedFile, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: [PROFILE_QUERY_KEY] });
+        setSrc("");
+      },
+    });
     setIsModified(false);
   };
+
+  useEffect(() => {
+    setSrc(image || "");
+    if (image) {
+      dispatch(updateAvatar(image));
+    }
+  }, [image]);
 
   return (
     <div className="flex-none mx-auto md:mx-0">
       <label className="mb-2 block font-medium text-center">Ảnh đại diện</label>
       <img
-        src={getImageUrl(src, "avatar")}
+        src={isModified ? src : getImageUrl(src, "avatar")}
         alt="avatar image"
         className="object-cover size-40 rounded-full"
       />

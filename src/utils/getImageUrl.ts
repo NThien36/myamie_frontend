@@ -15,7 +15,7 @@ import { noAvatar, noCover } from "@/assets/images";
 // }
 
 export default function getImageUrl(
-  imagePath: string | null,
+  imagePath: string | null | undefined,
   type: "cover" | "avatar"
 ): string {
   const fallbackImage = type === "cover" ? noCover : noAvatar;

@@ -1,16 +1,21 @@
 import { ChangeEvent, useState } from "react";
 
 interface FilterByDistanceProps {
+  currentDistance: number;
   onChange: (distance: number) => void;
 }
 
-function FilterByDistance({ onChange }: FilterByDistanceProps) {
-  const [distance, setDistance] = useState<number>(5);
+function FilterByDistance({
+  currentDistance,
+  onChange,
+}: FilterByDistanceProps) {
+  const [distance, setDistance] = useState<number>(currentDistance);
 
   const handleDistanceChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newDistance = Number(event.target.value);
+    console.log("new distance: " + newDistance);
     setDistance(newDistance);
-    onChange(newDistance);
+    onChange(newDistance); // Notify parent component immediately
   };
 
   return (

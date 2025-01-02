@@ -13,6 +13,9 @@ export const PLACES_ADMIN_QUERY_KEY = "placeAdmin";
 // 3. Feedback
 export const FEEDBACK_QUERY_KEY = "feedbacks";
 
+// 4. Friendship
+export const FRIENDSHIP_QUERY_KEY = "friendships";
+
 // Filter Options
 export const ALL_OPTIONS = "Tất cả";
 export const ACTIVE_OPTION = "Đang hoạt động";

@@ -92,7 +92,7 @@ function ImagesUpload({ control, name, limit = 10 }: ImagesUploadProps) {
           Tải ảnh lên
         </Button>
         {value.length >= limit && (
-          <p className="text-red-600 mt-2">Đã đạt tối đa {limit} hình ảnh.</p>
+          <p className="text-red-600 mt-2">Đã đạt tối đa 10 hình ảnh.</p>
         )}
       </div>
       <input

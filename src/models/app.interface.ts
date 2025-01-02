@@ -19,10 +19,24 @@ export enum PlaceStatusEnum {
   SUSPENDED = 2,
 }
 
-export enum FeedbackTargetType {
+export enum FeedbackTargetTypeEnum {
   BUSINESS = 1,
   PLACE = 2,
   USER = 3,
+}
+
+export enum FriendshipStatusEnum {
+  NONE = 0,
+  PENDING = 1,
+  ACCEPTED = 2,
+  BLOCKED = 3,
+}
+
+export enum MessageStatusEnum {
+  SENT = 1,
+  DELIVERED = 2,
+  READ = 3,
+  RECALLED = 4,
 }
 
 export interface ApiResponse {

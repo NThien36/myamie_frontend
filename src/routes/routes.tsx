@@ -95,15 +95,15 @@ const router = createBrowserRouter([
           { path: ROUTE_PATH.ACCOUNT, element: <Account /> },
         ],
       },
-      {
-        element: <RoleRoute allowedRoles={[RoleEnum.BUSINESS]} />,
-        children: [
-          {
-            path: ROUTE_PATH.BUSINESS_FEEDBACK,
-            element: <BusinessFeedbacks />,
-          },
-        ],
-      },
+      // {
+      //   element: <RoleRoute allowedRoles={[RoleEnum.BUSINESS]} />,
+      //   children: [
+      //     {
+      //       path: ROUTE_PATH.BUSINESS_FEEDBACK,
+      //       element: <BusinessFeedbacks />,
+      //     },
+      //   ],
+      // },
       {
         element: <RoleRoute allowedRoles={[RoleEnum.ADMIN]} />,
         children: [

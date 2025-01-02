@@ -83,7 +83,7 @@ function Businesses() {
       <CategoryContainer onSelect={handleCategorySelect} />
       <div className="mt-10">
         <p className="font-semibold text-base mb-4">
-          Danh sách {pagination?.totalCount} địa điểm
+          Danh sách {pagination?.totalCount} dịch vụ
         </p>
         {content}
       </div>

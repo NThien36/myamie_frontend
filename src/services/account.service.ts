@@ -1,10 +1,12 @@
 import {
   changePassword,
+  getAvatarWithName,
   getProfile,
   resetPassword,
   updateAvatar,
   updateCover,
   updateProfile,
+  updateProfileBusiness,
 } from "@/apis/account.api";
 import { PROFILE_QUERY_KEY } from "@/utils/constants";
 import { handleMessageError } from "@/utils/errorUtils";
@@ -57,9 +59,29 @@ export const useGetProfile = () => {
   });
 };
 
-export const useUpdatePorfile = () => {
+export const useGetAvatarWithName = (id: number) => {
+  return useQuery({
+    queryKey: ["avatarWithName", id],
+    queryFn: () => getAvatarWithName(id),
+    staleTime: 1000 * 60,
+  });
+};
+
+export const useUpdateProfile = () => {
   return useMutation({
     mutationFn: updateProfile,
+    onSuccess: () => {
+      toast.success("Cập nhật thông tin thành công");
+    },
+    onError: (error) => {
+      handleMessageError(error, "Xảy ra lỗi khi cập nhật thông tin");
+    },
+  });
+};
+
+export const useUpdateProfileBusiness = () => {
+  return useMutation({
+    mutationFn: updateProfileBusiness,
     onSuccess: () => {
       toast.success("Cập nhật thông tin thành công");
     },

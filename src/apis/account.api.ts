@@ -1,12 +1,14 @@
 import {
   AccountProfileResponse,
+  AvatarWNameResponse,
   ChangePasswordParams,
+  UpdateProfileBusinessParams,
   UpdateProfileParams,
 } from "@/models/account.interface";
+import { handleMessageError } from "@/utils/errorUtils";
 import fetchAPI from "@/utils/fetchApi";
 import createFormData from "@/utils/formatDataUtils";
 import { AxiosResponse } from "axios";
-import { date } from "zod";
 
 export const resetPassword = async ({
   email,
@@ -66,11 +68,43 @@ export const getProfile = async () => {
   return response.data;
 };
 
+export const getAvatarWithName = async (id: number) => {
+  try {
+    const response: AxiosResponse<AvatarWNameResponse> = await fetchAPI.request(
+      {
+        url: `/Account/get-avatar-name-by-id?Id=${id}`,
+        method: "get",
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    handleMessageError(error, "Xảy ra lỗi khi lấy ảnh đại diện");
+  }
+};
+
 export const updateProfile = async (data: UpdateProfileParams) => {
   const formData = createFormData(data);
 
   const response: AxiosResponse<string> = await fetchAPI.request({
     url: "/Account/update-profile",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    method: "put",
+    data: formData,
+  });
+
+  return response.data;
+};
+
+export const updateProfileBusiness = async (
+  data: UpdateProfileBusinessParams
+) => {
+  const formData = createFormData(data);
+
+  const response: AxiosResponse<string> = await fetchAPI.request({
+    url: "/Account/update-profile-business",
     headers: {
       "Content-Type": "multipart/form-data",
     },

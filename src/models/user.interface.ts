@@ -1,4 +1,9 @@
-import { ApiResponse, FilterParams, Pagination } from "./app.interface";
+import {
+  ApiResponse,
+  FilterParams,
+  FriendshipStatusEnum,
+  Pagination,
+} from "./app.interface";
 import { Category } from "./category.interface";
 
 export interface User {
@@ -9,6 +14,8 @@ export interface User {
   distance: number;
   city: string;
   characteristics: string[];
+  friendStatus: FriendshipStatusEnum;
+  receiverId: number;
 }
 
 export interface UserDetail {

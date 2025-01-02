@@ -38,7 +38,7 @@ function PlaceProfile() {
         <p className="mt-1 text-gray-500 text-center lg:text-left">
           {place.shortDescription}
         </p>
-        <div className="grid grid-cols-1 lg:grid-cols-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 mt-4">
           <div className="col-span-1 mt-3 lg:mr-10">
             <div className="flex justify-center lg:justify-start flex-wrap gap-2">
               {place.categories.map((category) => (

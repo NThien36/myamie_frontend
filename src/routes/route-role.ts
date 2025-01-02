@@ -58,12 +58,12 @@ export const ROLE_ROUTES = {
         //   icon: "fa-chart-simple",
         //   label: "Tổng quan",
         // },
-        {
-          path: ROUTE_PATH.BUSINESS_FEEDBACK,
-          icon: "fa-comment",
-          label: "Đánh giá",
-          number: 90, // Optional, could represent some count like feedbacks
-        },
+        // {
+        //   path: ROUTE_PATH.BUSINESS_FEEDBACK,
+        //   icon: "fa-comment",
+        //   label: "Đánh giá",
+        //   number: 90, // Optional, could represent some count like feedbacks
+        // },
       ],
     },
     ...BASE_ROUTES, // Include common routes for SERVICE role

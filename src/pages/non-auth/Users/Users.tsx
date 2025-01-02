@@ -17,7 +17,7 @@ function Users() {
     latitude: 0,
     longitude: 0,
   });
-  const [tempDistance, setTempDistance] = useState<number | null>(5);
+  const [tempDistance, setTempDistance] = useState<number>(5);
 
   useEffect(() => {
     // Fetch current location on mount
@@ -50,8 +50,8 @@ function Users() {
   const handleClearFilter = () => {
     if (tempDistance === null) return;
 
-    setTempDistance(null);
-    updateParams({ distanceInKm: 0 });
+    setTempDistance(5);
+    updateParams({ distanceInKm: 5 });
   };
 
   if (params.latitude === 0 || params.longitude === 0) {
@@ -94,7 +94,10 @@ function Users() {
             onActiveClick={handleFilterApply}
             onInactiveClick={handleClearFilter}
           >
-            <FilterByDistance onChange={handleDistanceChange} />
+            <FilterByDistance
+              currentDistance={tempDistance}
+              onChange={handleDistanceChange}
+            />
           </FilterBtn>
         </div>
         {content}

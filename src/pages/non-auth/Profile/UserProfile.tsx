@@ -14,12 +14,17 @@ import Loader from "@/components/Loader/Loader";
 import NotFound from "@/components/PlaceholderPages/NotFound";
 import getImageUrl from "@/utils/getImageUrl";
 import { useSelector } from "react-redux";
-import { accountRoleSelector } from "@/store/auth/auth.selector";
+import {
+  accountIdSelector,
+  accountRoleSelector,
+} from "@/store/auth/auth.selector";
 import { RoleEnum } from "@/models/app.interface";
+import UserFriends from "./components/UserFriends";
 
 function UserProfile() {
   const { id } = useParams();
   const role = useSelector(accountRoleSelector);
+  const currentUserId = useSelector(accountIdSelector);
   const { data, isLoading, isError } = useGetUserById(Number(id));
   const user = data?.data;
 
@@ -87,13 +92,18 @@ function UserProfile() {
           </div>
           <div className="mt-7 lg:mt-0 lg:col-span-2">
             <Tabs>
-              <TabList className="flex text-gray-600">
+              <TabList className="flex flex-wrap text-gray-600">
                 <Tab className="cursor-pointer py-2 px-5 transition-colors duration-500">
                   Mô tả
                 </Tab>
                 <Tab className="cursor-pointer py-2 px-5 transition-colors duration-500">
                   Ảnh chi tiết
                 </Tab>
+                {currentUserId === user.id && (
+                  <Tab className="cursor-pointer py-2 px-5 transition-colors duration-500">
+                    Bạn bè
+                  </Tab>
+                )}
               </TabList>
 
               <TabPanel className="mt-4">
@@ -117,6 +127,11 @@ function UserProfile() {
                   <p>Chưa có ảnh</p>
                 )}
               </TabPanel>
+              {currentUserId === user.id && (
+                <TabPanel>
+                  <UserFriends />
+                </TabPanel>
+              )}
             </Tabs>
           </div>
         </div>

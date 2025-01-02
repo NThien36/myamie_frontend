@@ -3,20 +3,21 @@ import { useState } from "react";
 import useClickOutside from "@/hooks/useClickOutside";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/store/auth/auth.slice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ROUTE_PATH } from "@/routes/route-path";
 import { accountRoleSelector } from "@/store/auth/auth.selector";
 import { RoleEnum } from "@/models/app.interface";
 import { useQueryClient } from "@tanstack/react-query";
 
 interface ProfileOptionsProps {
-  src: string;
+  src?: string;
   name: string;
   accountId: number;
 }
 
 function ProfileOptions({ src, name, accountId }: ProfileOptionsProps) {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const [isShow, setIsShow] = useState(false);
   const role = useSelector(accountRoleSelector);
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ function ProfileOptions({ src, name, accountId }: ProfileOptionsProps) {
   const handleLogout = () => {
     queryClient.clear();
     dispatch(logout());
+    navigate(0);
   };
 
   return (
@@ -55,24 +57,30 @@ function ProfileOptions({ src, name, accountId }: ProfileOptionsProps) {
               <i className="fa-regular fa-user"></i>
               <p className="">Quản trị</p>
             </Link>
+          ) : role === RoleEnum.BUSINESS ? (
+            <Link
+              to={`/service/${accountId}`}
+              className="p-1.5 hover:bg-primary-lighter rounded-sm flex gap-4 items-center w-full"
+            >
+              <i className="fa-regular fa-user"></i>
+              <p className="">Trang cá nhân</p>
+            </Link>
           ) : (
-            <>
-              <Link
-                to={`/user/${accountId}`}
-                className="p-1.5 hover:bg-primary-lighter rounded-sm flex gap-4 items-center w-full"
-              >
-                <i className="fa-regular fa-user"></i>
-                <p className="">Trang cá nhân</p>
-              </Link>
-              <Link
-                to={ROUTE_PATH.SETTINGS}
-                className="p-1.5 hover:bg-primary-lighter rounded-sm flex gap-4 items-center w-full"
-              >
-                <i className="fa-regular fa-gear"></i>
-                <p className="">Thông tin</p>
-              </Link>
-            </>
+            <Link
+              to={`/user/${accountId}`}
+              className="p-1.5 hover:bg-primary-lighter rounded-sm flex gap-4 items-center w-full"
+            >
+              <i className="fa-regular fa-user"></i>
+              <p className="">Trang cá nhân</p>
+            </Link>
           )}
+          <Link
+            to={ROUTE_PATH.SETTINGS}
+            className="p-1.5 hover:bg-primary-lighter rounded-sm flex gap-4 items-center w-full"
+          >
+            <i className="fa-regular fa-gear"></i>
+            <p className="">Thông tin</p>
+          </Link>
           <button
             onClick={handleLogout}
             className="p-1.5 hover:bg-primary-lighter rounded-sm flex gap-4 items-center w-full"

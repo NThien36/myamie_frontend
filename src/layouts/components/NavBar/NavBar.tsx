@@ -2,14 +2,16 @@ import Logo from "@/assets/images/Logo";
 import Button from "@/components/Buttons/Button";
 import { ROUTE_PATH } from "@/routes/route-path";
 import cx from "classnames";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import ProfileOptions from "../ProfileOptions/ProfileOptions";
 import { useState } from "react";
 import "./NavBar.css";
 import useClickOutside from "@/hooks/useClickOutside";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { accountSelector, isLoginSelector } from "@/store/auth/auth.selector";
-import { noAvatar } from "@/assets/images";
+import { useQueryClient } from "@tanstack/react-query";
+import { logout } from "@/store/auth/auth.slice";
+import { RoleEnum } from "@/models/app.interface";
 
 const navlinks = [
   {
@@ -31,12 +33,21 @@ const navlinks = [
 
 function NavBar() {
   const [showDropdown, setShowDropdown] = useState(false);
+  const queryClient = useQueryClient();
   const isLoggedIn = useSelector(isLoginSelector);
   const account = useSelector(accountSelector);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const toggleDropdown = () => setShowDropdown((prev) => !prev);
 
   const dropdownRef = useClickOutside(() => setShowDropdown(false));
+
+  const handleLogout = () => {
+    queryClient.clear();
+    dispatch(logout());
+    navigate(0);
+  };
 
   return (
     <div ref={dropdownRef} className="relative">
@@ -79,7 +90,7 @@ function NavBar() {
             </Link>
             <ProfileOptions
               accountId={account.id}
-              src={account.avatar ?? noAvatar}
+              src={account.avatar}
               name={`${account.lastName ?? ""} ${account.firstName ?? ""}`}
             />
           </div>
@@ -103,22 +114,32 @@ function NavBar() {
             Địa điểm
           </Link>
           <Link to={ROUTE_PATH.USERS} className="hover:underline">
-            Người dùng
+            Bạn bè
           </Link>
           {isLoggedIn ? (
             <>
               <Link to={ROUTE_PATH.CHAT} className="hover:underline">
                 Tin nhắn
               </Link>
-              <Link to={ROUTE_PATH.USER_DETAIL} className="hover:underline">
-                Trang cá nhân
-              </Link>
+              {account.role === RoleEnum.BUSINESS ? (
+                <Link to={`/service/${account.id}`} className="hover:underline">
+                  Trang cá nhân
+                </Link>
+              ) : account.role === RoleEnum.ADMIN ? (
+                <Link to={ROUTE_PATH.ADMIN_USERS} className="hover:underline">
+                  Quản trị viên
+                </Link>
+              ) : (
+                <Link to={`/user/${account.id}`} className="hover:underline">
+                  Trang cá nhân
+                </Link>
+              )}
               <Link to={ROUTE_PATH.ACCOUNT} className="hover:underline">
                 Thông tin
               </Link>
-              <Link to={ROUTE_PATH.BUSINESSES} className="hover:underline">
+              <p onClick={handleLogout} className="hover:underline">
                 Đăng xuất
-              </Link>
+              </p>
             </>
           ) : (
             <>

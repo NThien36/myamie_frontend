@@ -25,3 +25,15 @@ export const handleMessageError = (error: unknown, message: string) => {
     toast.error("Đã xảy ra lỗi không xác định");
   }
 };
+
+export const extractChatErrorMessage = (err: any): string => {
+  if (err && typeof err.message === "string") {
+    // Check if the error message contains "HubException"
+    const match = err.message.match(/HubException: (.*)$/);
+    if (match && match[1]) {
+      return match[1]; // Extract the meaningful message
+    }
+    return err.message; // Fallback to the full message
+  }
+  return "An unexpected error occurred.";
+};

@@ -29,10 +29,22 @@ export interface AccountProfileResponse extends ApiResponse {
 export interface UpdateProfileParams {
   firstName: string;
   lastName?: string;
-  shortDescription: string;
+  shortDescription?: string;
   description?: string;
   dateOfBirth?: string;
   characteristics?: string[];
+  cityId: number;
+  categoryIds: number[];
+  // for update
+  images?: string;
+  imageFiles?: File[];
+  keptImages?: string[];
+}
+
+export interface UpdateProfileBusinessParams {
+  firstName: string;
+  shortDescription: string;
+  description?: string;
   cityId: number;
   categoryIds: number[];
 
@@ -50,4 +62,14 @@ export interface UpdateProfileParams {
 export interface ChangePasswordParams {
   oldPassword: string;
   newPassword: string;
+}
+
+export interface AvatarWName {
+  id: number;
+  avatar: string;
+  name: string;
+}
+
+export interface AvatarWNameResponse extends ApiResponse {
+  data: AvatarWName;
 }

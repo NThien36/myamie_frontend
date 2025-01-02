@@ -79,6 +79,7 @@ function ForgetPassword() {
         </p>
         <Input
           placeholder="Nhập email tại đây..."
+          type="email"
           className="mt-5"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -94,7 +95,7 @@ function ForgetPassword() {
             ? "Đang gửi mã..."
             : timeLeft > 0
             ? `Gửi lại sau ${timeLeft}s`
-            : "Gửi mã (Optional)"}
+            : "Gửi mã"}
         </Button>
         <Input
           placeholder="Nhập mã tại đây..."

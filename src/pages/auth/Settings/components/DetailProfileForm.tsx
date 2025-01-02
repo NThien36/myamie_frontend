@@ -1,7 +1,10 @@
 import Input from "@/components/Input/Input";
 import Textarea from "@/components/Input/Textarea";
 import CharacteristicSelect from "./CharacteristicSelect";
-import { AccountProfile } from "@/models/account.interface";
+import {
+  AccountProfile,
+  UpdateProfileBusinessParams,
+} from "@/models/account.interface";
 import Dropdown from "@/components/Dropdown/Dropdown";
 import { useGetCities } from "@/services/city.service";
 import { useGetCategories } from "@/services/category.service";
@@ -9,13 +12,13 @@ import { z } from "zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import { useUpdatePorfile } from "@/services/account.service";
+import { useUpdateProfile } from "@/services/account.service";
 import { PROFILE_QUERY_KEY } from "@/utils/constants";
 import { formatDateForInput } from "@/utils/dateTimeUtils";
 import Button from "@/components/Buttons/Button";
 import ImagesDisplay from "@/components/ImagesUpload/ImagesDisplay";
 import ImagesUpload from "@/components/ImagesUpload/ImagesUpload";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 interface DetailProfileFormProps {
@@ -38,9 +41,10 @@ const schema = z.object({
     .min(1, { message: "Vui lòng chọn một thành phố" }),
   shortDescription: z
     .string()
-    .min(1, { message: "Mô tả ngắn không được để trống" })
-    .max(250, { message: "Mô tả ngắn không được dài quá 250 ký tự" }),
-  description: z.string(),
+    .max(250, { message: "Mô tả ngắn không được dài quá 250 ký tự" })
+    .optional()
+    .nullable(),
+  description: z.string().optional().nullable(),
   categoryIds: z
     .array(z.number(), { required_error: "Sở thích không được để trống" })
     .min(1, { message: "Chọn ít nhất một sở thích" })
@@ -59,6 +63,7 @@ function DetailProfileForm({ detail }: DetailProfileFormProps) {
   const [displayImages, setDisplayImages] = useState<string[]>(detail.images);
   const queryClient = useQueryClient();
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
@@ -71,15 +76,13 @@ function DetailProfileForm({ detail }: DetailProfileFormProps) {
       lastName: detail.lastName,
       firstName: detail.firstName,
       dateOfBirth: formatDateForInput(detail.dateOfBirth),
-      cityId: detail.city.id,
+      cityId: detail.city?.id ?? 0,
       shortDescription: detail.shortDescription,
       description: detail.description,
       categoryIds: detail.categories.map((category) => category.id),
       characteristics: detail.characteristics,
     },
   });
-
-  console.log(detail);
 
   const {
     data: categories,
@@ -92,7 +95,25 @@ function DetailProfileForm({ detail }: DetailProfileFormProps) {
     isError: isErrorCities,
   } = useGetCities();
 
-  const { isPending, mutateAsync } = useUpdatePorfile();
+  const { isPending, mutateAsync } = useUpdateProfile();
+
+  // Update the form when the detail prop changes
+  useEffect(() => {
+    reset({
+      images: detail.images.join(";"),
+      lastName: detail.lastName,
+      firstName: detail.firstName,
+      dateOfBirth: formatDateForInput(detail.dateOfBirth),
+      cityId: detail.city?.id ?? 0,
+      shortDescription: detail.shortDescription,
+      description: detail.description,
+      categoryIds: detail.categories.map((category) => category.id),
+      characteristics: detail.characteristics,
+    });
+
+    // Update the displayImages state
+    setDisplayImages(detail.images);
+  }, [detail, reset]);
 
   const onSubmit = async (data: FormUpdateProfileFields) => {
     const totalImages = data.imageFiles.length + displayImages.length;
@@ -102,8 +123,10 @@ function DetailProfileForm({ detail }: DetailProfileFormProps) {
     }
 
     // Include kept images
-    const finalData = {
+    const finalData: UpdateProfileBusinessParams = {
       ...data,
+      shortDescription: data.shortDescription ?? "",
+      description: data.description ?? "",
       keptImages: displayImages, // Add kept images
     };
 

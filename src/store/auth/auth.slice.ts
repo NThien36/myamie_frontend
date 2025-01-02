@@ -38,10 +38,15 @@ export const authSlice = createSlice({
     setRefreshToken: (state, action: PayloadAction<string>) => {
       state.refreshToken = action.payload;
     },
+    updateAvatar: (state, action: PayloadAction<string>) => {
+      if (state.account) {
+        state.account.avatar = action.payload; // Update the avatar field
+      }
+    },
   },
 });
 
-export const { login, logout, setAccessToken, setRefreshToken } =
+export const { login, logout, setAccessToken, setRefreshToken, updateAvatar } =
   authSlice.actions;
 
 export default authSlice.reducer;

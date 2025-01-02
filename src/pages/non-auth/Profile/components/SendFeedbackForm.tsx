@@ -1,9 +1,12 @@
 import Button from "@/components/Buttons/Button";
 import RatingModal from "@/components/CustomModals/RatingModal/RatingModal";
-import { FeedbackTargetType } from "@/models/app.interface";
+import { FeedbackTargetTypeEnum, RoleEnum } from "@/models/app.interface";
 import { AddFeedbackParams } from "@/models/feedback.interface";
 import { useAddFeedback } from "@/services/feedback.service";
-import { isLoginSelector } from "@/store/auth/auth.selector";
+import {
+  accountRoleSelector,
+  isLoginSelector,
+} from "@/store/auth/auth.selector";
 import { FEEDBACK_QUERY_KEY } from "@/utils/constants";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -20,6 +23,7 @@ function SendFeedbackForm({ id }: SendFeedbackFormProps) {
   const [comment, setComment] = useState("");
   const queryClient = useQueryClient(); // Query client for invalidating queries
   const isLogin = useSelector(isLoginSelector);
+  const role = useSelector(accountRoleSelector);
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
@@ -60,7 +64,7 @@ function SendFeedbackForm({ id }: SendFeedbackFormProps) {
     // Data to send to the server
     const data: AddFeedbackParams = {
       targetId: id,
-      targetType: FeedbackTargetType.BUSINESS,
+      targetType: FeedbackTargetTypeEnum.BUSINESS,
       rating,
       content: comment,
     };
@@ -77,13 +81,15 @@ function SendFeedbackForm({ id }: SendFeedbackFormProps) {
 
   return (
     <>
-      <Button
-        variant="ghost"
-        className="text-xs font-medium"
-        onClick={openModal}
-      >
-        Viết đánh giá
-      </Button>
+      {role === RoleEnum.USER && (
+        <Button
+          variant="ghost"
+          className="text-xs font-medium"
+          onClick={openModal}
+        >
+          Viết đánh giá
+        </Button>
+      )}
       <RatingModal
         isOpen={isOpen}
         onClose={closeModal}

@@ -1,13 +1,13 @@
 import {
   ApiResponse,
-  FeedbackTargetType,
+  FeedbackTargetTypeEnum,
   FilterParams,
   Pagination,
 } from "./app.interface";
 
 export interface AddFeedbackParams {
   targetId: number;
-  targetType: FeedbackTargetType;
+  targetType: FeedbackTargetTypeEnum;
   content: string;
   rating: number;
 }
@@ -47,7 +47,7 @@ export interface FeedbacksParams extends FilterParams {
   rate?: number;
 }
 
-export interface Feedbacks {
+export interface DataResponse {
   feebacks: Feedback[];
   averageRating: number;
   totalFeedback: number;
@@ -55,5 +55,5 @@ export interface Feedbacks {
 }
 
 export interface FeedbacksResponse extends ApiResponse {
-  data: Feedbacks;
+  data: DataResponse;
 }

@@ -3,7 +3,7 @@ import getImageUrl from "@/utils/getImageUrl";
 import cx from "classnames";
 
 interface AvatarProps {
-  src: string;
+  src: string | undefined;
   alt: string;
   size?: string;
   className?: string;

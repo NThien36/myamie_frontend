@@ -1,24 +1,36 @@
-import { User } from "@/models/user.interface";
-import { Link } from "react-router-dom";
+import { FriendshipStatusEnum } from "@/models/app.interface";
 import Avatar from "../Avatar/Avatar";
-import IconText from "../IconText/IconText";
 import Button from "../Buttons/Button";
+import { useSelector } from "react-redux";
+import { accountIdSelector, isLoginSelector } from "@/store/auth/auth.selector";
+import { useEffect, useState } from "react";
 import {
   useAcceptFriend,
   useAddFriend,
   useCancelFriend,
   useRemoveFriend,
 } from "@/services/friendship.service";
-import { useSelector } from "react-redux";
-import { accountIdSelector, isLoginSelector } from "@/store/auth/auth.selector";
 import toast from "react-hot-toast";
-import { FriendshipStatusEnum } from "@/models/app.interface";
-import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function UserCard({ user }: { user: User }) {
-  const [friendStatus, setFriendStatus] = useState<FriendshipStatusEnum>(
-    user.friendStatus
-  );
+type FriendCardProps = {
+  friendId: number;
+  avatar: string;
+  name: string;
+  status: FriendshipStatusEnum;
+  receiverId: number;
+};
+
+function FriendCard({
+  friendId,
+  avatar,
+  name,
+  status,
+  receiverId,
+}: FriendCardProps) {
+  const navigate = useNavigate();
+  const [friendStatus, setFriendStatus] =
+    useState<FriendshipStatusEnum>(status);
   const isLogin = useSelector(isLoginSelector);
   const currentUserId = useSelector(accountIdSelector);
   const { isPending: isAddPending, mutateAsync: addFriend } = useAddFriend();
@@ -31,8 +43,8 @@ function UserCard({ user }: { user: User }) {
 
   // Reset the state when the component unmounts
   useEffect(() => {
-    setFriendStatus(user.friendStatus);
-  }, [user.friendStatus]);
+    setFriendStatus(friendStatus);
+  }, [friendStatus]);
 
   const handleAddFriend = async () => {
     if (!isLogin) {
@@ -40,7 +52,7 @@ function UserCard({ user }: { user: User }) {
       return;
     }
 
-    await addFriend(user.id, {
+    await addFriend(friendId, {
       onSuccess: () => {
         setFriendStatus(FriendshipStatusEnum.PENDING);
       },
@@ -53,7 +65,7 @@ function UserCard({ user }: { user: User }) {
       return;
     }
 
-    await cancelFriend(user.id, {
+    await cancelFriend(friendId, {
       onSuccess: () => {
         setFriendStatus(FriendshipStatusEnum.NONE);
       },
@@ -66,7 +78,7 @@ function UserCard({ user }: { user: User }) {
       return;
     }
 
-    await removeFriend(user.id, {
+    await removeFriend(friendId, {
       onSuccess: () => {
         setFriendStatus(FriendshipStatusEnum.NONE);
       },
@@ -79,11 +91,15 @@ function UserCard({ user }: { user: User }) {
       return;
     }
 
-    await acceptFriend(user.id, {
+    await acceptFriend(friendId, {
       onSuccess: () => {
         setFriendStatus(FriendshipStatusEnum.ACCEPTED);
       },
     });
+  };
+
+  const handleNavigateToChat = () => {
+    navigate(`/chat/${friendId}`);
   };
 
   const renderFriendshipButton = () => {
@@ -98,20 +114,18 @@ function UserCard({ user }: { user: User }) {
             disabled={isLoading}
             variant="outline"
             padding="px-4 py-1.5"
-            aria-label="Kết bạn"
           >
             {isAddPending ? "Đang xử lý" : "Kết bạn"}
           </Button>
         );
       case FriendshipStatusEnum.PENDING:
-        if (user.receiverId === currentUserId) {
+        if (receiverId === currentUserId) {
           return (
             <Button
               onClick={handleAcceptFriend}
               disabled={isLoading}
               variant="outline"
               padding="px-4 py-1.5"
-              aria-label="Kết bạn"
             >
               {isAddPending ? "Đang xử lý" : "Chấp nhận"}
             </Button>
@@ -123,7 +137,6 @@ function UserCard({ user }: { user: User }) {
             disabled={isLoading}
             variant="ghost"
             padding="px-4 py-1.5"
-            aria-label="Huỷ lời mời"
           >
             {isCancelPending ? "Đang xử lý" : "Huỷ lời mời"}
           </Button>
@@ -135,7 +148,6 @@ function UserCard({ user }: { user: User }) {
             disabled={isLoading}
             variant="ghost"
             padding="px-4 py-1.5"
-            aria-label="Huỷ kết bạn"
           >
             {isRemovePending ? "Đang xử lý" : "Huỷ kết bạn"}
           </Button>
@@ -146,47 +158,31 @@ function UserCard({ user }: { user: User }) {
   };
 
   return (
-    <div className="flex flex-col justify-between p-4 border-2 rounded-lg relative bg-white">
-      <div>
-        <div className="flex items-center gap-3">
-          <Avatar
-            src={user.avatar}
-            alt={user.name}
-            size="size-12"
-            hasBorder={false}
-          />
-          <Link
-            to={`/user/${user.id}`}
-            className="text-base font-medium hover:underline"
-          >
-            {user.name}
-          </Link>
-        </div>
-        <p className="text-gray-500 line-clamp-3 lg:line-clamp-2 mt-2">
-          {user.shortDescription}
-        </p>
+    <div className="border-2 bg-white rounded-md p-3 flex flex-col gap-2 relative">
+      <div className="flex flex-wrap gap-2 items-center">
+        <Avatar
+          src={avatar}
+          alt="Friend avatar"
+          size="size-12"
+          className="inline"
+        />
+        <p className="font-semibold">{name}</p>
       </div>
-      <div>
-        <div className="flex flex-wrap gap-2 mt-4">
-          {user.characteristics.map((characteristic, index) => (
-            <span
-              key={index}
-              className="border-2 border-primary py-1 px-3 rounded-full"
-            >
-              {characteristic}
-            </span>
-          ))}
-        </div>
-        <div className="flex flex-wrap gap-4 lg:gap-10 justify-end mt-3">
-          <div className="flex flex-wrap gap-3 sm:gap-8">
-            {user.city && <IconText icon="fa-location-dot" text={user.city} />}
-            <IconText icon="fa-compass" text={`${user.distance} km`} />
-          </div>
-          {renderFriendshipButton()}
-        </div>
+      <div className="flex gap-2 flex-wrap">
+        {friendStatus === FriendshipStatusEnum.ACCEPTED && (
+          <Button
+            onClick={handleNavigateToChat}
+            variant="outline"
+            padding="px-4 py-1.5"
+          >
+            Nhắn tin
+          </Button>
+        )}
+
+        {renderFriendshipButton()}
       </div>
     </div>
   );
 }
 
-export default UserCard;
+export default FriendCard;

@@ -16,7 +16,7 @@ const ROUTE_LABEL_MAP: Record<string, string> = {
   [ROUTE_PATH.ADMIN_USERS]: "Quản lý người dùng",
   [ROUTE_PATH.ADMIN_PLACES]: "Quản lý địa điểm",
   [ROUTE_PATH.BUSINESS_OVERVIEW]: "Tổng quan",
-  [ROUTE_PATH.BUSINESS_FEEDBACK]: "Đánh giá",
+  // [ROUTE_PATH.BUSINESS_FEEDBACK]: "Đánh giá",
 };
 
 function SidebarLayout() {

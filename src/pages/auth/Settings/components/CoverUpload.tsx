@@ -1,8 +1,10 @@
 import { noCover } from "@/assets/images";
 import Button from "@/components/Buttons/Button";
 import { useUpdateCover } from "@/services/account.service";
+import { PROFILE_QUERY_KEY } from "@/utils/constants";
 import getImageUrl from "@/utils/getImageUrl";
-import { useRef, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useEffect, useRef, useState } from "react";
 
 interface CoverUploadProps {
   image?: string;
@@ -13,6 +15,7 @@ function CoverUpload({ image }: CoverUploadProps) {
   const [isModified, setIsModified] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const queryClient = useQueryClient();
 
   const { isPending, mutateAsync } = useUpdateCover();
 
@@ -46,15 +49,25 @@ function CoverUpload({ image }: CoverUploadProps) {
 
   const handleSave = async () => {
     if (!selectedFile) return;
-    await mutateAsync(selectedFile);
+    await mutateAsync(selectedFile, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: [PROFILE_QUERY_KEY] });
+        setCoverImg("");
+      },
+    });
     setIsModified(false);
   };
+
+  // reset setCoverImg if image changes
+  useEffect(() => {
+    setCoverImg(image || "");
+  }, [image]);
 
   return (
     <div className="relative">
       <label className="mb-2 block font-medium">Ảnh bìa (1400 x 320px)</label>
       <img
-        src={getImageUrl(coverImg, "cover")}
+        src={isModified ? coverImg : getImageUrl(coverImg, "cover")}
         alt="cover image"
         className="object-cover h-48 sm:h-64 w-full rounded-lg"
       />

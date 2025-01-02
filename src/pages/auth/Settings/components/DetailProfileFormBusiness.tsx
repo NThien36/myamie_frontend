@@ -8,7 +8,7 @@ import { z } from "zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useUpdatePorfile } from "@/services/account.service";
+import { useUpdateProfileBusiness } from "@/services/account.service";
 import { PROFILE_QUERY_KEY } from "@/utils/constants";
 import Button from "@/components/Buttons/Button";
 import ImagesDisplay from "@/components/ImagesUpload/ImagesDisplay";
@@ -72,6 +72,7 @@ function DetailProfileForm({ detail }: DetailProfileFormProps) {
   const [displayImages, setDisplayImages] = useState<string[]>(detail.images);
   const queryClient = useQueryClient();
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
@@ -113,7 +114,24 @@ function DetailProfileForm({ detail }: DetailProfileFormProps) {
     isError: isErrorCities,
   } = useGetCities();
 
-  const { isPending, mutateAsync } = useUpdatePorfile();
+  const { isPending, mutateAsync } = useUpdateProfileBusiness();
+
+  // Update the form when the detail prop changes
+  useEffect(() => {
+    reset({
+      images: detail.images.join(";"),
+      firstName: detail.firstName,
+      cityId: detail.city.id,
+      shortDescription: detail.shortDescription,
+      description: detail.description ?? undefined,
+      categoryIds: detail.categories.map((category) => category.id),
+      phone: detail.phone,
+      address: detail.address,
+      openHour: detail.openHour === 0 ? 8 : detail.openHour,
+      closeHour: detail.closeHour === 0 ? 17 : detail.closeHour,
+    });
+    setDisplayImages(detail.images);
+  }, [detail, reset]);
 
   const onSubmit = async (data: FormUpdateProfileFields) => {
     const totalImages = data.imageFiles.length + displayImages.length;
