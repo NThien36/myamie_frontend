@@ -182,7 +182,7 @@ function Messages({
                   : "bg-gray-200"
               }`}
             >
-              <p>{msg.content}</p>
+              <p data-testid="message-item">{msg.content}</p>
               <p className="hidden group-hover:block absolute right-0 bg-black bg-opacity-65 rounded-xl text-xs p-2 text-white -top-9 w-fit">
                 {getTimeFromDate(msg.sentAt)}
               </p>

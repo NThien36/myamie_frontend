@@ -36,14 +36,14 @@ function ProfileOptions({ src, name, accountId }: ProfileOptionsProps) {
 
   return (
     <div className="relative" ref={ref}>
-      <div className="flex items-center gap-2">
+      <div id="profile-options" className="flex items-center gap-2">
         <Avatar
           onClick={handleShowOptions}
           src={src}
           alt="avatar"
           size="size-10"
           hasBorder={false}
-          className="hover:cursor-pointer"
+          className="hover:cursor-pointer "
         />
         <p className="font-medium">{name}</p>
       </div>
@@ -67,6 +67,7 @@ function ProfileOptions({ src, name, accountId }: ProfileOptionsProps) {
             </Link>
           ) : (
             <Link
+              id="profile-link"
               to={`/user/${accountId}`}
               className="p-1.5 hover:bg-primary-lighter rounded-sm flex gap-4 items-center w-full"
             >
@@ -82,6 +83,7 @@ function ProfileOptions({ src, name, accountId }: ProfileOptionsProps) {
             <p className="">Thông tin</p>
           </Link>
           <button
+            id="logout-button"
             onClick={handleLogout}
             className="p-1.5 hover:bg-primary-lighter rounded-sm flex gap-4 items-center w-full"
           >

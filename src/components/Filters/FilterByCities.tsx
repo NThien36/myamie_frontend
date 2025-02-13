@@ -106,6 +106,7 @@ function FilterByCities({
         />
         {selectedCity && (
           <IconBtn
+            id="clear-city-filter"
             hasBackground={false}
             className="absolute right-3 bottom-2"
             onClick={clearSelectedCity}

@@ -26,7 +26,10 @@ function Chat() {
   } else {
     content = (
       <>
-        <div className="flex justify-between border-b-2 p-3">
+        <div
+          data-testid="chat-detail"
+          className="flex justify-between border-b-2 p-3"
+        >
           <div className="flex gap-2 items-center">
             <Avatar
               src={avatar}

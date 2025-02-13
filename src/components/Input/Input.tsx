@@ -70,7 +70,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
         </div>
         {errorMessage && (
-          <p className="text-xs text-red-500 mt-1.5 inline-block">
+          <p
+            id={`${id}-error`}
+            className="text-xs text-red-500 mt-1.5 inline-block"
+          >
             {errorMessage}
           </p>
         )}

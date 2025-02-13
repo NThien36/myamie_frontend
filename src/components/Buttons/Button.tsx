@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 interface ButtonProps {
   variant?: "solid" | "outline" | "ghost";
+  id?: string;
   shape?: "rectangle" | "rounded";
   children: React.ReactNode;
   onClick?: () => void;
@@ -23,6 +24,7 @@ function Button({
   type = "button",
   className,
   to,
+  id,
 }: ButtonProps) {
   const baseStyles = "transition-color duration-300 border-2 whitespace-nowrap";
 
@@ -51,7 +53,7 @@ function Button({
   if (to) {
     // If href is provided, render an anchor tag
     return (
-      <Link to={to} className={classes}>
+      <Link id={id} to={to} className={classes}>
         {children}
       </Link>
     );
@@ -59,6 +61,7 @@ function Button({
 
   return (
     <button
+      id={id}
       type={type}
       className={classes}
       onClick={onClick}

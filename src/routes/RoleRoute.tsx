@@ -20,7 +20,7 @@ const RoleRoute = ({ allowedRoles }: RoleRouteProps) => {
   }
 
   if (!role || !allowedRoles.includes(role as RoleEnum)) {
-    return <Navigate to={ROUTE_PATH.FORBIDDEN} replace />;
+    return <Navigate to={ROUTE_PATH.BUSINESSES} replace />;
   }
 
   return <Outlet />;

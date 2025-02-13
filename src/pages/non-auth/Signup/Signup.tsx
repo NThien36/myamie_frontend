@@ -17,12 +17,12 @@ const schema = z.object({
     .min(6, { message: "Mật khẩu phải dài hơn 6 ký tự" }),
   firstname: z
     .string()
-    .min(1, { message: "Họ không được để trống" })
-    .max(50, { message: "Họ không được dài quá 50 ký tự" }),
-  lastname: z
-    .string()
     .min(1, { message: "Tên không được để trống" })
     .max(50, { message: "Tên không được dài quá 50 ký tự" }),
+  lastname: z
+    .string()
+    .min(1, { message: "Họ không được để trống" })
+    .max(50, { message: "Họ không được dài quá 50 ký tự" }),
 });
 
 export type FormSignupFields = z.infer<typeof schema>;
@@ -81,12 +81,14 @@ function Signup() {
       <form onSubmit={handleSubmit(onSubmit)} className="mt-3 space-y-3">
         <div className="flex gap-3">
           <Input
+            id="signup-lastname"
             label="Họ"
             placeholder="Nhập họ..."
             {...register("lastname")}
             errorMessage={errors.lastname?.message}
           />
           <Input
+            id="signup-firstname"
             label="Tên"
             placeholder="Nhập tên..."
             {...register("firstname")}
@@ -94,6 +96,7 @@ function Signup() {
           />
         </div>
         <Input
+          id="signup-email"
           label="Email"
           type="email"
           placeholder="Nhập tài khoản Email..."
@@ -101,6 +104,7 @@ function Signup() {
           errorMessage={errors.email?.message}
         />
         <Input
+          id="signup-password"
           label="Mật khẩu"
           type="password"
           placeholder="Nhập mật khẩu..."
@@ -108,6 +112,7 @@ function Signup() {
           errorMessage={errors.password?.message}
         />
         <Button
+          id="signup-button"
           type="submit"
           variant="outline"
           shape="rounded"

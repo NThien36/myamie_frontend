@@ -14,7 +14,7 @@ function ConversationItem({ conversation }: ConversationItemProps) {
   return (
     <Link
       to={`/chat/${conversation.id}`}
-      className="relative w-full flex gap-2 items-center hover:bg-primary-lighter px-2 py-3 rounded-md"
+      className="conversation-item relative w-full flex gap-2 items-center hover:bg-primary-lighter px-2 py-3 rounded-md"
     >
       <Avatar src={conversation.avatar} alt="avatar" size="size-14" />
       <div className="hidden md:block w-full overflow-hidden mr-2">

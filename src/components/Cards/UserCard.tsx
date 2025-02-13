@@ -146,7 +146,7 @@ function UserCard({ user }: { user: User }) {
   };
 
   return (
-    <div className="flex flex-col justify-between p-4 border-2 rounded-lg relative bg-white">
+    <div className="user-card flex flex-col justify-between p-4 border-2 rounded-lg relative bg-white">
       <div>
         <div className="flex items-center gap-3">
           <Avatar

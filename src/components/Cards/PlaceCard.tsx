@@ -59,7 +59,7 @@ function PlaceCard({ place }: { place: Place }) {
 
   return (
     <>
-      <div className="flex flex-col border-2 rounded-lg relative transition-shadow duration-300 hover:shadow-xl bg-white">
+      <div className="place-card flex flex-col border-2 rounded-lg relative transition-shadow duration-300 hover:shadow-xl bg-white">
         {place.ownerId === accountId && (
           <div className="absolute top-2 right-2 flex flex-col gap-2">
             <IconBtn

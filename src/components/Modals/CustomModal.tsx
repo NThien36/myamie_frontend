@@ -55,6 +55,7 @@ function CustomModal({
           {cancelButtonTitle}
         </Button>
         <Button
+          id="filter-button-save"
           disabled={isPending}
           onClick={onActiveClick}
           padding="py-1.5 px-2.5"

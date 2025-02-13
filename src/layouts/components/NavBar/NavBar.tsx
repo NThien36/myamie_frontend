@@ -15,17 +15,17 @@ import { RoleEnum } from "@/models/app.interface";
 
 const navlinks = [
   {
-    id: 1,
+    id: "navlink-businesses",
     name: "Dịch vụ",
     href: ROUTE_PATH.BUSINESSES,
   },
   {
-    id: 2,
+    id: "navlink-places",
     name: "Địa điểm",
     href: ROUTE_PATH.PLACES,
   },
   {
-    id: 3,
+    id: "navlink-users",
     name: "Bạn bè",
     href: ROUTE_PATH.USERS,
   },
@@ -60,9 +60,10 @@ function NavBar() {
           }
         )}
       >
-        <div className="hidden md:block space-x-7 font-medium">
+        <div className="navlink hidden md:block space-x-7 font-medium">
           {navlinks.map((link) => (
             <NavLink
+              id={link.id}
               key={link.id}
               to={link.href}
               className={({ isActive }) => cx({ "text-primary": isActive })}
@@ -83,6 +84,7 @@ function NavBar() {
         {isLoggedIn ? (
           <div className="hidden md:flex gap-3 items-center">
             <Link
+              id="chat-link"
               to={ROUTE_PATH.CHAT}
               className="hover:bg-gray-100 border border-gray-400 rounded-full size-10 flex items-center justify-center"
             >
@@ -99,7 +101,7 @@ function NavBar() {
             <Link to={ROUTE_PATH.SIGNUP_BUSINESS} className="font-medium">
               Kinh doanh
             </Link>
-            <Button shape="rounded" to={ROUTE_PATH.LOGIN}>
+            <Button id="access-button" shape="rounded" to={ROUTE_PATH.LOGIN}>
               Đăng nhập
             </Button>
           </div>

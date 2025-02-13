@@ -49,6 +49,7 @@ function ChatInput({ onSendMessage }: ChatInputProps) {
           <i className="text-primary fa-xl fa-regular fa-face-smile"></i>
         </button>
         <textarea
+          data-testid="chat-input"
           ref={textareaRef}
           rows={1}
           placeholder="Nhập lời nhắn tại đây..."
@@ -60,6 +61,7 @@ function ChatInput({ onSendMessage }: ChatInputProps) {
         ></textarea>
       </div>
       <button
+        data-testid="send-message-button"
         onClick={handleSendMessage}
         disabled={!message.trim()}
         className="flex items-center justify-center gap-2.5 rounded-full bg-primary text-white px-4 hover:bg-opacity-90"

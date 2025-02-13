@@ -16,7 +16,6 @@ import RoleRoute from "./RoleRoute";
 import { RoleEnum } from "@/models/app.interface";
 import Settings from "@/pages/auth/Settings/Settings";
 import Account from "@/pages/auth/Account/Account";
-import BusinessFeedbacks from "@/pages/auth/BusinessFeedbacks/BusinessFeedbacks";
 import AdminUsers from "@/pages/auth/AdminUsers/AdminUsers";
 import AdminPlaces from "@/pages/auth/AdminPlaces/AdminPlaces";
 import ChatLayout from "@/layouts/ChatLayout";
@@ -58,7 +57,7 @@ const router = createBrowserRouter([
       },
       {
         path: "*",
-        element: <PlaceProfile />,
+        element: <Businesses />,
       },
     ],
   },

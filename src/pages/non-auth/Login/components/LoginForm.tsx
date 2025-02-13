@@ -42,6 +42,7 @@ function LoginForm() {
         label="Email"
         type="email"
         placeholder="Nhập tài khoản Email..."
+        id="login-email"
       />
       <Input
         {...register("password")}
@@ -49,6 +50,7 @@ function LoginForm() {
         label="Mật khẩu"
         type="password"
         placeholder="Nhập mật khẩu..."
+        id="login-password"
       />
       <Button
         disabled={isPending}
@@ -56,6 +58,7 @@ function LoginForm() {
         variant="outline"
         shape="rounded"
         className="w-full"
+        id="login-button"
       >
         {isPending ? "Đang đăng nhập..." : "Đăng nhập"}
       </Button>

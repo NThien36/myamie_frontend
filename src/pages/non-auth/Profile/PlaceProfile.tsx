@@ -1,5 +1,4 @@
 import Cover from "./components/Cover";
-import { noCover } from "@/assets/images";
 import Avatar from "@/components/Avatar/Avatar";
 import ContactContainer from "./components/ContactContainer";
 import IconText from "@/components/IconText/IconText";

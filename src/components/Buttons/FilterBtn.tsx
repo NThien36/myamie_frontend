@@ -49,6 +49,7 @@ function FilterBtn({
   return (
     <>
       <Button
+        id="filter-button"
         variant="ghost"
         className="flex items-center gap-2"
         onClick={openModal}

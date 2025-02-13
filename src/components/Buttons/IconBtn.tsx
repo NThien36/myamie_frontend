@@ -1,6 +1,7 @@
 import cx from "classnames";
 
 interface IconBtnProps {
+  id?: string;
   onClick?: () => void;
   icon: string;
   className?: string;
@@ -11,6 +12,7 @@ interface IconBtnProps {
 }
 
 function IconBtn({
+  id,
   onClick,
   icon,
   className,
@@ -32,7 +34,7 @@ function IconBtn({
   );
 
   return (
-    <button type="button" className={buttonClasses} onClick={onClick}>
+    <button id={id} type="button" className={buttonClasses} onClick={onClick}>
       <i className={cx("fa-regular", iconSize, icon)}></i>
     </button>
   );

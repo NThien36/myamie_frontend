@@ -9,7 +9,7 @@ function BusinessCard({ business }: { business: Business }) {
   return (
     <Link
       to={`/service/${business.id}`}
-      className="flex flex-col border-2 rounded-lg relative transition-shadow duration-300 hover:shadow-xl bg-white"
+      className="business-card flex flex-col border-2 rounded-lg relative transition-shadow duration-300 hover:shadow-xl bg-white"
     >
       <img
         src={getImageUrl(business.cover, "cover")}
