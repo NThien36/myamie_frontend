@@ -24,7 +24,7 @@ function PasswordChange({ id }: PasswordChangeProps) {
     register,
     handleSubmit,
     formState: { errors },
-    control,
+    // control,
   } = useForm<FormPasswordChangeFields>({
     mode: "onBlur",
     resolver: zodResolver(schema),

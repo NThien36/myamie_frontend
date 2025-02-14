@@ -10,7 +10,7 @@ interface UserPlacesProps {
 }
 
 function UserPlaces({ id }: UserPlacesProps) {
-  const [params, setParams] = useState<PlacesParams>({
+  const [params] = useState<PlacesParams>({
     pageNumber: 1,
     userId: id,
   });

@@ -7,7 +7,6 @@ import {
 } from "@/services/email.service";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
 
 interface ConfirmEmailProps {
   isOpen: boolean;

@@ -50,7 +50,7 @@ axiosInstance.refreshToken({
       config.headers["Authorization"] = `Bearer ${response.data.accessToken}`;
     }
   },
-  failure: (error) => {
+  failure: () => {
     toast.error("Phiên đăng nhập hết hạn");
     store.dispatch(logout());
     store.dispatch(clearConversations());

@@ -1,6 +1,4 @@
-import Button from "@/components/Buttons/Button";
 import Divider from "@/components/Divider/Divider";
-import Dropdown from "@/components/Dropdown/Dropdown";
 import FeedbackItem from "@/components/FeedbackItem/FeedbackItem";
 import Loader from "@/components/Loader/Loader";
 import Pagination from "@/components/Pagination/Pagination";
@@ -15,7 +13,7 @@ interface FeedbackTabProps {
 }
 
 function FeedbackTab({ id }: FeedbackTabProps) {
-  const [params, setParams] = useState<FeedbacksParams>({
+  const [params] = useState<FeedbacksParams>({
     pageNumber: 1,
     id: id,
   });

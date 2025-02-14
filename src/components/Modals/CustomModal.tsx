@@ -1,7 +1,6 @@
 import ReactModal from "react-modal";
 import IconBtn from "../Buttons/IconBtn";
 import Button from "../Buttons/Button";
-import { isPending } from "@reduxjs/toolkit";
 
 interface CustomModalProps {
   title: string;
