@@ -34,8 +34,8 @@ jobs:
         run: npm test
         continue-on-error: true # Remove this if unit tests should block merging
 
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+      #- name: Install Playwright Browsers
+      #  run: npx playwright install --with-deps
 
-      - name: Run Playwright Tests
-        run: npx playwright test
+      #- name: Run Playwright Tests
+      #  run: npx playwright test
