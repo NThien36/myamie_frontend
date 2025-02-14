@@ -4,8 +4,6 @@ import Avatar from "../Avatar/Avatar";
 import IconText from "../IconText/IconText";
 import IconBtn from "../Buttons/IconBtn";
 import { useEffect, useRef, useState } from "react";
-import ConfirmModal from "../Modals/ConfirmModal";
-import Button from "../Buttons/Button";
 import CustomModal from "../Modals/CustomModal";
 import getImageUrl from "@/utils/getImageUrl";
 import { useSelector } from "react-redux";

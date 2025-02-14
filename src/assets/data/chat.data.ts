@@ -1,4 +1,5 @@
-import { Conversation, Message } from "@/models/chat.interface";
+import { MessageStatusEnum } from "@/models/app.interface";
+import { Conversation, Message } from "@/models/message.interface";
 
 export const conversationData: Conversation[] = [
   {
@@ -90,64 +91,73 @@ export const messageData: Message[] = [
     content:
       "Hey! How have you been?Hey! How have you beenHey! How have you beenHey! How have you beenHey! How have you been",
     sentAt: "2024-10-31",
-    status: "READ",
+    status: MessageStatusEnum.READ,
     senderId: 1,
+    receiverId: 2,
   },
   {
     id: 2,
     content: "Hi! I've been good, thanks. How about you?",
     sentAt: "2024-10-31",
-    status: "READ",
+    status: MessageStatusEnum.READ,
     senderId: 2,
+    receiverId: 1,
   },
   {
     id: 3,
     content: "I'm doing well! Are you free for a call later?",
     sentAt: "2024-10-31",
-    status: "DELIVERED",
+    status: MessageStatusEnum.READ,
     senderId: 1,
+    receiverId: 2,
   },
   {
     id: 4,
     content: "Yes, sure. What time works for you?",
     sentAt: "2024-10-31",
-    status: "SENT",
+    status: MessageStatusEnum.READ,
     senderId: 2,
+    receiverId: 1,
   },
   {
     id: 5,
     content: "How about 3 PM?",
     sentAt: "2024-10-31",
-    status: "SENT",
+    status: MessageStatusEnum.READ,
     senderId: 1,
+    receiverId: 2,
   },
   {
     id: 6,
     content: "Sounds good to me!",
     sentAt: "2024-10-31",
-    status: "SENT",
+    status: MessageStatusEnum.READ,
     senderId: 2,
+    receiverId: 1,
   },
   {
     id: 7,
     content:
       "Oh wait, I just realized I haveit, I just realized I havit, I just realized I havit, I just realized I havit, I just realized I havit, I just realized I havit, I just realized I havit, I just realized I hav another meeting.",
     sentAt: "2024-10-31",
-    status: "RECALLED",
+    status: MessageStatusEnum.READ,
     senderId: 1,
+    receiverId: 2,
   },
   {
     id: 8,
     content: "No worries! Just let me know a time that works.",
     sentAt: "2024-10-31",
-    status: "READ",
+    status: MessageStatusEnum.READ,
     senderId: 2,
+    receiverId: 1,
   },
   {
     id: 9,
     content: "No worries! Just let me know a time that works.",
     sentAt: "2024-10-31",
-    status: "READ",
+    status: MessageStatusEnum.READ,
     senderId: 2,
+    receiverId: 1,
   },
 ];

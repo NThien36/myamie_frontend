@@ -1,6 +1,4 @@
-import Button from "@/components/Buttons/Button";
 import Divider from "@/components/Divider/Divider";
-import Dropdown from "@/components/Dropdown/Dropdown";
 import FeedbackItem from "@/components/FeedbackItem/FeedbackItem";
 import Loader from "@/components/Loader/Loader";
 import Pagination from "@/components/Pagination/Pagination";
@@ -15,7 +13,7 @@ interface FeedbackTabProps {
 }
 
 function FeedbackTab({ id }: FeedbackTabProps) {
-  const [params, setParams] = useState<FeedbacksParams>({
+  const [params] = useState<FeedbacksParams>({
     pageNumber: 1,
     id: id,
   });
@@ -32,6 +30,18 @@ function FeedbackTab({ id }: FeedbackTabProps) {
     content = <Loader />;
   } else if (isError) {
     content = <p className="error">Lỗi, vui lòng thử lại</p>;
+  } else {
+    content = (
+      <div className="py-6 md:p-6 space-y-10">
+        {feedbacks && feedbacks.length > 0 ? (
+          feedbacks.map((feedback) => (
+            <FeedbackItem key={feedback.id} feedback={feedback} />
+          ))
+        ) : (
+          <p>Chưa có đánh giá nào</p>
+        )}
+      </div>
+    );
   }
 
   return (
@@ -64,7 +74,7 @@ function FeedbackTab({ id }: FeedbackTabProps) {
           <SendFeedbackForm id={id} />
         </div>
       </div>
-      <div className="py-6 md:p-6 space-y-10">
+      {/* <div className="py-6 md:p-6 space-y-10">
         {feedbacks && feedbacks.length > 0 ? (
           feedbacks.map((feedback) => (
             <FeedbackItem key={feedback.id} feedback={feedback} />
@@ -72,7 +82,8 @@ function FeedbackTab({ id }: FeedbackTabProps) {
         ) : (
           <p>Chưa có đánh giá nào</p>
         )}
-      </div>
+      </div> */}
+      {content}
       <Pagination
         currentPage={pagination?.currentPage ?? 1}
         totalPage={pagination?.totalPages ?? 1}

@@ -1,4 +1,4 @@
-import { noAvatar } from "@/assets/images";
+// import { noAvatar } from "@/assets/images";
 import getImageUrl from "@/utils/getImageUrl";
 import cx from "classnames";
 

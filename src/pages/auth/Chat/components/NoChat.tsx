@@ -1,5 +1,4 @@
 import { chatCharacters } from "@/assets/images";
-import React from "react";
 
 function NoChat() {
   return (

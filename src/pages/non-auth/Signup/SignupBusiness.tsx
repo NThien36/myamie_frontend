@@ -2,8 +2,6 @@ import Divider from "@/components/Divider/Divider";
 import Dropdown from "@/components/Dropdown/Dropdown";
 import IconText from "@/components/IconText/IconText";
 import Input from "@/components/Input/Input";
-import ConfirmEmail from "./components/ConfirmEmail";
-import { useState } from "react";
 import Button from "@/components/Buttons/Button";
 import { useGetCities } from "@/services/city.service";
 import { useGetCategories } from "@/services/category.service";
@@ -12,7 +10,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSignupBusiness } from "@/services/auth.service";
-import toast from "react-hot-toast";
 
 const schema = z.object({
   email: z
@@ -43,7 +40,7 @@ const schema = z.object({
 export type FormSignupBusinessFields = z.infer<typeof schema>;
 
 function SignupBusiness() {
-  const [submittedEmail, setSubmittedEmail] = useState<string>("");
+  // const [submittedEmail, setSubmittedEmail] = useState<string>("");
   const {
     register,
     handleSubmit,
@@ -69,7 +66,7 @@ function SignupBusiness() {
   const navigate = useNavigate();
 
   const onSubmit = async (data: FormSignupBusinessFields) => {
-    setSubmittedEmail(data.email);
+    // setSubmittedEmail(data.email);
     await mutateAsync(data, {
       onSuccess: () => {
         navigate("/login");

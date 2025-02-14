@@ -5,12 +5,7 @@ import { PlaceAdmin } from "@/models/place.interface";
 import React, { useState } from "react";
 import { Column, useTable } from "react-table";
 import StatusChange from "./components/StatusChange";
-import {
-  ACTIVE_OPTION,
-  ALL_OPTIONS,
-  DELETE_OPTION,
-  SUSPEND_OPTION,
-} from "@/utils/constants";
+import { ACTIVE_OPTION, ALL_OPTIONS, SUSPEND_OPTION } from "@/utils/constants";
 import { useGetPlacesByAdmin } from "@/services/admin.service";
 import { PlacesAdminParams } from "@/models/admin.interface";
 import Loader from "@/components/Loader/Loader";
