@@ -1,0 +1,27 @@
+name: Deploy Frontend to Docker Hub
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+    - name: Build Docker Image
+      run: docker build -t bminh1709/myamie-frontend .
+
+    - name: Tag Image
+      run: docker tag bminh1709/myamie-frontend bminh1709/myamie-frontend:latest
+
+    - name: Push to Docker Hub
+      run: docker push bminh1709/myamie-frontend:latest
