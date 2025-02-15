@@ -1,0 +1,72 @@
+/*#region Font*/
+@font-face {
+  font-family: "Quicksand";
+  src: url("../fonts/Quicksand-Medium.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Quicksand";
+  src: url("../fonts/Quicksand-SemiBold.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Quicksand";
+  src: url("../fonts/Quicksand-Bold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+/*#endregion Font*/
+/*#region Scroll bar*/
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgb(255, 255, 255);
+  border-radius: 2rem;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(233, 233, 233);
+  border-radius: 20px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(205, 205, 205);
+}
+/*#endregion Scroll bar*/
+:root {
+  --main-color: #3f6189;
+  /* --max-header-width: 90rem;
+    --max-item-width: 87rem; */
+  --background-color: #fbfbfb;
+  --font-family: "Quicksand", sans-serif;
+}
+* {
+  font-family: var(--font-family);
+  scroll-behavior: smooth;
+}
+body {
+  background-color: var(--background-color);
+  font-size: 0.875rem;
+  color: #212325;
+}
+.auth-container {
+  padding: 1.25rem;
+  border-width: 2px;
+  background-color: white;
+  border-radius: 0.75rem;
+}
+.error {
+  color: #dc2626;
+  text-align: center;
+}
